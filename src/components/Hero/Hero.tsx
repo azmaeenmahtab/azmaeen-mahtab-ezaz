@@ -36,7 +36,7 @@ const socials = [
 
 const badges = [
   {
-    value: "60+",
+    value: "70+",
     label: "Problems Solved",
     position: "top-4 right-0 md:-right-6",
     icon: (
