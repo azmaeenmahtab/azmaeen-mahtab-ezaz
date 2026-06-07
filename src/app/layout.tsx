@@ -13,10 +13,10 @@ import { jetbrainsmono } from '@/fonts'
   //   weight: ['300', '400', '500', '600', '700'] 
   // })
 
-const title = 'Azmaeen Mahtab Ezaz | Aspiring Full-Stack Web Developer | Frontend Developer at Upwork'
+const title = 'Azmaeen Mahtab Ezaz | Full-Stack Web Developer | AI Trainer at Outlier.ai'
 
 const description =
-  "An aspiring full-stack web developer. Currently working on Upwork as a Frontend Developer I build responsive, user-friendly websites with React, NextJS, and NodeJS. Let's bring your vision to life. Hire me today!"
+  "A full-stack web developer. Currently working on Outlier.ai as AI Trainer as Full Stack Engineer and also have working experience on Upwork as a Full Stack Developer. I build responsive, user-friendly websites with React, NextJS, NodeJS. Express.JS, Postgresql/Mongodb. Let's bring your vision to life. Hire me today!"
 
 const url = process.env.NEXT_PUBLIC_SITE_URL
 

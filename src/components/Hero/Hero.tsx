@@ -146,7 +146,7 @@ const Hero = () => {
           className="flex flex-col gap-6"
         >
           <div data-reveal data-reveal-from="left" style={revealStyle('left')}>
-            <p className="text-[#8a9bb0] text-sm mb-2">Hey, I'm</p>
+            <p className="text-[#8a9bb0] text-sm mb-2">Hey, I&apos;m</p>
             <h1 className={`${playfairdisplay.className} text-4xl md:text-5xl lg:text-6xl text-[#ede8df] italic leading-tight`}>
               Azmaeen Mahtab Ezaz
             </h1>
