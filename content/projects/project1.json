@@ -1,0 +1,20 @@
+{
+  "priority": 1,
+  "title": "KHUJO - AI Integrated Mobile Theft Security System",
+  "shortDescription": "KHUJO is a security system agaisnt second hand mobile phone syndicate in Bangladesh and mobile theft. People can drop a report of their stolen phone, search before buying if a second hand phone was stolen or not and helping real owner find their phone. ",
+  "cover": "/mess-expert.png",
+  "githubLink": "https://github.com/azmaeenmahtab/Khujo-frontend",
+  "livePreview": "https://khujo.vercel.app/",
+  "type": "Team Project",
+  "recognition": "Phase 2 participant of First AI Hackathon in Bangladesh by SOLVIO.",
+  "technologies": [
+    "Next.js",
+    "Node.js",
+    "Express.js",
+    "Clerk",
+    "Supabase",
+    "TailwindCSS",
+    "Exif Metadata"
+
+  ]
+}

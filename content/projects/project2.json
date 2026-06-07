@@ -1,0 +1,20 @@
+{
+  "priority": 2,
+  "title": "Mess Expert",
+  "shortDescription": "A complete mess management system where you can manage mess members, their payments, daily meals, monthly bills and more.",
+  "cover": "/mess-expert.png",
+  "githubLink": "https://github.com/azmaeenmahtab/Mess-Expert",
+  "livePreview": "https://messexpert.netlify.app/",
+  "type": "Team Project",
+  "recognition": "Final Round Participant of 1st ACS Career Bootcamp - 2025",
+  "technologies": [
+    "React",
+    "Redux",
+    "TailwindCSS",
+    "Javascript",
+    "Node.js",
+    "Express.js",
+    "JWT",
+    "Supabase"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "priority": 3,
+  "title": "Coaching Management System",
+  "shortDescription": "Basic frontend and CRUD API with JWT authentication. React frontend, Node.js/Express backend, Supabase database.",
+  "cover": "/ccm.png",
+  "githubLink": "https://github.com/azmaeenmahtab/Interview-Task-Backend",
+  "livePreview": "https://ccm-roan-one.vercel.app/",
+  "type": "Personal Project",
+  "technologies": [
+    "React",
+    "Node.js",
+    "Express",
+    "JWT",
+    "Supabase"
+  ]
+}

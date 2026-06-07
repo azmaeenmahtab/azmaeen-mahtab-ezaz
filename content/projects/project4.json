@@ -1,0 +1,13 @@
+{
+  "priority": 4,
+  "title": "Prestige Frontend",
+  "shortDescription": "A fully responsive landing page for a fictional SaaS product called Prestige, built with React and Tailwind CSS.",
+  "cover": "/prestige.png",
+  "githubLink": "https://github.com/azmaeenmahtab/Prestige",
+  "livePreview": "https://cheery-chebakia-d70b4e.netlify.app/",
+  "type": "Personal Project",
+  "technologies": [
+    "React",
+    "Tailwind CSS"
+  ]
+ }
