@@ -1,8 +1,10 @@
 {
+  "id": "mess-expert",
   "priority": 2,
   "title": "Mess Expert",
   "shortDescription": "A complete mess management system where you can manage mess members, their payments, daily meals, monthly bills and more.",
-  "cover": "/mess-expert.png",
+  "fullDescription": "Mess Expert is a complete hostel and shared-living mess management web application designed for students and flatmates. It simplifies complex monthly expense splitting, meal counting, grocery shopping logs, deposit calculations, and individual balance statements with automated calculation engines and role-based access control.",
+  "cover": "/project2.png",
   "githubLink": "https://github.com/azmaeenmahtab/Mess-Expert",
   "livePreview": "https://messexpert.netlify.app/",
   "type": "Team Project",
@@ -16,5 +18,15 @@
     "Express.js",
     "JWT",
     "Supabase"
+  ],
+  "challenges": [
+    "Formulating dynamic meal-rate math algorithms that instantly adjust when shared grocery expenses fluctuate during the month.",
+    "Architecting clean Redux store state synchronization between daily meal tracking sheets and monthly financial ledgers.",
+    "Implementing reliable JWT authentication with Supabase database security rules for smooth multi-user access."
+  ],
+  "futurePlans": [
+    "Integrate automated digital payment gateways (bKash/Nagad) for instant member monthly dues settlement.",
+    "Add one-click PDF monthly audit statement downloads and automated SMS reminders for pending dues.",
+    "Implement multi-mess admin view for hostel managers overseeing multiple residential units."
   ]
 }

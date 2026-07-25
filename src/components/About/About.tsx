@@ -99,8 +99,7 @@ export default function About() {
                 data-reveal
                 style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
               >
-                I&apos;m a full stack developer based in Dhaka, BD —
-                studying Computer Science at{" "}
+                My programming journey started with a deep curiosity for how software solves everyday challenges. Today, I&apos;m a full stack developer based in Dhaka, BD — studying Computer Science at{" "}
                 <span className="italic text-[#c8b97a]">
                   Ahsanullah University of Science and Technology
                 </span>{" "}
@@ -112,26 +111,20 @@ export default function About() {
                 data-reveal
                 style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
               >
-                I build across the{" "}
-                <span className="text-[#00e6b4]">full stack</span>
-                {" — clean REST APIs, structured databases, and UIs that feel right to use. One project I\u2019m proud of: "}
+                I thrive on building scalable{" "}
+                <span className="text-[#00e6b4]">full stack web applications</span>
+                {" — designing clean REST APIs, architecting robust databases, and crafting fluid UIs with high aesthetic standards. I particularly enjoy solving real-world problems through tech, like my flagship project: "}
                 <span className="italic text-[#c8b97a]">
-                  an AI-driven security system
+                  KHUJO (AI-driven security ecosystem)
                 </span>
-                {" targeting mobile fraud in Bangladesh."}
+                {" targeting mobile phone theft in Bangladesh."}
               </p>
 
               <p
                 data-reveal
                 style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
               >
-                My stack is{" "}
-                <span className="text-[#00e6b4]">
-                  TS · React · Next.js · Node.js · Spring Boot
-                </span>
-                . Outside work I grind DSA — graph traversals, BSTs,
-                competitive-style problems. Curious by default. Builder by
-                habit.
+                When I&apos;m not writing code or solving DSA problems, you can find me playing sports (football & cricket), exploring tech blogs, listening to music, or tuning up digital designs. Curious by default. Builder by habit.
               </p>
             </div>
 

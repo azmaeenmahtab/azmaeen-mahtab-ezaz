@@ -1,8 +1,10 @@
 {
+  "id": "coaching-management",
   "priority": 3,
   "title": "Coaching Management System",
   "shortDescription": "Basic frontend and CRUD API with JWT authentication. React frontend, Node.js/Express backend, Supabase database.",
-  "cover": "/ccm.png",
+  "fullDescription": "A full-featured coaching institute management web application created to streamline student enrollments, batch scheduling, tuition fee tracking, teacher assignments, and course administration. Built with React for an intuitive frontend and Node.js/Express with Supabase for secure REST API endpoints.",
+  "cover": "/project3.png",
   "githubLink": "https://github.com/azmaeenmahtab/Interview-Task-Backend",
   "livePreview": "https://ccm-roan-one.vercel.app/",
   "type": "Personal Project",
@@ -12,5 +14,15 @@
     "Express",
     "JWT",
     "Supabase"
+  ],
+  "challenges": [
+    "Structuring clean relational database schemas in Supabase for multi-entity relationships across students, courses, and payments.",
+    "Designing robust JWT authentication middleware with auto-refresh logic to safeguard admin routes.",
+    "Building dynamic, high-performance data tables with client-side searching and sorting."
+  ],
+  "futurePlans": [
+    "Incorporate an online exam and automated grading system for batch assessments.",
+    "Implement student attendance tracking with mobile QR code scanning.",
+    "Add parent-teacher portal with push notifications for exam results and fee reminders."
   ]
 }

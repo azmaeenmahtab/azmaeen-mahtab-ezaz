@@ -1,7 +1,9 @@
 export interface Project {
+  id?: string
+  priority: number
   title: string
   shortDescription: string
-  priority: number
+  fullDescription?: string
   cover: string
   livePreview?: string
   githubLink?: string
@@ -14,6 +16,8 @@ export interface Project {
   siteAge?: string
   recognition?: string
   technologies?: string[]
+  challenges?: string[] | string
+  futurePlans?: string[] | string
 }
 
 export interface Heading {

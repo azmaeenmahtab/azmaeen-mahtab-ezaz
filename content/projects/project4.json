@@ -1,13 +1,26 @@
 {
+  "id": "prestige",
   "priority": 4,
   "title": "Prestige Frontend",
   "shortDescription": "A fully responsive landing page for a fictional SaaS product called Prestige, built with React and Tailwind CSS.",
-  "cover": "/prestige.png",
+  "fullDescription": "Prestige is a modern, high-converting SaaS product landing page designed to showcase digital product features with fluid micro-interactions, responsive layouts, feature breakdowns, and interactive pricing tiers. Built with React and Tailwind CSS for a premium design aesthetic.",
+  "cover": "/project4.png",
   "githubLink": "https://github.com/azmaeenmahtab/Prestige",
   "livePreview": "https://cheery-chebakia-d70b4e.netlify.app/",
   "type": "Personal Project",
   "technologies": [
     "React",
-    "Tailwind CSS"
+    "Tailwind CSS",
+    "JavaScript"
+  ],
+  "challenges": [
+    "Crafting complex responsive grid layouts and gradient cards while adhering to high UI/UX accessibility standards.",
+    "Ensuring ultra-fast first contentful paint (FCP) and smooth micro-animations across all mobile viewports.",
+    "Designing modular UI components to make landing page sections easily reconfigurable."
+  ],
+  "futurePlans": [
+    "Build an interactive live product sandbox preview within the hero section.",
+    "Add dark/light mode theme toggle capability with system preference auto-detection.",
+    "Integrate animated testimonial carousels and interactive ROI pricing calculators."
   ]
- }
+}

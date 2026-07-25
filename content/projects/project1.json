@@ -1,8 +1,10 @@
 {
+  "id": "khujo",
   "priority": 1,
   "title": "KHUJO - AI Integrated Mobile Theft Security System",
-  "shortDescription": "KHUJO is a security system agaisnt second hand mobile phone syndicate in Bangladesh and mobile theft. People can drop a report of their stolen phone, search before buying if a second hand phone was stolen or not and helping real owner find their phone. ",
-  "cover": "/mess-expert.png",
+  "shortDescription": "KHUJO is a security system agaisnt second hand mobile phone syndicate in Bangladesh and mobile theft. People can drop a report of their stolen phone, search before buying if a second hand phone was stolen or not and helping real owner find their phone.",
+  "fullDescription": "KHUJO is an innovative web security ecosystem created to dismantle second-hand mobile phone theft syndicates in Bangladesh. By uniting victims, buyers, and enforcement through a unified verification system, users can report lost devices, search stolen databases prior to buying used phones, and submit metadata leads to reunite owners with their lost devices.",
+  "cover": "/project1.png",
   "githubLink": "https://github.com/azmaeenmahtab/Khujo-frontend",
   "livePreview": "https://khujo.vercel.app/",
   "type": "Team Project",
@@ -15,6 +17,15 @@
     "Supabase",
     "TailwindCSS",
     "Exif Metadata"
-
+  ],
+  "challenges": [
+    "Ensuring privacy and integrity while allowing public verification without exposing sensitive user information.",
+    "Integrating Exif metadata extraction and AI validation to accurately match stolen device reports with marketplace listings.",
+    "Handling real-time alert notifications efficiently across distributed database triggers in Supabase."
+  ],
+  "futurePlans": [
+    "Partner with local mobile retailers to provide instant QR-code device verification at point of sale.",
+    "Develop AI-powered OCR algorithms to automatically parse physical receipts and serial number barcodes.",
+    "Launch a mobile app with background security features and location-assisted recovery tracking."
   ]
 }

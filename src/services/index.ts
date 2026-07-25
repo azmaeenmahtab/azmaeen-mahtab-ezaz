@@ -33,6 +33,19 @@ const getAllProjects = async (): Promise<Project[]> => {
   }
 }
 
+const getProjectById = async (id: string): Promise<Project | null> => {
+  try {
+    const projects = await getAllProjects()
+    const found = projects.find(
+      (p) => p.id === id || String(p.priority) === id || p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') === id
+    )
+    return found || null
+  } catch (error) {
+    console.error('Error finding project by ID:', error)
+    return null
+  }
+}
+
 const getAllTestimonials = async (): Promise<Testimonial[]> => {
   try {
     const testimonialsPath = path.join(process.cwd(), '/content/testimonials')
@@ -57,4 +70,4 @@ const getAllTestimonials = async (): Promise<Testimonial[]> => {
   }
 }
 
-export { getAllProjects, getAllTestimonials }
+export { getAllProjects, getProjectById, getAllTestimonials }
