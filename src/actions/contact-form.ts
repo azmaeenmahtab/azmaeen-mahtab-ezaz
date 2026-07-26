@@ -16,10 +16,6 @@ const action = async (_: { success: boolean; message: string } | null, formData:
         message: 'Please provide your email address.',
       }
 
-    if (!formData.get('subject')) {
-      formData.set('subject', `Portfolio Inquiry from ${name}`)
-    }
-
     const message = formData.get('message')
     if (!message)
       return {
@@ -27,7 +23,17 @@ const action = async (_: { success: boolean; message: string } | null, formData:
         message: 'Please provide a message.',
       }
 
-    const res = await fetch(process.env.CONTACT_FORM_ACTION_URL!, {
+    if (!formData.get('subject')) {
+      formData.set('subject', `Portfolio Inquiry from ${name}`)
+    }
+    if (!formData.get('_subject')) {
+      formData.set('_subject', `Portfolio Inquiry from ${name}`)
+    }
+
+    const actionUrl =
+      process.env.CONTACT_FORM_ACTION_URL || 'https://formspree.io/f/myznlgdv'
+
+    const res = await fetch(actionUrl, {
       method: 'POST',
       body: formData,
       headers: {
@@ -35,22 +41,32 @@ const action = async (_: { success: boolean; message: string } | null, formData:
       },
     })
 
-    if (res.ok) {
-      return { success: true, message: 'Thanks for your submission!' }
+    const data = await res.json().catch(() => null)
+
+    if (res.ok && data?.success !== 'false' && data?.success !== false && data?.ok !== false) {
+      return { success: true, message: 'Thanks for your submission! I will get back to you soon.' }
     } else {
-      const data = await res.json()
-      console.error(data?.error)
+      console.error('Contact form endpoint error:', data)
+      let errorMsg = 'Oops! There was a problem submitting your form.'
+
+      if (Array.isArray(data?.errors) && data.errors.length > 0) {
+        errorMsg = data.errors.map((e: { field?: string; message: string }) => e.message).join(', ')
+      } else if (data?.message) {
+        errorMsg = data.message
+      } else if (typeof data?.error === 'string') {
+        errorMsg = data.error
+      }
 
       return {
         success: false,
-        message: 'Oops! There was a problem submitting your form',
+        message: errorMsg,
       }
     }
   } catch (error) {
     console.error('Contact form submission error: ' + error)
     return {
       success: false,
-      message: 'Oops! There was a problem submitting your form',
+      message: 'Oops! There was a problem submitting your form. Please try again or email directly.',
     }
   }
 }
