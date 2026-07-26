@@ -16,12 +16,9 @@ const action = async (_: { success: boolean; message: string } | null, formData:
         message: 'Please provide your email address.',
       }
 
-    const subject = formData.get('subject')
-    if (!subject)
-      return {
-        success: false,
-        message: 'Please provide a subject.',
-      }
+    if (!formData.get('subject')) {
+      formData.set('subject', `Portfolio Inquiry from ${name}`)
+    }
 
     const message = formData.get('message')
     if (!message)
