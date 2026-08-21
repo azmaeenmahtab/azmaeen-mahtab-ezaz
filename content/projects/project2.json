@@ -1,32 +1,33 @@
 {
-  "id": "mess-expert",
+  "id": "khujo",
   "priority": 2,
-  "title": "Mess Expert",
-  "shortDescription": "A complete mess management system where you can manage mess members, their payments, daily meals, monthly bills and more.",
-  "fullDescription": "Mess Expert is a complete hostel and shared-living mess management web application designed for students and flatmates. It simplifies complex monthly expense splitting, meal counting, grocery shopping logs, deposit calculations, and individual balance statements with automated calculation engines and role-based access control.",
-  "cover": "/project2.png",
-  "githubLink": "https://github.com/azmaeenmahtab/Mess-Expert",
-  "livePreview": "https://messexpert.netlify.app/",
-  "type": "Team Project",
-  "recognition": "Final Round Participant of 1st ACS Career Bootcamp - 2025",
+  "category": "fullstack",
+  "title": "KHUJO - AI Integrated Mobile Theft Security System",
+  "shortDescription": "KHUJO is a security system against second hand mobile phone syndicate in Bangladesh and mobile theft. People can drop a report of their stolen phone, search before buying if a second hand phone was stolen or not and helping real owner find their phone.",
+  "fullDescription": "KHUJO is an innovative web security ecosystem created to dismantle second-hand mobile phone theft syndicates in Bangladesh. By uniting victims, buyers, and enforcement through a unified verification system, users can report lost devices, search stolen databases prior to buying used phones, and submit metadata leads to reunite owners with their lost devices.",
+  "cover": "/project1.png",
+  "githubLinkClient": "https://github.com/azmaeenmahtab/Khujo-frontend",
+  "githubLinkServer": "https://github.com/azmaeenmahtab/Khujo-backend",
+  "livePreview": "https://khujo.vercel.app/",
+  "type": "Team Project (AI Integrated)",
+  "recognition": "Phase 2 participant of First AI Hackathon in Bangladesh by SOLVIO.",
   "technologies": [
-    "React",
-    "Redux",
-    "TailwindCSS",
-    "Javascript",
+    "Next.js",
     "Node.js",
     "Express.js",
-    "JWT",
-    "Supabase"
+    "Clerk",
+    "Supabase",
+    "TailwindCSS",
+    "Exif Metadata"
   ],
   "challenges": [
-    "Formulating dynamic meal-rate math algorithms that instantly adjust when shared grocery expenses fluctuate during the month.",
-    "Architecting clean Redux store state synchronization between daily meal tracking sheets and monthly financial ledgers.",
-    "Implementing reliable JWT authentication with Supabase database security rules for smooth multi-user access."
+    "Ensuring privacy and integrity while allowing public verification without exposing sensitive user information.",
+    "Integrating Exif metadata extraction and AI validation to accurately match stolen device reports with marketplace listings.",
+    "Handling real-time alert notifications efficiently across distributed database triggers in Supabase."
   ],
   "futurePlans": [
-    "Integrate automated digital payment gateways (bKash/Nagad) for instant member monthly dues settlement.",
-    "Add one-click PDF monthly audit statement downloads and automated SMS reminders for pending dues.",
-    "Implement multi-mess admin view for hostel managers overseeing multiple residential units."
+    "Partner with local mobile retailers to provide instant QR-code device verification at point of sale.",
+    "Develop AI-powered OCR algorithms to automatically parse physical receipts and serial number barcodes.",
+    "Launch a mobile app with background security features and location-assisted recovery tracking."
   ]
 }

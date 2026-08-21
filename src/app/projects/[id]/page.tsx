@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Navbar from '@/components/Navbar/Navbar'
+import { ArrowLeft, ExternalLink, Server, Trophy, Layers, Layout, Brain, CheckCircle2 } from 'lucide-react'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -46,11 +47,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
       <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pt-32 pb-24 relative z-10 space-y-12">
         {/* Breadcrumb & Navigation */}
         <div className="flex items-center gap-2 text-xs font-mono text-[#8a9bb0]">
-          <Link href="/#projects" className="hover:text-[#00e6b4] transition-colors flex items-center gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-            </svg>
-            Back to Projects
+          <Link href="/#projects" className="hover:text-[#00e6b4] transition-colors flex items-center gap-1.5">
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to Projects</span>
           </Link>
           <span>/</span>
           <span className="text-[#c8b97a] truncate max-w-[200px] sm:max-w-none">{project.title}</span>
@@ -59,6 +58,18 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         {/* Title & Metadata */}
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-3">
+            {project.category === 'fullstack' && (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#00e6b4]/30 bg-[#00e6b4]/10 px-3 py-1 text-xs text-[#00e6b4] font-medium">
+                <Layers className="w-3.5 h-3.5" />
+                <span>Full-Stack & AI</span>
+              </span>
+            )}
+            {project.category === 'frontend' && (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#38bdf8]/30 bg-[#38bdf8]/10 px-3 py-1 text-xs text-[#38bdf8] font-medium">
+                <Layout className="w-3.5 h-3.5" />
+                <span>Frontend Only</span>
+              </span>
+            )}
             {project.type && (
               <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[#c8b97a] font-medium">
                 {project.type}
@@ -75,7 +86,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
           {project.recognition && (
             <div className="inline-flex items-center gap-2 rounded-xl border border-[#c8b97a]/30 bg-[#c8b97a]/10 px-4 py-2 text-sm text-[#c8b97a]">
-              <span>🏅</span>
+              <Trophy className="w-4 h-4 shrink-0" />
               <span>{project.recognition}</span>
             </div>
           )}
@@ -106,23 +117,33 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-[#00e6b4]/50 bg-[#00e6b4]/10 hover:bg-[#00e6b4]/20 text-[#00e6b4] text-sm font-medium transition-all duration-300 shadow-lg shadow-[#00e6b4]/10"
             >
               <span>Visit Live Website</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
+              <ExternalLink className="w-4 h-4" />
             </a>
           )}
 
-          {project.githubLink && (
+          {(project.githubLinkClient || project.githubLink) && (
             <a
-              href={project.githubLink}
+              href={project.githubLinkClient || project.githubLink}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-[#ede8df] text-sm font-medium transition-all duration-300"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                 <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
               </svg>
               <span>GitHub Client Repo</span>
+            </a>
+          )}
+
+          {project.githubLinkServer && (
+            <a
+              href={project.githubLinkServer}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-[#ede8df] text-sm font-medium transition-all duration-300"
+            >
+              <Server className="w-4 h-4 text-[#00e6b4]" />
+              <span>GitHub Server Repo</span>
             </a>
           )}
         </div>
@@ -152,7 +173,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             Project Description
           </h2>
           <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 sm:p-8 backdrop-blur-sm">
-            <p className="text-base sm:text-lg text-[#8a9bb0] leading-relaxed">
+            <p className="text-base sm:text-lg text-[#8a9bb0] leading-relaxed whitespace-pre-line">
               {project.fullDescription || project.shortDescription}
             </p>
           </div>
@@ -189,9 +210,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               {futurePlansList.map((plan, idx) => (
                 <div key={idx} className="flex items-start gap-3">
                   <div className="w-6 h-6 rounded-lg bg-[#00e6b4]/10 border border-[#00e6b4]/30 flex items-center justify-center shrink-0 mt-0.5 text-[#00e6b4]">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                    </svg>
+                    <CheckCircle2 className="w-3.5 h-3.5" />
                   </div>
                   <p className="text-sm sm:text-base text-[#8a9bb0] leading-relaxed">
                     {plan}
@@ -208,7 +227,8 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             href="/#projects"
             className="inline-flex items-center gap-2 px-8 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-sm text-[#ede8df] transition-all duration-300"
           >
-            ← Back to All Projects
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to All Projects</span>
           </Link>
         </div>
 

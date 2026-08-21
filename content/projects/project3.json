@@ -1,28 +1,29 @@
 {
-  "id": "coaching-management",
+  "id": "sayeah-beauty",
   "priority": 3,
-  "title": "Coaching Management System",
-  "shortDescription": "Basic frontend and CRUD API with JWT authentication. React frontend, Node.js/Express backend, Supabase database.",
-  "fullDescription": "A full-featured coaching institute management web application created to streamline student enrollments, batch scheduling, tuition fee tracking, teacher assignments, and course administration. Built with React for an intuitive frontend and Node.js/Express with Supabase for secure REST API endpoints.",
-  "cover": "/project3.png",
-  "githubLink": "https://github.com/azmaeenmahtab/Interview-Task-Backend",
-  "livePreview": "https://ccm-roan-one.vercel.app/",
-  "type": "Personal Project",
+  "category": "frontend",
+  "title": "SAYEAH BEAUTY – Pixel Perfect Frontend Replication",
+  "shortDescription": "Replication of the official SAYEAH Beauty Shopify e-commerce site with a strong focus on pixel-perfect UI precision, visual consistency, and responsive component architecture.",
+  "fullDescription": "This project involved replicating the frontend of the official SAYEAH Beauty Shopify website with a strong focus on achieving a pixel-perfect user interface and maintaining the original website's visual consistency and user experience.\n\nThe main objective was to carefully analyze the existing Shopify store and replicate its design, layout, and interaction patterns using modern frontend technologies. Special attention was given to accurately matching typography, spacing, color palettes, component structure, and responsive behavior across different screen sizes.\n\nThe website was implemented using Next.js and TypeScript, along with Tailwind CSS for efficient styling and responsive design. A component-based structure was used to keep the codebase organized, reusable, and scalable. The project emphasizes clean UI implementation and modern frontend development practices.\n\nOne of the key challenges in this project was ensuring that the interface remained visually identical to the original website while also maintaining performance and responsiveness. Each section of the website—including navigation, product sections, promotional banners, and layout components—was carefully recreated to deliver a seamless user experience.\n\nThe final result is a fully responsive frontend implementation that works smoothly across desktop, tablet, and mobile devices.",
+  "cover": "/sayeah-beauty.png",
+  "livePreview": "https://sayeah-beauty-one.vercel.app/",
+  "githubLink": "",
+  "type": "Associated with Upwork",
+  "recognition": "Upwork Client Work",
   "technologies": [
+    "Next.js",
+    "TypeScript",
     "React",
-    "Node.js",
-    "Express",
-    "JWT",
-    "Supabase"
+    "Tailwind CSS"
   ],
   "challenges": [
-    "Structuring clean relational database schemas in Supabase for multi-entity relationships across students, courses, and payments.",
-    "Designing robust JWT authentication middleware with auto-refresh logic to safeguard admin routes.",
-    "Building dynamic, high-performance data tables with client-side searching and sorting."
+    "Ensuring the interface remained visually identical to the original Shopify store while maintaining high performance and responsive layout scaling.",
+    "Matching intricate typography, precise micro-spacing, and brand color palettes across desktop, tablet, and mobile break points.",
+    "Building reusable, scalable component structures for complex promotional banners and multi-item product displays."
   ],
   "futurePlans": [
-    "Incorporate an online exam and automated grading system for batch assessments.",
-    "Implement student attendance tracking with mobile QR code scanning.",
-    "Add parent-teacher portal with push notifications for exam results and fee reminders."
+    "Integrate dynamic Shopify Storefront API endpoints for live product sync.",
+    "Add micro-interaction animations for add-to-cart drawers and product quick views.",
+    "Implement internationalization (i18n) for multi-language product listings."
   ]
 }

@@ -1,26 +1,34 @@
 {
-  "id": "prestige",
+  "id": "mess-expert",
   "priority": 4,
-  "title": "Prestige Frontend",
-  "shortDescription": "A fully responsive landing page for a fictional SaaS product called Prestige, built with React and Tailwind CSS.",
-  "fullDescription": "Prestige is a modern, high-converting SaaS product landing page designed to showcase digital product features with fluid micro-interactions, responsive layouts, feature breakdowns, and interactive pricing tiers. Built with React and Tailwind CSS for a premium design aesthetic.",
-  "cover": "/project4.png",
-  "githubLink": "https://github.com/azmaeenmahtab/Prestige",
-  "livePreview": "https://cheery-chebakia-d70b4e.netlify.app/",
-  "type": "Personal Project",
+  "category": "fullstack",
+  "title": "Mess Expert",
+  "shortDescription": "A complete mess management system where you can manage mess members, their payments, daily meals, monthly bills and more.",
+  "fullDescription": "Mess Expert is a complete hostel and shared-living mess management web application designed for students and flatmates. It simplifies complex monthly expense splitting, meal counting, grocery shopping logs, deposit calculations, and individual balance statements with automated calculation engines and role-based access control.",
+  "cover": "/project2.png",
+  "githubLinkClient": "https://github.com/azmaeenmahtab/Mess-Expert",
+  "githubLinkServer": "https://github.com/azmaeenmahtab/mess_expert_server_backend",
+  "livePreview": "https://messexpert.vercel.app/",
+  "type": "Team Project",
+  "recognition": "Final Round Participant of 1st ACS Career Bootcamp - 2025",
   "technologies": [
     "React",
-    "Tailwind CSS",
-    "JavaScript"
+    "Redux",
+    "TailwindCSS",
+    "Javascript",
+    "Node.js",
+    "Express.js",
+    "JWT",
+    "Supabase"
   ],
   "challenges": [
-    "Crafting complex responsive grid layouts and gradient cards while adhering to high UI/UX accessibility standards.",
-    "Ensuring ultra-fast first contentful paint (FCP) and smooth micro-animations across all mobile viewports.",
-    "Designing modular UI components to make landing page sections easily reconfigurable."
+    "Formulating dynamic meal-rate math algorithms that instantly adjust when shared grocery expenses fluctuate during the month.",
+    "Architecting clean Redux store state synchronization between daily meal tracking sheets and monthly financial ledgers.",
+    "Implementing reliable JWT authentication with Supabase database security rules for smooth multi-user access."
   ],
   "futurePlans": [
-    "Build an interactive live product sandbox preview within the hero section.",
-    "Add dark/light mode theme toggle capability with system preference auto-detection.",
-    "Integrate animated testimonial carousels and interactive ROI pricing calculators."
+    "Integrate automated digital payment gateways (bKash/Nagad) for instant member monthly dues settlement.",
+    "Add one-click PDF monthly audit statement downloads and automated SMS reminders for pending dues.",
+    "Implement multi-mess admin view for hostel managers overseeing multiple residential units."
   ]
 }

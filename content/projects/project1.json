@@ -1,31 +1,36 @@
 {
-  "id": "khujo",
+  "id": "skydgets",
   "priority": 1,
-  "title": "KHUJO - AI Integrated Mobile Theft Security System",
-  "shortDescription": "KHUJO is a security system agaisnt second hand mobile phone syndicate in Bangladesh and mobile theft. People can drop a report of their stolen phone, search before buying if a second hand phone was stolen or not and helping real owner find their phone.",
-  "fullDescription": "KHUJO is an innovative web security ecosystem created to dismantle second-hand mobile phone theft syndicates in Bangladesh. By uniting victims, buyers, and enforcement through a unified verification system, users can report lost devices, search stolen databases prior to buying used phones, and submit metadata leads to reunite owners with their lost devices.",
-  "cover": "/project1.png",
-  "githubLink": "https://github.com/azmaeenmahtab/Khujo-frontend",
-  "livePreview": "https://khujo.vercel.app/",
-  "type": "Team Project",
-  "recognition": "Phase 2 participant of First AI Hackathon in Bangladesh by SOLVIO.",
+  "category": "fullstack",
+  "title": "SKYDGETS — Full-Stack E-Commerce Platform with AI-Powered Automation",
+  "shortDescription": "A feature-rich full-stack e-commerce platform built with Next.js 15, Express, MongoDB, and Tailwind CSS. Features dynamic product catalogs, guest checkout merging, real-time order tracking, and Gemini-powered AI automation.",
+  "fullDescription": "SKYDGETS is a state-of-the-art full-stack e-commerce platform designed for tech gadgets. It features dynamic product catalogs with category-specific attribute schemas (phones, PC components, accessories), real-time search, multi-field filtering, sorting, pagination, and guest checkout support with seamless account merging upon login. The backend implements a layered architecture (routes → controllers → services → repositories) secured with Better Auth (Google OAuth + JWT). Crucially, SKYDGETS integrates AI-powered automation using the Google Gemini API: a Smart Listing Assistant (image analysis, auto-categorization, description generation, data-driven price suggestions) and a streaming AI Shopping Assistant with live catalog search and order lookup tools.",
+  "cover": "/skydgets3.png",
+  "livePreview": "https://skydgets.vercel.app",
+  "githubLinkClient": "https://github.com/azmaeenmahtab/SKYDGETS-CLIENT",
+  "githubLinkServer": "https://github.com/azmaeenmahtab/SKYDGETS-SERVER",
+  "type": "Full-Stack + AI",
+  "recognition": "AI-Powered E-Commerce Platform",
   "technologies": [
-    "Next.js",
-    "Node.js",
+    "Next.js 15",
+    "TypeScript",
     "Express.js",
-    "Clerk",
-    "Supabase",
-    "TailwindCSS",
-    "Exif Metadata"
+    "MongoDB",
+    "Tailwind CSS",
+    "TanStack Query",
+    "Better Auth (Google OAuth + JWT)",
+    "Google Gemini API",
+    "Cloudinary",
+    "Vercel"
   ],
   "challenges": [
-    "Ensuring privacy and integrity while allowing public verification without exposing sensitive user information.",
-    "Integrating Exif metadata extraction and AI validation to accurately match stolen device reports with marketplace listings.",
-    "Handling real-time alert notifications efficiently across distributed database triggers in Supabase."
+    "Designing flexible category-specific attribute schemas in MongoDB to handle diverse product specifications (phones, PC hardware, accessories).",
+    "Integrating real-time streaming tool-calling AI agents for instant catalog search, order status lookups, and personalized shopping recommendations.",
+    "Architecting smooth guest checkout transitions and seamless account-merging logic upon post-checkout login or OAuth sign-in."
   ],
   "futurePlans": [
-    "Partner with local mobile retailers to provide instant QR-code device verification at point of sale.",
-    "Develop AI-powered OCR algorithms to automatically parse physical receipts and serial number barcodes.",
-    "Launch a mobile app with background security features and location-assisted recovery tracking."
+    "Expand to multi-vendor marketplace functionality with merchant analytics dashboards.",
+    "Implement AI visual similarity search using product embeddings.",
+    "Integrate automated inventory demand forecasting using historical order trends."
   ]
 }
