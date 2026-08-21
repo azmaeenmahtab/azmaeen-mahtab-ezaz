@@ -11,6 +11,14 @@ const reviews = [
     stars: 5,
     createdAt: "2025-02-10",
   },
+  {
+    name: "Upwork Client",
+    title: "Shopify & Frontend Client",
+    feedback: "Great Work by Mahtab, very happy with the results. Detail oriented and committed to quality of the delivery.",
+    image: "/upwork-client.png",
+    stars: 5,
+    createdAt: "2025-02-20",
+  },
 ]
 
 const marqueeItems = [
