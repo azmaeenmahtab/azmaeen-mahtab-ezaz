@@ -30,12 +30,12 @@ const TestimonialCard: FC<TestimonialCardProps> = ({
   return (
     <div
       ref={cardRef}
-      className="bg-secondary border-border flex max-w-full shrink-0 flex-col items-center justify-between gap-4 rounded-2xl border p-4 text-center sm:max-w-[425px]">
-      <p className="text-neutral text-center leading-8 before:content-['“'] after:content-['”']">
+      className="bg-secondary border-border flex h-[240px] max-w-full shrink-0 flex-col items-center justify-between gap-4 rounded-2xl border p-4 text-center sm:max-w-[425px]">
+      <div className="text-neutral text-center leading-8 before:content-['“'] after:content-['”'] line-clamp-4">
         {feedback}
-      </p>
-      <div>
-        <div className="mb-4 flex items-center gap-1.5">
+      </div>
+      <div className="mt-auto">
+        <div className="mb-4 flex items-center justify-center gap-1.5">
           {Array.from({ length: 5 }, (_, idx) => (
             <StarIcon key={idx} className={idx < stars ? 'text-tag' : 'text-transparent'} />
           ))}

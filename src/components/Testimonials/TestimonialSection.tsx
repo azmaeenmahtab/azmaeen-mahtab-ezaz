@@ -15,7 +15,7 @@ const reviews = [
     name: "Upwork Client",
     title: "Shopify & Frontend Client",
     feedback: "Great Work by Mahtab, very happy with the results. Detail oriented and committed to quality of the delivery.",
-    image: "/upwork-client.png",
+    image: "/upwork.png",
     stars: 5,
     createdAt: "2025-02-20",
   },
@@ -33,15 +33,15 @@ const StarIcon = () => (
 )
 
 const ReviewCard = ({ review }: { review: typeof reviews[0] }) => (
-  <div style={{ flexShrink: 0, width: '380px', margin: '0 12px' }}
-    className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6"
+  <div style={{ flexShrink: 0, width: '380px', height: '220px', margin: '0 12px' }}
+    className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 flex flex-col justify-between"
   >
-    <p className="text-[#8a9bb0] text-sm leading-relaxed line-clamp-5">
+    <p className="text-[#8a9bb0] text-sm leading-relaxed line-clamp-4">
       &ldquo;{review.feedback}&rdquo;
     </p>
-    <div className="mt-5 flex items-center justify-between">
+    <div className="mt-auto pt-4 flex items-center justify-between">
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-full overflow-hidden border border-white/10 bg-white/5 flex items-center justify-center">
+        <div className="w-9 h-9 rounded-full overflow-hidden border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
           <img
             src={review.image}
             alt={review.name}
@@ -60,7 +60,7 @@ const ReviewCard = ({ review }: { review: typeof reviews[0] }) => (
           <p className="text-[#8a9bb0] text-xs mt-1">{review.title}</p>
         </div>
       </div>
-      <div className="flex items-center gap-0.5">
+      <div className="flex items-center gap-0.5 shrink-0">
         {Array.from({ length: review.stars }).map((_, i) => <StarIcon key={i} />)}
       </div>
     </div>
