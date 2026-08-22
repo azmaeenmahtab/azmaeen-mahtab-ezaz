@@ -52,9 +52,9 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
             className={`${playfairdisplay.className} italic text-4xl sm:text-5xl text-[#e8e2d5] tracking-tight`}
           >
             What I Have Built{' '}
-            <span className="text-[#00e6b4] not-italic font-sans text-xl sm:text-2xl font-normal inline-block ml-1">
+            {/* <span className="text-[#00e6b4] not-italic font-sans text-xl sm:text-2xl font-normal inline-block ml-1">
               - projects.
-            </span>
+            </span> */}
           </h2>
           <p
             data-reveal
@@ -129,18 +129,20 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
         {/* Full-Stack Section */}
         {(activeTab === 'all' || activeTab === 'fullstack') && (
           <div className="space-y-6">
-            <div className="flex items-center gap-3.5 border-b border-white/10 pb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#00e6b4]/20 to-[#00e6b4]/5 border border-[#00e6b4]/30 shadow-lg shadow-[#00e6b4]/10">
+            <div className="flex items-start sm:items-center gap-3.5 border-b border-white/10 pb-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#00e6b4]/20 to-[#00e6b4]/5 border border-[#00e6b4]/30 shadow-lg shadow-[#00e6b4]/10 shrink-0 mt-0.5 sm:mt-0">
                 <Layers className="w-5 h-5 text-[#00e6b4]" />
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-[#ede8df] flex items-center gap-2">
-                  Full-Stack & AI-Powered Projects
-                  <span className="rounded-full bg-[#00e6b4]/10 border border-[#00e6b4]/30 px-2.5 py-0.5 text-[11px] text-[#00e6b4] font-mono font-normal">
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="text-lg sm:text-xl font-bold text-[#ede8df]">
+                    Full-Stack & AI-Powered Projects
+                  </h3>
+                  <span className="shrink-0 whitespace-nowrap rounded-full bg-[#00e6b4]/10 border border-[#00e6b4]/30 px-2.5 py-0.5 text-[11px] text-[#00e6b4] font-mono font-normal">
                     {fullstackProjects.length} Projects
                   </span>
-                </h3>
-                <p className="text-xs text-[#8a9bb0]">Production-ready full-stack applications with AI agent pipelines, OAuth, and custom database schemas</p>
+                </div>
+                <p className="text-xs text-[#8a9bb0] mt-1">Production-ready full-stack applications with AI agent pipelines, OAuth, and custom database schemas</p>
               </div>
             </div>
 
@@ -171,18 +173,20 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
         {/* Frontend Only Section */}
         {(activeTab === 'all' || activeTab === 'frontend') && (
           <div className="space-y-6">
-            <div className="flex items-center gap-3.5 border-b border-white/10 pb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#38bdf8]/20 to-[#38bdf8]/5 border border-[#38bdf8]/30 shadow-lg shadow-[#38bdf8]/10">
+            <div className="flex items-start sm:items-center gap-3.5 border-b border-white/10 pb-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#38bdf8]/20 to-[#38bdf8]/5 border border-[#38bdf8]/30 shadow-lg shadow-[#38bdf8]/10 shrink-0 mt-0.5 sm:mt-0">
                 <Layout className="w-5 h-5 text-[#38bdf8]" />
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-[#ede8df] flex items-center gap-2">
-                  Frontend Only Projects
-                  <span className="rounded-full bg-[#38bdf8]/10 border border-[#38bdf8]/30 px-2.5 py-0.5 text-[11px] text-[#38bdf8] font-mono font-normal">
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="text-lg sm:text-xl font-bold text-[#ede8df]">
+                    Frontend Only Projects
+                  </h3>
+                  <span className="shrink-0 whitespace-nowrap rounded-full bg-[#38bdf8]/10 border border-[#38bdf8]/30 px-2.5 py-0.5 text-[11px] text-[#38bdf8] font-mono font-normal">
                     {frontendProjects.length} Projects
                   </span>
-                </h3>
-                <p className="text-xs text-[#8a9bb0]">Pixel-perfect UI replications, responsive design systems, and client work</p>
+                </div>
+                <p className="text-xs text-[#8a9bb0] mt-1">Pixel-perfect UI replications, responsive design systems, and client work</p>
               </div>
             </div>
 
@@ -213,19 +217,21 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
         {/* AI/ML Journey Coming Soon Section */}
         {(activeTab === 'all' || activeTab === 'aiml') && (
           <div className="space-y-6">
-            <div className="flex items-center gap-3.5 border-b border-white/10 pb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#c8b97a]/20 to-[#c8b97a]/5 border border-[#c8b97a]/30 shadow-lg shadow-[#c8b97a]/10">
+            <div className="flex items-start sm:items-center gap-3.5 border-b border-white/10 pb-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#c8b97a]/20 to-[#c8b97a]/5 border border-[#c8b97a]/30 shadow-lg shadow-[#c8b97a]/10 shrink-0 mt-0.5 sm:mt-0">
                 <Brain className="w-5 h-5 text-[#c8b97a]" />
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-[#ede8df] flex items-center gap-2">
-                  AI / ML Lab (In Progress)
-                  <span className="rounded-full bg-[#c8b97a]/10 border border-[#c8b97a]/30 px-2.5 py-0.5 text-[11px] text-[#c8b97a] font-mono font-normal flex items-center gap-1">
-                    <Sparkles className="w-3 h-3 animate-pulse" />
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="text-lg sm:text-xl font-bold text-[#ede8df]">
+                    AI / ML Lab (In Progress)
+                  </h3>
+                  <span className="shrink-0 whitespace-nowrap rounded-full bg-[#c8b97a]/10 border border-[#c8b97a]/30 px-2.5 py-0.5 text-[11px] text-[#c8b97a] font-mono font-normal flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 animate-pulse shrink-0" />
                     Learning Path
                   </span>
-                </h3>
-                <p className="text-xs text-[#8a9bb0]">Dedicated machine learning models, research benchmarks, and AI tools coming soon</p>
+                </div>
+                <p className="text-xs text-[#8a9bb0] mt-1">Dedicated machine learning models, research benchmarks, and AI tools coming soon</p>
               </div>
             </div>
 
