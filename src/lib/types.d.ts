@@ -23,6 +23,36 @@ export interface Project {
   futurePlans?: string[] | string
 }
 
+export interface HackathonTeamMember {
+  name: string
+  role: string
+  github?: string
+}
+
+export interface HackathonProject {
+  id: string
+  title: string
+  tagline: string
+  hackathonName: string
+  edition?: string
+  awardOrRole?: string
+  date: string
+  sprintDuration: string
+  problemStatement: string
+  solution: string
+  coreAiInnovation: string
+  architectureHighlights?: string[]
+  technologies: string[]
+  cover: string
+  githubLink?: string
+  githubLinkClient?: string
+  githubLinkServer?: string
+  livePreview?: string
+  team?: HackathonTeamMember[]
+  accentColor: string
+  accentColorSecondary?: string
+}
+
 export interface Heading {
   id: string
   title: string
