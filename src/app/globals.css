@@ -230,3 +230,77 @@ section {
 /* .animate-marquee {
   animation: marquee 30s linear infinite;
 } */
+
+/* Smooth, buttery project card interactions */
+.project-card-interactive {
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: transform, box-shadow;
+  transform: translateY(0);
+}
+
+.project-card-interactive:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(0, 230, 180, 0.5) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.65), 0 0 30px rgba(0, 230, 180, 0.12) !important;
+}
+
+.project-card-image {
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: transform;
+}
+
+.project-card-interactive:hover .project-card-image {
+  transform: scale(1.035) !important;
+}
+
+.project-card-halo {
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.project-card-interactive:hover .project-card-halo {
+  opacity: 1 !important;
+}
+
+.project-card-sheen-default {
+  transition: opacity 0.4s ease-out !important;
+}
+
+.project-card-interactive:hover .project-card-sheen-default {
+  opacity: 0 !important;
+}
+
+.project-card-sheen-hover {
+  transition: opacity 0.4s ease-out !important;
+}
+
+.project-card-interactive:hover .project-card-sheen-hover {
+  opacity: 1 !important;
+}
+
+.project-card-title {
+  transition: color 0.35s ease-out !important;
+}
+
+.project-card-interactive:hover .project-card-title {
+  color: #00e6b4 !important;
+}
+
+.project-card-arrow-btn {
+  transition: background-color 0.35s ease-out, border-color 0.35s ease-out, color 0.35s ease-out !important;
+}
+
+.project-card-interactive:hover .project-card-arrow-btn {
+  background-color: rgba(0, 230, 180, 0.1) !important;
+  border-color: rgba(0, 230, 180, 0.4) !important;
+  color: #00e6b4 !important;
+}
+
+.project-card-arrow-icon {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.project-card-interactive:hover .project-card-arrow-icon {
+  transform: translate(2px, -2px) !important;
+}

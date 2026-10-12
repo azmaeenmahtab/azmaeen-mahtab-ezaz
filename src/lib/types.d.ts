@@ -2,6 +2,10 @@ export interface Project {
   id?: string
   priority: number
   title: string
+  name?: string
+  subtitle?: string
+  brief?: string
+  year?: string
   category?: 'fullstack' | 'frontend' | 'aiml' | string
   shortDescription: string
   fullDescription?: string

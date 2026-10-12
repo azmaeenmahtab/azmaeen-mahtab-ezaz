@@ -17,24 +17,38 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
   const [activeTab, setActiveTab] = useState<TabType>('all')
 
   useEffect(() => {
+    const triggerReveal = () => {
+      if (!sectionRef.current) return
+      const reveals = sectionRef.current.querySelectorAll<HTMLElement>('[data-reveal]')
+      reveals.forEach((el, i) => {
+        setTimeout(() => {
+          el.style.opacity = '1'
+          el.style.transform = 'translateY(0)'
+        }, Math.min(i * 60, 360))
+      })
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const reveals = entry.target.querySelectorAll<HTMLElement>('[data-reveal]')
-            reveals.forEach((el, i) => {
-              setTimeout(() => {
-                el.style.opacity = '1'
-                el.style.transform = 'translateY(0)'
-              }, i * 90)
-            })
+            triggerReveal()
           }
         })
       },
       { threshold: 0.05 }
     )
 
-    if (sectionRef.current) observer.observe(sectionRef.current)
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+      if (typeof window !== 'undefined') {
+        const rect = sectionRef.current.getBoundingClientRect()
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          triggerReveal()
+        }
+      }
+    }
+
     return () => observer.disconnect()
   }, [activeTab])
 
@@ -146,24 +160,22 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
               </div>
             </div>
 
-            <div className="divide-y divide-white/5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-7 pt-2">
               {fullstackProjects.map((project, idx) => (
                 <div
                   key={project.id || project.priority}
                   data-reveal
-                  style={{ opacity: 1, transform: 'translateY(0)', transition: 'opacity 0.55s ease, transform 0.55s ease' }}
-                  className="py-8 first:pt-2"
+                  style={{
+                    opacity: 0,
+                    transform: 'translateY(16px)',
+                    transition: 'opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                  }}
+                  className="h-full"
                 >
-                  <div className="mx-auto flex max-w-[1200px] items-start gap-8 justify-between">
-                    <div className="hidden w-24 shrink-0 md:block pt-4">
-                      <div className="text-5xl font-extrabold leading-none text-white/10 font-mono">
-                        {String(idx + 1).padStart(2, '0')}
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <ProjectCard index={idx + 1} data={project} />
-                    </div>
-                  </div>
+                  <ProjectCard
+                    index={idx + 1}
+                    data={project}
+                  />
                 </div>
               ))}
             </div>
@@ -190,24 +202,22 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
               </div>
             </div>
 
-            <div className="divide-y divide-white/5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-7 pt-2">
               {frontendProjects.map((project, idx) => (
                 <div
                   key={project.id || project.priority}
                   data-reveal
-                  style={{ opacity: 1, transform: 'translateY(0)', transition: 'opacity 0.55s ease, transform 0.55s ease' }}
-                  className="py-8 first:pt-2"
+                  style={{
+                    opacity: 0,
+                    transform: 'translateY(16px)',
+                    transition: 'opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                  }}
+                  className="h-full"
                 >
-                  <div className="mx-auto flex max-w-[1200px] items-start gap-8 justify-between">
-                    <div className="hidden w-24 shrink-0 md:block pt-4">
-                      <div className="text-5xl font-extrabold leading-none text-white/10 font-mono">
-                        {String(idx + 1).padStart(2, '0')}
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <ProjectCard index={idx + 1} data={project} />
-                    </div>
-                  </div>
+                  <ProjectCard
+                    index={idx + 1}
+                    data={project}
+                  />
                 </div>
               ))}
             </div>

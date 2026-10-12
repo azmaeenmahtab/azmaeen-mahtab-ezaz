@@ -1,67 +1,67 @@
 "use client"
 import { playfairdisplay } from '@/fonts'
 import React, { useEffect, useRef } from 'react'
+import {
+  Layout,
+  Server,
+  Layers,
+  Database,
+  Webhook,
+  Brain,
+  Sparkles,
+  ArrowUpRight,
+} from 'lucide-react'
 
-const services = [
+interface ServiceItem {
+  title: string
+  description: string
+  icon: React.ComponentType<{ className?: string }>
+  tags: string[]
+  accentColor: string
+}
+
+const services: ServiceItem[] = [
   {
     title: "Frontend Development",
-    description: "Building responsive, performant UIs with React, Next.js, and Tailwind CSS that feel right to use.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <rect x="3" y="3" width="18" height="18" rx="2" />
-        <path strokeLinecap="round" d="M3 9h18" />
-        <path strokeLinecap="round" d="M9 21V9" />
-      </svg>
-    ),
+    description: "Building responsive, pixel-perfect, and accessible UIs with React, Next.js, and Tailwind CSS engineered for seamless user experience.",
+    icon: Layout,
+    tags: ["React", "Next.js", "Tailwind CSS"],
+    accentColor: "#38bdf8",
   },
   {
     title: "Backend Development",
-    description: "Designing clean REST APIs and server-side logic with Node.js, Express, Spring Boot, and Django.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l4-4 4 4M8 15l4 4 4-4" />
-      </svg>
-    ),
+    description: "Architecting reliable server-side services, robust business logic, and modular MVC architectures using Node.js, Express, and Spring Boot.",
+    icon: Server,
+    tags: ["Node.js", "Express", "Spring Boot"],
+    accentColor: "#10b981",
   },
   {
     title: "Full Stack Development",
-    description: "End-to-end product development — from database schema to polished UI — shipped as a cohesive whole.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M11 4H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2v-5" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M14 2l6 6-8 8H6v-6l8-8z" />
-      </svg>
-    ),
+    description: "End-to-end product delivery — from normalized database models to polished interactive frontends — shipped as a coherent, performant whole.",
+    icon: Layers,
+    tags: ["Architecture", "OAuth", "End-to-End"],
+    accentColor: "#00e6b4",
   },
   {
     title: "Database Design",
-    description: "Structuring efficient, scalable databases using PostgreSQL and MongoDB with clean data modelling.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <ellipse cx="12" cy="5" rx="9" ry="3" />
-        <path strokeLinecap="round" d="M3 5v14c0 1.657 4.03 3 9 3s9-1.343 9-3V5" />
-        <path strokeLinecap="round" d="M3 12c0 1.657 4.03 3 9 3s9-1.343 9-3" />
-      </svg>
-    ),
+    description: "Structuring high-performance schemas, relational modeling in PostgreSQL, and flexible NoSQL collections in MongoDB with atomic queries.",
+    icon: Database,
+    tags: ["PostgreSQL", "MongoDB", "Supabase"],
+    accentColor: "#c8b97a",
   },
   {
     title: "API Development",
-    description: "Building and documenting robust REST APIs — tested with Postman, versioned, and production-ready.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    ),
+    description: "Designing, documenting, and testing production-grade REST APIs with secure JWT authentication, rate limiting, and comprehensive Postman collections.",
+    icon: Webhook,
+    tags: ["REST APIs", "JWT", "Postman"],
+    accentColor: "#00e6b4",
   },
   {
     title: "AI Integration",
-    description: "Integrating AI capabilities into web products — from LLM-powered features to intelligent automation.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714a2.25 2.25 0 001.5 2.121m-3 0a2.25 2.25 0 01-1.5-2.121M15 3.104c.251.023.501.05.75.082M19 14.5l-4.091-4.091" />
-        <circle cx="12" cy="18" r="3" />
-      </svg>
-    ),
+    description: "Connecting modern LLM pipelines, Google Gemini APIs, function calling tools, and intelligent background automation into real-world applications.",
+    icon: Brain,
+    tags: ["Gemini API", "LLM Agents", "Automation"],
+    accentColor: "#e0b0ff",
   },
 ]
 
@@ -78,7 +78,11 @@ const ServiceSection = () => {
               setTimeout(() => {
                 el.style.opacity = "1"
                 el.style.transform = "translateY(0)"
-              }, i * 110)
+                // Remove inline transform after entry animation so CSS hover transitions are completely fluid
+                setTimeout(() => {
+                  el.style.transform = ""
+                }, 650)
+              }, i * 85)
             })
           }
         })
@@ -91,45 +95,79 @@ const ServiceSection = () => {
   }, [])
 
   return (
-    <section className="space-y-16" id="services" ref={sectionRef}>
+    <section className="space-y-16 my-25" id="services" ref={sectionRef}>
 
       {/* Heading */}
       <div
         data-reveal
         style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
-        className="text-center"
+        className="text-center space-y-2"
       >
-        <h2 className={`${playfairdisplay.className} text-4xl md:text-5xl text-[#ede8df] italic`}>
+        <h2 className={`${playfairdisplay.className} text-4xl md:text-5xl text-[#ede8df] italic tracking-tight`}>
           Services
         </h2>
-        <p className="text-sm text-[#8a9bb0] mt-2 tracking-widest uppercase">What I offer</p>
+        <p className="text-xs sm:text-sm text-[#8a9bb0] tracking-widest uppercase font-mono">
+          What I offer &amp; build
+        </p>
       </div>
 
       {/* Cards grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4  ">
-        {services.map((service, i) => (
-          <div
-            key={i}
-            data-reveal
-            style={{ opacity: 0, transform: "translateY(22px)", transition: `opacity 0.55s ease ${i * 80}ms, transform 0.55s ease ${i * 80}ms` }}
-            className="group rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-4 md:p-6 lg:p-7 flex flex-col gap-10 hover:border-white/20 hover:bg-white/[0.05] transition-all duration-300 cursor-default"
-          >
-            {/* Icon */}
-            <div className="text-[#c8b97a]">
-              {service.icon}
-            </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 lg:gap-6">
+        {services.map((service, i) => {
+          const IconComponent = service.icon
 
-            {/* Content */}
-            <div className="space-y-3">
-              <h3 className="text-[#ede8df] text-base font-medium leading-snug">
-                {service.title}
-              </h3>
-              <p className="text-[#8a9bb0] text-sm leading-relaxed">
-                {service.description}
-              </p>
+          return (
+            <div
+              key={service.title}
+              data-reveal
+              style={{
+                opacity: 0,
+                transform: "translateY(22px)",
+                transition: `opacity 0.55s ease ${i * 70}ms, transform 0.55s ease ${i * 70}ms`,
+              }}
+              className="group relative rounded-2xl border border-white/10 bg-[#12151c]/80 hover:bg-[#161a23] hover:border-white/25 backdrop-blur-md p-6 lg:p-7 flex flex-col justify-between gap-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-[#00e6b4]/5 cursor-default overflow-hidden"
+            >
+              {/* Subtle radial glow effect in the corner on hover */}
+              <div className="absolute -top-12 -right-12 w-28 h-28 rounded-full bg-gradient-to-br from-[#00e6b4]/15 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+              <div className="space-y-5 relative z-10">
+                {/* Header: Icon container & micro badge */}
+                <div className="flex items-center justify-between">
+                  <div className="w-12 h-12 rounded-xl border border-white/10 bg-white/[0.03] flex items-center justify-center text-[#c8b97a] group-hover:text-[#00e6b4] group-hover:border-[#00e6b4]/30 group-hover:bg-[#00e6b4]/10 group-hover:scale-105 group-hover:-rotate-3 transition-all duration-300 shadow-sm">
+                    <IconComponent className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+                  </div>
+
+                  <div className="flex items-center gap-1 text-[11px] font-mono text-white/30 group-hover:text-[#00e6b4]/80 transition-colors">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/20 group-hover:bg-[#00e6b4] group-hover:animate-ping transition-colors" />
+                    <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300" />
+                  </div>
+                </div>
+
+                {/* Content: Title & Description */}
+                <div className="space-y-2">
+                  <h3 className="text-[#ede8df] text-base lg:text-lg font-semibold tracking-tight group-hover:text-[#00e6b4] transition-colors duration-200">
+                    {service.title}
+                  </h3>
+                  <p className="text-[#8a9bb0] text-xs sm:text-sm leading-relaxed group-hover:text-[#a0b0c5] transition-colors">
+                    {service.description}
+                  </p>
+                </div>
+              </div>
+
+              {/* Tags footer */}
+              <div className="flex flex-wrap items-center gap-1.5 pt-3 border-t border-white/5 relative z-10">
+                {service.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="inline-flex items-center rounded-lg border border-white/5 bg-white/[0.02] px-2 py-0.5 text-[11px] font-mono text-[#8a9bb0] group-hover:border-white/10 group-hover:text-[#ede8df] group-hover:bg-white/[0.05] transition-colors"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
 
     </section>
