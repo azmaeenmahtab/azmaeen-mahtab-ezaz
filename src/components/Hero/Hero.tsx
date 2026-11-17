@@ -1,268 +1,335 @@
 'use client'
-import { playfairdisplay } from '@/fonts'
-import useRoleSwitcher from '@/hooks/useRoleSwitcher'
-import Image from 'next/image'
-import { HeroImage } from '../../utils/images'
-import Ellipse from './Ellipse'
-import useRotatingAnimation from '@/hooks/useRotatingAnimation'
-import { useEffect, useRef } from 'react'
 
-const socials = [
+import React, { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { HeroImage } from '../../utils/images'
+import MagnetLines from '@/components/UI/MagnetLines'
+import GradientButton from '@/components/UI/GradientButton'
+
+// Curated skills badges matching the reference card
+const aiTools = [
   {
-    href: "https://www.linkedin.com/in/azmaeen-mahtab-ezaz/",
+    name: 'Claude Code',
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm13.5 11.268h-3v-5.604c0-1.337-.027-3.063-1.867-3.063-1.868 0-2.154 1.459-2.154 2.967v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.381-1.563 2.844-1.563 3.042 0 3.603 2.002 3.603 4.604v5.592z" />
+      <svg className="w-3.5 h-3.5 text-[#D97757]" viewBox="0 0 24 24" fill="currentColor">
+        <path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z" />
       </svg>
     ),
+    borderHover: 'hover:border-amber-500/50',
+  },
+
+  {
+    name: 'Antigravity',
+    icon: (
+      <img
+        src="/antigravity-color.svg"
+        alt="Antigravity"
+        className="w-3.5 h-3.5 object-contain"
+      />
+    ),
+    borderHover: 'hover:border-sky-500/50',
   },
   {
-    href: "https://github.com/azmaeenmahtab",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-      </svg>
-    ),
+    name: 'OpenCode',
+    icon: <i className="fa-solid fa-terminal text-[#a855f7] text-xs" />,
+    borderHover: 'hover:border-purple-500/50',
   },
-  {
-    href: "https://x.com/mahtab_builds",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-      </svg>
-    ),
-  },
+
 ]
 
-const badges = [
-  {
-    value: "70+",
-    label: "Problems Solved",
-    position: "top-4 right-0 md:-right-6",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-[#c8b97a]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21a48.309 48.309 0 01-8.135-.687c-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
-      </svg>
-    ),
-  },
-  {
-    value: "1.5+",
-    label: "Years Experience",
-    position: "top-1/2 -translate-y-1/2 -left-4 md:-left-10",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-[#c8b97a]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
-      </svg>
-    ),
-  },
-  {
-    value: "4+",
-    label: "Projects Done",
-    position: "bottom-4 right-0 md:-right-6",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-[#c8b97a]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
-      </svg>
-    ),
-  },
-  {
-    value: "2",
-    label: "Clients Served",
-    position: "bottom-4 left-0 md:-left-10",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-[#c8b97a]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-      </svg>
-    ),
-  },
+const stackPills = [
+  { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
+  { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+  { name: 'Next.js', icon: 'https://cdn.simpleicons.org/nextdotjs/black' },
+  { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+  // { name: 'Spring Boot', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg' },
+  { name: 'PostgreSQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+  { name: 'MongoDB', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
 ]
 
 const Hero = () => {
-  const ellipseRef = useRotatingAnimation()
   const sectionRef = useRef<HTMLElement>(null)
-  const role = useRoleSwitcher({
-    roles: ["AI Trainer at Outlier.ai", "Full Stack Developer", "Competitive Programmer", "Aspiring AI/ML Engineer"]
-  })
+  const [copied, setCopied] = useState<boolean>(false)
+  const [currentTime, setCurrentTime] = useState<string>('')
+  const [theme, setTheme] = useState<string>('light')
 
-  const revealStyle = (from: 'left' | 'right' | 'up' = 'up') => {
-    if (from === 'left') return { opacity: 0, transform: 'translateX(-42px)', transition: 'opacity 0.7s ease, transform 0.7s ease' }
-    if (from === 'right') return { opacity: 0, transform: 'translateX(42px)', transition: 'opacity 0.7s ease, transform 0.7s ease' }
-    return { opacity: 0, transform: 'translateY(22px)', transition: 'opacity 0.7s ease, transform 0.7s ease' }
-  }
-
+  // Synchronize theme with html data-theme attribute
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const reveals = entry.target.querySelectorAll<HTMLElement>('[data-reveal]')
-            reveals.forEach((el, i) => {
-              const direction = el.dataset.revealFrom
-              setTimeout(() => {
-                el.style.opacity = '1'
-                if (direction === 'left' || direction === 'right') {
-                  el.style.transform = 'translateX(0)'
-                } else {
-                  el.style.transform = 'translateY(0)'
-                }
-              }, i * 90)
-            })
-          }
-        })
-      },
-      { threshold: 0.15 }
-    )
+    if (typeof window !== 'undefined') {
+      const syncTheme = () => {
+        const current = document.documentElement.getAttribute('data-theme') || localStorage.getItem('theme') || 'light'
+        setTheme(current)
+      }
+      syncTheme()
+      window.addEventListener('theme-change', syncTheme)
 
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
+      const observer = new MutationObserver(() => syncTheme())
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+
+      return () => {
+        window.removeEventListener('theme-change', syncTheme)
+        observer.disconnect()
+      }
+    }
   }, [])
 
+  const isWhiteTheme = theme === 'light'
+
+  // Live Dhaka Local Time (GMT+6)
+  useEffect(() => {
+    const updateTime = () => {
+      try {
+        const now = new Date()
+        const options: Intl.DateTimeFormatOptions = {
+          timeZone: 'Asia/Dhaka',
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true,
+        }
+        setCurrentTime(new Intl.DateTimeFormat('en-US', options).format(now))
+      } catch {
+        setCurrentTime('1:52 PM')
+      }
+    }
+    updateTime()
+    const timer = setInterval(updateTime, 15000)
+    return () => clearInterval(timer)
+  }, [])
+
+  // Native share or copy to clipboard
+  const handleShare = async () => {
+    if (typeof window === 'undefined') return
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Azmaeen Mahtab Ezaz | Portfolio',
+          text: 'Check out the portfolio of Azmaeen Mahtab Ezaz — Full Stack Developer & AI Engineer.',
+          url: window.location.href,
+        })
+        return
+      } catch {
+        // Fallback to clipboard
+      }
+    }
+
+    navigator.clipboard.writeText(window.location.href)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2200)
+  }
+
   return (
-    <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden">
+    <section ref={sectionRef} className="relative">
+      {/* ── Outer Card Wrapper matching the reference aesthetic ── */}
+      <div className="relative border-b border-slate-200/90 dark:border-slate-800/80 bg-white/95 dark:bg-[#0c1017]/95  overflow-hidden transition-all duration-300">
 
-      {/* Left side socials */}
-      {/* Left side socials — only show on very wide screens */}
-      <div className="hidden xl:flex fixed left-6 top-1/2 -translate-y-1/2 z-50 flex-col gap-4">
-        {socials.map((social, i) => (
-          <a
-            key={i}
-            href={social.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-9 h-9 rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-sm flex items-center justify-center text-[#8a9bb0] hover:text-[#ede8df] hover:border-white/20 transition-all duration-300"
-          >
-            {social.icon}
-          </a>
-        ))}
-      </div>
+        {/* 1. TOP HEADER BAR */}
+        {/* <div className="flex items-center justify-between px-5 sm:px-8 py-4 sm:py-5 border-b border-slate-100 dark:border-slate-800/70 relative z-20">
 
-      <div className="mx-auto grid max-w-[1200px] w-full grid-cols-1 items-center gap-8 px-4 sm:px-6 lg:px-8 py-20 md:grid-cols-2 md:gap-4  ">
-
-        {/* Left — text */}
-        <div
-          data-reveal
-          data-reveal-from="left"
-          style={revealStyle('left')}
-          className="flex flex-col gap-6"
-        >
-          <div data-reveal data-reveal-from="left" style={revealStyle('left')}>
-            <p className="text-[#8a9bb0] text-sm mb-2">Hey, I&apos;m</p>
-            <h1 className={`${playfairdisplay.className} text-4xl md:text-5xl lg:text-6xl text-[#ede8df] italic leading-tight`}>
-              Azmaeen Mahtab Ezaz
-            </h1>
-            <p className="text-[#c8b97a] text-lg mt-3 font-medium">{role}</p>
-          </div>
-
-          <div data-reveal data-reveal-from="left" style={{ ...revealStyle('left'), transitionDelay: '80ms' }} className="space-y-1.5 text-[#8a9bb0] text-sm">
-            <p>🚀 Turning ideas into stunning web experiences</p>
-            <p>✨ Available for projects and collaborations</p>
-          </div>
-
-          <div data-reveal data-reveal-from="left" style={{ ...revealStyle('left'), transitionDelay: '140ms' }} className="flex flex-wrap gap-4 mt-2">
-            <a
-              href="#contact"
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-white/10 bg-white/[0.05] hover:bg-white/10 text-[#ede8df] text-sm transition-all duration-300"
-            >
-              Say Hello
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.269 20.876L5.999 12zm0 0h7.5" />
-              </svg>
-            </a>
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              download="Azmaeen_Mahtab_Ezaz_Resume.pdf"
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[#c8b97a]/30 text-[#c8b97a] text-sm hover:bg-[#c8b97a]/10 transition-all duration-300"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-              </svg>
-              Download Resume
-            </a>
-          </div>
-
-          {/* Inline socials — hidden on xl where fixed sidebar shows */}
-          <div data-reveal data-reveal-from="left" style={{ ...revealStyle('left'), transitionDelay: '200ms' }} className="flex xl:hidden items-center gap-3">
-            {socials.map((social, i) => (
-              <a
-                key={i}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg border border-white/10 bg-white/[0.03] flex items-center justify-center text-[#8a9bb0] hover:text-[#ede8df] hover:border-white/20 transition-all duration-300"
-              >
-                {social.icon}
-              </a>
-            ))}
-          </div>
-
-          {/* Scroll down */}
-          <div data-reveal data-reveal-from="left" style={{ ...revealStyle('left'), transitionDelay: '260ms' }} className="flex items-center gap-2">
-            <div className="w-5 h-8 rounded-full border border-white/20 flex items-start justify-center pt-1.5">
-              <div className="w-1 h-1.5 rounded-full bg-[#8a9bb0] animate-bounce" />
+           <div className="flex items-center gap-3 min-w-0">
+            <div className="relative size-10 sm:size-11 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 shrink-0">
+              <Image
+                src={HeroImage}
+                alt="Azmaeen Mahtab Ezaz"
+                fill
+                priority
+                sizes="44px"
+                className="object-cover object-top"
+              />
             </div>
-            <span className="text-[#8a9bb0] text-xs">Scroll Down</span>
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 leading-tight">
+                <span className="font-bold text-sm sm:text-base text-slate-900 dark:text-white truncate">
+                  Azmaeen Mahtab Ezaz
+                </span>
+                <i className="fa-solid fa-circle-check text-emerald-500 text-sm shrink-0" />
+              </div>
+              <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 mt-0.5 truncate">
+                Full Stack Developer &amp; AI Trainer
+              </p>
+            </div>
           </div>
+
+ 
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+            <button
+              onClick={handleShare}
+              aria-label="Share profile link"
+              title="Share profile link"
+              className="relative p-2.5 sm:p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 hover:border-emerald-300 dark:hover:border-emerald-700/60 transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
+            >
+              <i className="fa-solid fa-share-nodes text-xs sm:text-sm" />
+              {copied && (
+                <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-md bg-slate-900 text-white text-[10px] font-mono shadow-md whitespace-nowrap animate-fade-in pointer-events-none">
+                  Copied link!
+                </span>
+              )}
+            </button>
+
+            <GradientButton
+              href="#contact"
+              size="sm"
+              icon={<i className="fa-solid fa-paper-plane text-[10px]" />}
+            >
+              Get in touch
+            </GradientButton>
+          </div>
+        </div> */}
+
+        {/* 2. BANNER GRAPHIC WITH MAGNETLINES MOTION EFFECT */}
+        <div
+          className={`relative h-46 sm:h-44 md:h-62 w-full overflow-hidden select-none transition-colors duration-500 ${isWhiteTheme
+              ? 'bg-[#fafbfc] border-b border-emerald-100/80'
+              : 'bg-[#060a0f]'
+            }`}
+        >
+          {/* Interactive MagnetLines WebGL2 Component */}
+          <MagnetLines
+            key={isWhiteTheme ? 'magnet-light' : 'magnet-dark'}
+            rows={22}
+            columns={66}
+            lineColor={isWhiteTheme ? '#0077b6' : '#00b4d8'}
+            accentColor={isWhiteTheme ? '#03045e' : '#90e0ef'}
+            lineWidth={1.5}
+            lineHeight={10}
+            baseAngle={0}
+            mode="orbit"
+            shape="line"
+            fade={isWhiteTheme ? 0.45 : 0.38}
+            stretch={0.25}
+            radius={130}
+            clickPulse={true}
+            className="w-full h-full"
+          />
+
+          {/* Ambient Lighting & Vignette for seamless visual depth */}
+          <div
+            className={`absolute inset-0 pointer-events-none transition-colors duration-500 ${isWhiteTheme
+                ? 'bg-gradient-to-t from-white via-transparent to-transparent'
+                : 'bg-gradient-to-t from-[#0c1017] via-transparent to-transparent'
+              }`}
+          />
+          <div
+            className={`absolute inset-0 pointer-events-none transition-opacity duration-500 ${isWhiteTheme
+                ? 'bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(202,240,248,0.7)_100%)]'
+                : 'bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(6,10,15,0.75)_100%)]'
+              }`}
+          />
+
+          {/* Subtle grid accent glow */}
+          <div
+            className={`absolute -top-16 left-1/2 -translate-x-1/2 w-96 h-32 blur-3xl pointer-events-none transition-colors duration-500 ${isWhiteTheme ? 'bg-[#00b4d8]/15' : 'bg-[#0077b6]/20'
+              }`}
+          />
         </div>
 
-        {/* Right — image with badges */}
-        <div data-reveal data-reveal-from="right" style={revealStyle('right')} className="flex items-center justify-center">
-          <div className="relative size-56 sm:size-64 md:size-72 lg:size-[22rem]">
+        {/* 3. PROFILE BODY (Overlapping Avatar, Identity, Bio, and Stacks) */}
+        <div className="relative px-6 sm:px-10 pb-10 sm:pb-12 text-center z-10">
 
-            {/* Profile image + ellipse */}
-            <Image
-              src={HeroImage}
-              fill
-              priority
-              sizes="(min-width: 1024px) 22rem, (min-width: 768px) 18rem, 16rem"
-              alt="Azmaeen Mahtab Ezaz"
-              className="object-contain p-1 z-10 relative"
-            />
-            <Ellipse
-              ref={ellipseRef}
-              className="absolute top-0 left-0 w-full h-full transition-transform duration-500 ease-out"
-            />
+          {/* Centered Large Circular Avatar overlapping the Banner */}
+          <div className="relative -mt-18 sm:-mt-22 md:-mt-24 size-36 sm:size-44 md:size-48 mx-auto rounded-full p-[2px] bg-white dark:bg-[#0c1017] shadow-2xl border border-white/90 dark:border-slate-800 z-20">
+            <div className="relative w-full h-full rounded-full overflow-hidden bg-gradient-to-b from-[#00b4d8] to-[#03045e]">
+              <Image
+                src={HeroImage}
+                alt="Azmaeen Mahtab Ezaz"
+                fill
+                priority
+                sizes="(min-width: 768px) 192px, (min-width: 640px) 176px, 144px"
+                className="object-cover object-top scale-105"
+              />
+            </div>
 
-            {/* Floating badges */}
-            {/* Floating badges — hidden on mobile, shown on md+ */}
-            <div className="hidden md:block">
-              {badges.map((badge, i) => (
+          </div>
+
+          {/* Name with Verified Checkmark */}
+          <h1 className="text-2xl  sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center justify-center gap-2 mt-4.5">
+            <span>Azmaeen Mahtab Ezaz</span>
+            <svg
+              className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-500 shrink-0 inline-block align-middle"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-label="Verified"
+            >
+              <path d="M8.5 12.5L10.0089 14.0089C10.3526 14.3526 10.5245 14.5245 10.7198 14.5822C10.8914 14.6328 11.0749 14.6245 11.2412 14.5585C11.4305 14.4834 11.5861 14.2967 11.8973 13.9232L16 9M16.3287 4.75855C17.0676 4.77963 17.8001 5.07212 18.364 5.636C18.9278 6.19989 19.2203 6.9324 19.2414 7.67121C19.2623 8.40232 19.2727 8.76787 19.2942 8.85296C19.3401 9.0351 19.2867 8.90625 19.383 9.06752C19.428 9.14286 19.6792 9.40876 20.1814 9.94045C20.6889 10.4778 21 11.2026 21 12C21 12.7974 20.6889 13.5222 20.1814 14.0595C19.6792 14.5912 19.428 14.8571 19.383 14.9325C19.2867 15.0937 19.3401 14.9649 19.2942 15.147C19.2727 15.2321 19.2623 15.5977 19.2414 16.3288C19.2203 17.0676 18.9278 17.8001 18.364 18.364C17.8001 18.9279 17.0676 19.2204 16.3287 19.2414C15.5976 19.2623 15.2321 19.2727 15.147 19.2942C14.9649 19.3401 15.0937 19.2868 14.9325 19.3831C14.8571 19.4281 14.5912 19.6792 14.0595 20.1814C13.5222 20.6889 12.7974 21 12 21C11.2026 21 10.4778 20.6889 9.94047 20.1814C9.40874 19.6792 9.14287 19.4281 9.06753 19.3831C8.90626 19.2868 9.0351 19.3401 8.85296 19.2942C8.76788 19.2727 8.40225 19.2623 7.67121 19.2414C6.93238 19.2204 6.19986 18.9279 5.63597 18.364C5.07207 17.8001 4.77959 17.0676 4.75852 16.3287C4.73766 15.5976 4.72724 15.2321 4.70578 15.147C4.65985 14.9649 4.71322 15.0937 4.61691 14.9324C4.57192 14.8571 4.32082 14.5912 3.81862 14.0595C3.31113 13.5222 3 12.7974 3 12C3 11.2026 3.31113 10.4778 3.81862 9.94048C4.32082 9.40876 4.57192 9.14289 4.61691 9.06755C4.71322 8.90628 4.65985 9.03512 4.70578 8.85299C4.72724 8.7679 4.73766 8.40235 4.75852 7.67126C4.77959 6.93243 5.07207 6.1999 5.63597 5.636C6.19986 5.07211 6.93238 4.77963 7.67121 4.75855C8.40232 4.73769 8.76788 4.72727 8.85296 4.70581C9.0351 4.65988 8.90626 4.71325 9.06753 4.61694C9.14287 4.57195 9.40876 4.32082 9.94047 3.81863C10.4778 3.31113 11.2026 3 12 3C12.7974 3 13.5222 3.31114 14.0595 3.81864C14.5913 4.32084 14.8571 4.57194 14.9325 4.61693C15.0937 4.71324 14.9649 4.65988 15.147 4.70581C15.2321 4.72726 15.5976 4.73769 16.3287 4.75855Z" />
+            </svg>
+          </h1>
+
+          {/* Tagline */}
+          {/* <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base font-medium mt-1.5 max-w-xl mx-auto">
+            Less talk, show me code!
+          </p> */}
+
+          {/* Status Badge: Open to new conversations */}
+          <div className="mt-3.5 inline-flex">
+            <Link
+              href="#contact"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-semibold transition-all hover:scale-105 active:scale-95 shadow-xs"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-600 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+              </span>
+              <span>Open to new opportunities</span>
+            </Link>
+          </div>
+
+          {/* Professional Details & Location */}
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-5 font-medium">
+            <div className="flex items-center gap-2">
+              <i className="fa-solid fa-briefcase text-slate-400 dark:text-slate-500 text-xs" />
+              <span>
+                Backend AI Engineer Intern at <strong className="text-slate-900 dark:text-white font-semibold">FlyRank AI</strong>
+              </span>
+            </div>
+
+            <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
+
+            <div className="flex items-center gap-2">
+              <i className="fa-solid fa-location-dot text-slate-400 dark:text-slate-500 text-xs" />
+              <span>Dhaka · {currentTime || '1:52 PM'}</span>
+            </div>
+          </div>
+
+          {/* 4. TECH STACK & AI PILLS ROWS MATCHING REFERENCE CARD */}
+          <div className="mt-7 space-y-2.5 max-w-3xl mx-auto">
+            {/* Row 1: AI, LLM & Agentic Ecosystem */}
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              {aiTools.map((tool) => (
                 <div
-                  key={i}
-                  data-reveal
-                  data-reveal-from="up"
-                  style={{ ...revealStyle('up'), transitionDelay: `${i * 90}ms` }}
-                  className={`absolute ${badge.position} z-20 flex items-center gap-2 rounded-xl border border-white/10 bg-[#0b0c0f]/80 backdrop-blur-sm px-3 py-2 min-w-[120px]`}
+                  key={tool.name}
+                  className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-slate-200/90 dark:border-slate-800 bg-slate-50/80 dark:bg-[#121622] text-xs font-medium text-slate-800 dark:text-slate-200 shadow-2xs transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xs ${tool.borderHover}`}
                 >
-                  {badge.icon}
-                  <div>
-                    <p className="text-[#ede8df] text-sm font-semibold leading-none">{badge.value}</p>
-                    <p className="text-[#8a9bb0] text-[10px] mt-0.5 leading-tight">{badge.label}</p>
-                  </div>
+                  {tool.icon}
+                  <span>{tool.name}</span>
                 </div>
               ))}
             </div>
 
-          </div>
-        </div>
-        {/* Badges grid — mobile only, below image */}
-        <div className="grid grid-cols-2 gap-3 md:hidden">
-          {badges.map((badge, i) => (
-            <div
-              key={i}
-              data-reveal
-              data-reveal-from="up"
-              style={{ ...revealStyle('up'), transitionDelay: `${i * 90}ms` }}
-              className="flex items-center gap-2 rounded-xl border border-white/10 bg-[#0b0c0f]/80 backdrop-blur-sm px-3 py-2"
-            >
-              {badge.icon}
-              <div>
-                <p className="text-[#ede8df] text-sm font-semibold leading-none">{badge.value}</p>
-                <p className="text-[#8a9bb0] text-[10px] mt-0.5 leading-tight">{badge.label}</p>
-              </div>
+            {/* Row 2: Core Engineering & Stacks */}
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              {stackPills.map((tech) => (
+                <div
+                  key={tech.name}
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-slate-200/90 dark:border-slate-800 bg-slate-50/80 dark:bg-[#121622] text-xs font-medium text-slate-800 dark:text-slate-200 shadow-2xs transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/50 hover:shadow-xs"
+                >
+                  <img
+                    src={tech.icon}
+                    alt={tech.name}
+                    className="w-3.5 h-3.5 object-contain"
+                    loading="lazy"
+                  />
+                  <span>{tech.name}</span>
+                </div>
+              ))}
             </div>
-          ))}
+
+
+          </div>
+
         </div>
       </div>
     </section>

@@ -4,7 +4,6 @@ import { Project } from '@/lib/types'
 import ProjectCard from './ProjectCard'
 import { playfairdisplay } from '@/fonts'
 import { useEffect, useRef, useState } from 'react'
-import { Grid, Layers, Layout, Brain, Sparkles, Rocket } from 'lucide-react'
 
 interface ProjectSectionProps {
   projects: Project[]
@@ -56,27 +55,18 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
   const frontendProjects = projects.filter((p) => p.category === 'frontend')
 
   return (
-    <section id="projects" ref={sectionRef} className="space-y-12 my-25">
+    <section id="projects" ref={sectionRef} className="space-y-12 my-25 max-w-4xl mx-auto">
       {/* Header & Tabs */}
       <div className="flex flex-col gap-6">
         <div className="text-left space-y-1">
           <h2
             data-reveal
             style={{ opacity: 0, transform: 'translateY(22px)', transition: 'opacity 0.55s ease, transform 0.55s ease' }}
-            className={`${playfairdisplay.className} italic text-4xl sm:text-5xl text-[#e8e2d5] tracking-tight`}
+            className={`${playfairdisplay.className} italic text-4xl sm:text-5xl text-slate-900 dark:text-white tracking-tight`}
           >
-            What I Have Built{' '}
-            {/* <span className="text-[#00e6b4] not-italic font-sans text-xl sm:text-2xl font-normal inline-block ml-1">
-              - projects.
-            </span> */}
+            What I Have Built
           </h2>
-          <p
-            data-reveal
-            style={{ opacity: 0, transform: 'translateY(22px)', transition: 'opacity 0.55s ease 0.1s, transform 0.55s ease 0.1s' }}
-            className="text-xs sm:text-sm text-[#8a9bb0] font-mono"
-          >
-            Filter by category to explore full-stack platforms, AI integrations, and frontend builds
-          </p>
+          
         </div>
 
         {/* Category Tabs Filter */}
@@ -89,11 +79,11 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
             onClick={() => setActiveTab('all')}
             className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-all duration-300 ${
               activeTab === 'all'
-                ? 'bg-[#00e6b4] text-[#0b0c0f] shadow-lg shadow-[#00e6b4]/25 font-bold scale-[1.02]'
-                : 'border border-white/10 bg-white/[0.03] text-[#8a9bb0] hover:text-[#ede8df] hover:border-white/20 hover:bg-white/5'
+                ? 'bg-emerald-700 text-white shadow-md shadow-emerald-900/15 font-semibold scale-[1.02]'
+                : 'border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111622] text-slate-600 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-400 hover:border-emerald-300 dark:hover:border-emerald-500/50 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 shadow-sm'
             }`}
           >
-            <Grid className="w-3.5 h-3.5" />
+            <i className="fa-solid fa-table-cells text-xs" />
             <span>All ({projects.length})</span>
           </button>
 
@@ -101,11 +91,11 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
             onClick={() => setActiveTab('fullstack')}
             className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-all duration-300 ${
               activeTab === 'fullstack'
-                ? 'bg-[#00e6b4] text-[#0b0c0f] shadow-lg shadow-[#00e6b4]/25 font-bold scale-[1.02]'
-                : 'border border-white/10 bg-white/[0.03] text-[#8a9bb0] hover:text-[#ede8df] hover:border-white/20 hover:bg-white/5'
+                ? 'bg-emerald-700 text-white shadow-md shadow-emerald-900/15 font-semibold scale-[1.02]'
+                : 'border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111622] text-slate-600 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-400 hover:border-emerald-300 dark:hover:border-emerald-500/50 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 shadow-sm'
             }`}
           >
-            <Layers className="w-3.5 h-3.5" />
+            <i className="fa-solid fa-layer-group text-xs" />
             <span>Full-Stack & AI ({fullstackProjects.length})</span>
           </button>
 
@@ -113,11 +103,11 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
             onClick={() => setActiveTab('frontend')}
             className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-all duration-300 ${
               activeTab === 'frontend'
-                ? 'bg-[#00e6b4] text-[#0b0c0f] shadow-lg shadow-[#00e6b4]/25 font-bold scale-[1.02]'
-                : 'border border-white/10 bg-white/[0.03] text-[#8a9bb0] hover:text-[#ede8df] hover:border-white/20 hover:bg-white/5'
+                ? 'bg-emerald-700 text-white shadow-md shadow-emerald-900/15 font-semibold scale-[1.02]'
+                : 'border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111622] text-slate-600 dark:text-slate-400 hover:text-emerald-800 dark:hover:text-emerald-400 hover:border-emerald-300 dark:hover:border-emerald-500/50 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20 shadow-sm'
             }`}
           >
-            <Layout className="w-3.5 h-3.5" />
+            <i className="fa-solid fa-desktop text-xs" />
             <span>Frontend Only ({frontendProjects.length})</span>
           </button>
 
@@ -125,13 +115,13 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
             onClick={() => setActiveTab('aiml')}
             className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-all duration-300 ${
               activeTab === 'aiml'
-                ? 'bg-gradient-to-r from-[#c8b97a] to-[#e5d8a6] text-[#0b0c0f] shadow-lg shadow-[#c8b97a]/25 font-bold scale-[1.02]'
-                : 'border border-[#c8b97a]/30 bg-[#c8b97a]/5 text-[#c8b97a] hover:bg-[#c8b97a]/15'
+                ? 'bg-emerald-700 text-white shadow-md shadow-emerald-900/15 font-semibold scale-[1.02]'
+                : 'border border-emerald-300 bg-emerald-50/70 text-emerald-800 hover:bg-emerald-100/70 shadow-sm'
             }`}
           >
-            <Brain className="w-3.5 h-3.5" />
+            <i className="fa-solid fa-brain text-xs" />
             <span>AI / ML Lab</span>
-            <span className="rounded-full bg-[#0b0c0f]/50 px-1.5 py-0.5 text-[10px] uppercase font-mono tracking-wider">
+            <span className="rounded-full bg-emerald-800/10 px-1.5 py-0.5 text-[10px] uppercase font-mono tracking-wider font-semibold">
               Soon
             </span>
           </button>
@@ -143,20 +133,18 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
         {/* Full-Stack Section */}
         {(activeTab === 'all' || activeTab === 'fullstack') && (
           <div className="space-y-6">
-            <div className="flex items-start sm:items-center gap-3.5 border-b border-white/10 pb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#00e6b4]/20 to-[#00e6b4]/5 border border-[#00e6b4]/30 shadow-lg shadow-[#00e6b4]/10 shrink-0 mt-0.5 sm:mt-0">
-                <Layers className="w-5 h-5 text-[#00e6b4]" />
+            <div className="flex items-center gap-3.5 border-b border-slate-200 pb-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 border border-emerald-200 shadow-sm shrink-0 mt-0.5 sm:mt-0">
+                <i className="fa-solid fa-layer-group text-lg text-emerald-700" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="text-lg sm:text-xl font-bold text-[#ede8df]">
+                <div className="">
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-900">
                     Full-Stack & AI-Powered Projects
                   </h3>
-                  <span className="shrink-0 whitespace-nowrap rounded-full bg-[#00e6b4]/10 border border-[#00e6b4]/30 px-2.5 py-0.5 text-[11px] text-[#00e6b4] font-mono font-normal">
-                    {fullstackProjects.length} Projects
-                  </span>
+                  
                 </div>
-                <p className="text-xs text-[#8a9bb0] mt-1">Production-ready full-stack applications with AI agent pipelines, OAuth, and custom database schemas</p>
+               
               </div>
             </div>
 
@@ -185,20 +173,18 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
         {/* Frontend Only Section */}
         {(activeTab === 'all' || activeTab === 'frontend') && (
           <div className="space-y-6">
-            <div className="flex items-start sm:items-center gap-3.5 border-b border-white/10 pb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#38bdf8]/20 to-[#38bdf8]/5 border border-[#38bdf8]/30 shadow-lg shadow-[#38bdf8]/10 shrink-0 mt-0.5 sm:mt-0">
-                <Layout className="w-5 h-5 text-[#38bdf8]" />
+            <div className="flex items-center gap-3.5 border-b border-slate-200 pb-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 border border-emerald-200 shadow-sm shrink-0 mt-0.5 sm:mt-0">
+                <i className="fa-solid fa-desktop text-lg text-emerald-700" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="text-lg sm:text-xl font-bold text-[#ede8df]">
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-900">
                     Frontend Only Projects
                   </h3>
-                  <span className="shrink-0 whitespace-nowrap rounded-full bg-[#38bdf8]/10 border border-[#38bdf8]/30 px-2.5 py-0.5 text-[11px] text-[#38bdf8] font-mono font-normal">
-                    {frontendProjects.length} Projects
-                  </span>
+                  
                 </div>
-                <p className="text-xs text-[#8a9bb0] mt-1">Pixel-perfect UI replications, responsive design systems, and client work</p>
+                
               </div>
             </div>
 
@@ -227,46 +213,32 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
         {/* AI/ML Journey Coming Soon Section */}
         {(activeTab === 'all' || activeTab === 'aiml') && (
           <div className="space-y-6">
-            <div className="flex items-start sm:items-center gap-3.5 border-b border-white/10 pb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#c8b97a]/20 to-[#c8b97a]/5 border border-[#c8b97a]/30 shadow-lg shadow-[#c8b97a]/10 shrink-0 mt-0.5 sm:mt-0">
-                <Brain className="w-5 h-5 text-[#c8b97a]" />
+            <div className="flex items-center sm:items-center gap-3.5 border-b border-slate-200 pb-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 border border-emerald-200 shadow-sm shrink-0 mt-0.5 sm:mt-0">
+                <i className="fa-solid fa-brain text-lg text-emerald-700" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="text-lg sm:text-xl font-bold text-[#ede8df]">
+                   <h3 className="text-lg sm:text-xl font-bold text-slate-900">
                     AI / ML Lab (In Progress)
                   </h3>
-                  <span className="shrink-0 whitespace-nowrap rounded-full bg-[#c8b97a]/10 border border-[#c8b97a]/30 px-2.5 py-0.5 text-[11px] text-[#c8b97a] font-mono font-normal flex items-center gap-1">
-                    <Sparkles className="w-3 h-3 animate-pulse shrink-0" />
-                    Learning Path
-                  </span>
-                </div>
-                <p className="text-xs text-[#8a9bb0] mt-1">Dedicated machine learning models, research benchmarks, and AI tools coming soon</p>
               </div>
             </div>
 
             <div
               data-reveal
               style={{ opacity: 1, transform: 'translateY(0)', transition: 'opacity 0.55s ease, transform 0.55s ease' }}
-              className="relative overflow-hidden rounded-2xl border border-[#c8b97a]/30 bg-gradient-to-br from-[#c8b97a]/10 via-white/[0.02] to-transparent p-6 sm:p-8 backdrop-blur-md shadow-2xl"
+              className="relative overflow-hidden rounded-2xl border border-emerald-200/90 bg-gradient-to-br from-emerald-50/50 via-white to-white p-6 sm:p-8 shadow-xl"
             >
-              <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-[#c8b97a]/10 blur-3xl pointer-events-none" />
+              <div className="absolute -right-10 -bottom-10 h-40 w-40 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none" />
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative z-10">
                 <div className="space-y-3 max-w-2xl">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[#c8b97a]/40 bg-[#c8b97a]/20 px-3 py-1 text-xs text-[#c8b97a] font-mono">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#c8b97a] opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[#c8b97a]"></span>
-                    </span>
-                    <Brain className="w-3.5 h-3.5" />
-                    <span>AI / ML Journey Started</span>
-                  </div>
+                  
 
-                  <h4 className="text-2xl font-bold text-[#ede8df]">
+                  <h4 className="text-2xl font-bold text-slate-900">
                     Building Next-Gen AI & Machine Learning Solutions
                   </h4>
 
-                  <p className="text-sm text-[#8a9bb0] leading-relaxed">
+                  <p className="text-sm text-slate-600 leading-relaxed">
                     I have officially embarked on my AI & Machine Learning learning path! While I currently integrate AI pipelines (like Gemini tool-calling agents & Exif analysis) into full-stack web platforms, dedicated AI/ML projects, model fine-tuning experiments, and PyTorch implementations will be showcased here soon.
                   </p>
 
@@ -274,23 +246,23 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
                     {['PyTorch', 'Scikit-Learn', 'LLM Agents & RAG', 'Computer Vision', 'Model Fine-Tuning'].map((tech) => (
                       <span
                         key={tech}
-                        className="rounded-lg border border-[#c8b97a]/30 bg-[#c8b97a]/10 px-3 py-1 text-xs text-[#c8b97a] flex items-center gap-1.5"
+                        className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs text-emerald-800 font-medium flex items-center gap-1.5 shadow-sm"
                       >
-                        <Sparkles className="w-3 h-3 opacity-70" />
+                        <i className="fa-solid fa-wand-magic-sparkles text-[10px] text-emerald-600 opacity-80" />
                         {tech}
                       </span>
                     ))}
                   </div>
                 </div>
 
-                <div className="shrink-0 rounded-2xl border border-white/10 bg-white/5 p-5 text-center sm:w-48 backdrop-blur-md">
+                <div className="shrink-0 rounded-2xl border border-slate-200 bg-white p-5 text-center sm:w-48 shadow-sm">
                   <div className="flex justify-center mb-2">
-                    <div className="p-3 rounded-xl bg-[#c8b97a]/10 border border-[#c8b97a]/30 text-[#c8b97a]">
-                      <Rocket className="w-6 h-6 animate-bounce" />
+                    <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700">
+                      <i className="fa-solid fa-rocket text-xl animate-bounce" />
                     </div>
                   </div>
-                  <div className="text-xs font-semibold text-[#ede8df]">Stay Tuned</div>
-                  <div className="text-[11px] text-[#8a9bb0] mt-1">AI/ML projects dropping here soon</div>
+                  <div className="text-xs font-semibold text-slate-900">Stay Tuned</div>
+                  <div className="text-[11px] text-slate-500 mt-1">AI/ML projects dropping here soon</div>
                 </div>
               </div>
             </div>

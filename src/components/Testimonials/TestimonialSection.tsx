@@ -27,21 +27,19 @@ const marqueeItems = [
 ]
 
 const StarIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 fill-[#c8b97a]" viewBox="0 0 24 24">
-    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-  </svg>
+  <i className="fa-solid fa-star text-amber-500 text-xs" />
 )
 
 const ReviewCard = ({ review }: { review: typeof reviews[0] }) => (
   <div style={{ flexShrink: 0, width: '380px', height: '220px', margin: '0 12px' }}
-    className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-6 flex flex-col justify-between"
+    className="rounded-2xl border border-slate-200/90 dark:border-slate-800/80 bg-white dark:bg-[#111622] p-6 flex flex-col justify-between shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(4,120,87,0.08)] hover:border-emerald-300 dark:hover:border-emerald-500/50 transition-all duration-300"
   >
-    <p className="text-[#8a9bb0] text-sm leading-relaxed line-clamp-4">
+    <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed line-clamp-4">
       &ldquo;{review.feedback}&rdquo;
     </p>
-    <div className="mt-auto pt-4 flex items-center justify-between">
+    <div className="mt-auto pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80">
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-full overflow-hidden border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
+        <div className="w-9 h-9 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700 bg-emerald-50 dark:bg-emerald-950/40 flex items-center justify-center shrink-0">
           <img
             src={review.image}
             alt={review.name}
@@ -50,14 +48,14 @@ const ReviewCard = ({ review }: { review: typeof reviews[0] }) => (
               const t = e.currentTarget
               t.style.display = 'none'
               if (t.parentElement) {
-                t.parentElement.innerHTML = `<span style="font-size:12px;color:#c8b97a;font-weight:500">${review.name.charAt(0)}</span>`
+                t.parentElement.innerHTML = `<span style="font-size:12px;color:#0077b6;font-weight:600">${review.name.charAt(0)}</span>`
               }
             }}
           />
         </div>
         <div>
-          <p className="text-[#ede8df] text-sm font-medium leading-none">{review.name}</p>
-          <p className="text-[#8a9bb0] text-xs mt-1">{review.title}</p>
+          <p className="text-slate-900 dark:text-white text-sm font-semibold leading-none">{review.name}</p>
+          <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">{review.title}</p>
         </div>
       </div>
       <div className="flex items-center gap-0.5 shrink-0">
@@ -101,19 +99,20 @@ const ReviewsSection = () => {
         style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
         className="text-center"
       >
-        <h2 className={`${playfairdisplay.className} text-4xl md:text-5xl text-[#ede8df] italic`}>
+        <h2 className={`${playfairdisplay.className} text-4xl md:text-5xl text-slate-900 dark:text-white italic`}>
           My Clients Say
         </h2>
-        <p className="text-sm text-[#8a9bb0] mt-2 tracking-widest uppercase">Testimonials</p>
+        <p className="text-xs text-emerald-700 dark:text-emerald-400 mt-2 tracking-widest uppercase font-mono font-semibold">Testimonials</p>
       </div>
 
-      {/* Marquee wrapper — NO data-reveal here */}
+      {/* Marquee wrapper */}
       <div data-reveal
-  style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
-  className="relative overflow-hidden">
+        style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
+        className="relative overflow-hidden"
+      >
         {/* Fade edges */}
-        <div className="pointer-events-none absolute left-0 top-0 h-full w-24 z-10 bg-gradient-to-r from-[#011627] to-transparent" />
-        <div className="pointer-events-none absolute right-0 top-0 h-full w-24 z-10 bg-gradient-to-l from-[#011627] to-transparent" />
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-24 z-10 bg-gradient-to-r from-primary to-transparent" />
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-24 z-10 bg-gradient-to-l from-primary to-transparent" />
 
         {/* Scrolling track */}
         <div

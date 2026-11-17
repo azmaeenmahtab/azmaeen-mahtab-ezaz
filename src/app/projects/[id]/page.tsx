@@ -1,10 +1,10 @@
 import { getProjectById, getAllProjects } from '@/services'
-import { playfairdisplay } from '@/fonts'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Navbar from '@/components/Navbar/Navbar'
-import { ArrowLeft, ExternalLink, Server, Trophy, Layers, Layout, Brain, CheckCircle2 } from 'lucide-react'
+
+export const dynamicParams = true
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -12,9 +12,34 @@ interface PageProps {
 
 export async function generateStaticParams() {
   const projects = await getAllProjects()
-  return projects.map((project) => ({
-    id: project.id || `project${project.priority}`,
-  }))
+  const params: { id: string }[] = []
+
+  projects.forEach((project) => {
+    if (project.id) {
+      params.push({ id: project.id })
+    }
+    params.push({ id: `project${project.priority}` })
+    params.push({ id: String(project.priority) })
+    if (project.title) {
+      const slug = project.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '')
+      if (slug) params.push({ id: slug })
+    }
+    const anyProject = project as any
+    if (anyProject.name) {
+      const nameSlug = anyProject.name
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '')
+      if (nameSlug) params.push({ id: nameSlug })
+    }
+  })
+
+  // Deduplicate params
+  const uniqueIds = Array.from(new Set(params.map((p) => p.id)))
+  return uniqueIds.map((id) => ({ id }))
 }
 
 export default async function ProjectDetailPage({ params }: PageProps) {
@@ -38,55 +63,62 @@ export default async function ProjectDetailPage({ params }: PageProps) {
     : []
 
   return (
-    <div className="min-h-screen bg-[#0b0c0f] text-[#ede8df] selection:bg-[#00e6b4]/30 selection:text-[#00e6b4]">
+    <div className="min-h-screen bg-[#fafbfc] dark:bg-[#0c1017] text-slate-900 dark:text-white selection:bg-emerald-500/20 selection:text-emerald-950 transition-colors duration-300">
       {/* Background glow effects */}
-      <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,230,180,0.1),rgba(255,255,255,0))]" />
+      <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(16,185,129,0.08),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(16,185,129,0.12),rgba(0,0,0,0))]" />
 
       <Navbar />
 
       <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pt-32 pb-24 relative z-10 space-y-12">
         {/* Breadcrumb & Navigation */}
-        <div className="flex items-center gap-2 text-xs font-mono text-[#8a9bb0]">
-          <Link href="/#projects" className="hover:text-[#00e6b4] transition-colors flex items-center gap-1.5">
-            <ArrowLeft className="w-4 h-4" />
+        <div className="flex items-center gap-2 text-xs font-mono text-slate-500 dark:text-slate-400">
+          <Link
+            href="/#projects"
+            className="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5 font-medium"
+          >
+            <i className="fa-solid fa-arrow-left text-xs" />
             <span>Back to Projects</span>
           </Link>
           <span>/</span>
-          <span className="text-[#c8b97a] truncate max-w-[200px] sm:max-w-none">{project.title}</span>
+          <span className="text-emerald-800 dark:text-emerald-400 font-semibold truncate max-w-[200px] sm:max-w-none">
+            {project.title}
+          </span>
         </div>
 
         {/* Title & Metadata */}
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-3">
             {project.category === 'fullstack' && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#00e6b4]/30 bg-[#00e6b4]/10 px-3 py-1 text-xs text-[#00e6b4] font-medium">
-                <Layers className="w-3.5 h-3.5" />
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 dark:border-emerald-800/60 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 text-xs text-emerald-800 dark:text-emerald-300 font-medium">
+                <i className="fa-solid fa-layer-group text-xs text-emerald-700 dark:text-emerald-400" />
                 <span>Full-Stack & AI</span>
               </span>
             )}
             {project.category === 'frontend' && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#38bdf8]/30 bg-[#38bdf8]/10 px-3 py-1 text-xs text-[#38bdf8] font-medium">
-                <Layout className="w-3.5 h-3.5" />
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-200 dark:border-sky-800/60 bg-sky-50 dark:bg-sky-950/40 px-3 py-1 text-xs text-sky-800 dark:text-sky-300 font-medium">
+                <i className="fa-solid fa-desktop text-xs text-sky-700 dark:text-sky-400" />
                 <span>Frontend Only</span>
               </span>
             )}
             {project.type && (
-              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[#c8b97a] font-medium">
+              <span className="rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 px-3 py-1 text-xs text-slate-700 dark:text-slate-300 font-medium">
                 {project.type}
               </span>
             )}
             {project.siteAge && (
-              <span className="text-xs text-[#8a9bb0] font-mono">{project.siteAge}</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+                {project.siteAge}
+              </span>
             )}
           </div>
 
-          <h1 className={`${playfairdisplay.className} text-3xl sm:text-4xl md:text-5xl lg:text-6xl italic leading-tight text-[#ede8df]`}>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white">
             {project.title}
           </h1>
 
           {project.recognition && (
-            <div className="inline-flex items-center gap-2 rounded-xl border border-[#c8b97a]/30 bg-[#c8b97a]/10 px-4 py-2 text-sm text-[#c8b97a]">
-              <Trophy className="w-4 h-4 shrink-0" />
+            <div className="inline-flex items-center gap-2 rounded-xl border border-amber-200 dark:border-amber-800/50 bg-amber-50 dark:bg-amber-950/30 px-4 py-2 text-sm text-amber-900 dark:text-amber-300 font-medium shadow-sm">
+              <i className="fa-solid fa-trophy text-amber-600 dark:text-amber-400 shrink-0 text-sm" />
               <span>{project.recognition}</span>
             </div>
           )}
@@ -94,30 +126,30 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
         {/* Hero Image */}
         {project.cover && (
-          <div className="relative w-full h-[260px] sm:h-[380px] md:h-[480px] rounded-2xl border border-white/10 overflow-hidden bg-white/[0.02] shadow-2xl">
+          <div className="relative w-full h-[260px] sm:h-[380px] md:h-[480px] rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-slate-100 dark:bg-slate-900 shadow-xl">
             <Image
               src={project.cover}
               alt={project.title}
               fill
               priority
+              quality={92}
               sizes="(min-width: 1024px) 1000px, 100vw"
               className="object-cover object-top"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0b0c0f] via-transparent to-transparent opacity-40" />
           </div>
         )}
 
         {/* Action Buttons */}
-        <div className="flex flex-wrap items-center gap-4 py-2 border-y border-white/10">
+        <div className="flex flex-wrap items-center gap-4 py-3 border-y border-slate-200 dark:border-slate-800">
           {project.livePreview && (
             <a
               href={project.livePreview}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-[#00e6b4]/50 bg-[#00e6b4]/10 hover:bg-[#00e6b4]/20 text-[#00e6b4] text-sm font-medium transition-all duration-300 shadow-lg shadow-[#00e6b4]/10"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 text-white dark:text-slate-950 text-sm font-semibold transition-all duration-300 shadow-md shadow-emerald-900/15"
             >
               <span>Visit Live Website</span>
-              <ExternalLink className="w-4 h-4" />
+              <i className="fa-solid fa-arrow-up-right-from-square text-xs" />
             </a>
           )}
 
@@ -126,11 +158,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               href={project.githubLinkClient || project.githubLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-[#ede8df] text-sm font-medium transition-all duration-300"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#121622] hover:bg-emerald-50/60 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 hover:text-emerald-800 dark:hover:text-emerald-400 text-sm font-medium transition-all duration-300 shadow-sm"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-              </svg>
+              <i className="fa-brands fa-github text-sm" />
               <span>GitHub Client Repo</span>
             </a>
           )}
@@ -140,9 +170,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               href={project.githubLinkServer}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-[#ede8df] text-sm font-medium transition-all duration-300"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#121622] hover:bg-emerald-50/60 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 hover:text-emerald-800 dark:hover:text-emerald-400 text-sm font-medium transition-all duration-300 shadow-sm"
             >
-              <Server className="w-4 h-4 text-[#00e6b4]" />
+              <i className="fa-solid fa-server text-emerald-700 dark:text-emerald-400 text-sm" />
               <span>GitHub Server Repo</span>
             </a>
           )}
@@ -151,14 +181,14 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         {/* Technology Stack */}
         {project.technologies && project.technologies.length > 0 && (
           <div className="space-y-4">
-            <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#00e6b4]">
+            <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400 font-semibold">
               Technology Stack Used
             </h2>
             <div className="flex flex-wrap gap-2.5">
               {project.technologies.map((tech) => (
                 <span
                   key={tech}
-                  className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-[#ede8df] hover:border-[#00e6b4]/30 transition-all duration-200"
+                  className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121622] px-4 py-2 text-sm text-slate-800 dark:text-slate-200 font-medium shadow-sm hover:border-emerald-300 dark:hover:border-emerald-500/50 transition-all duration-200"
                 >
                   {tech}
                 </span>
@@ -169,11 +199,11 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
         {/* Description Section */}
         <div className="space-y-4">
-          <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#00e6b4]">
+          <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400 font-semibold">
             Project Description
           </h2>
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 sm:p-8 backdrop-blur-sm">
-            <p className="text-base sm:text-lg text-[#8a9bb0] leading-relaxed whitespace-pre-line">
+          <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800/80 bg-white dark:bg-[#121622] p-6 sm:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-line">
               {project.fullDescription || project.shortDescription}
             </p>
           </div>
@@ -182,16 +212,16 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         {/* Challenges Faced */}
         {challengesList.length > 0 && (
           <div className="space-y-4">
-            <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#c8b97a]">
+            <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400 font-semibold">
               Challenges Faced During Development
             </h2>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 sm:p-8 space-y-4">
+            <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800/80 bg-white dark:bg-[#121622] p-6 sm:p-8 space-y-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
               {challengesList.map((challenge, idx) => (
                 <div key={idx} className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-lg bg-[#c8b97a]/10 border border-[#c8b97a]/30 flex items-center justify-center shrink-0 mt-0.5 text-[#c8b97a] text-xs font-bold">
+                  <div className="w-6 h-6 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/50 flex items-center justify-center shrink-0 mt-0.5 text-emerald-800 dark:text-emerald-300 text-xs font-bold">
                     {idx + 1}
                   </div>
-                  <p className="text-sm sm:text-base text-[#8a9bb0] leading-relaxed">
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
                     {challenge}
                   </p>
                 </div>
@@ -203,16 +233,16 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         {/* Future Plans */}
         {futurePlansList.length > 0 && (
           <div className="space-y-4">
-            <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-[#00e6b4]">
+            <h2 className="text-xs font-mono uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400 font-semibold">
               Potential Improvements & Future Plans
             </h2>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 sm:p-8 space-y-4">
+            <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800/80 bg-white dark:bg-[#121622] p-6 sm:p-8 space-y-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
               {futurePlansList.map((plan, idx) => (
                 <div key={idx} className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-lg bg-[#00e6b4]/10 border border-[#00e6b4]/30 flex items-center justify-center shrink-0 mt-0.5 text-[#00e6b4]">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
+                  <div className="w-6 h-6 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/50 flex items-center justify-center shrink-0 mt-0.5 text-emerald-700 dark:text-emerald-400">
+                    <i className="fa-solid fa-circle-check text-xs" />
                   </div>
-                  <p className="text-sm sm:text-base text-[#8a9bb0] leading-relaxed">
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
                     {plan}
                   </p>
                 </div>
@@ -225,13 +255,12 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         <div className="pt-8 text-center">
           <Link
             href="/#projects"
-            className="inline-flex items-center gap-2 px-8 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-sm text-[#ede8df] transition-all duration-300"
+            className="inline-flex items-center gap-2 px-8 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#121622] hover:bg-emerald-50 dark:hover:bg-slate-800 text-sm text-slate-800 dark:text-white hover:text-emerald-800 dark:hover:text-emerald-400 font-medium shadow-sm transition-all duration-300"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <i className="fa-solid fa-arrow-left text-xs" />
             <span>Back to All Projects</span>
           </Link>
         </div>
-
       </main>
     </div>
   )

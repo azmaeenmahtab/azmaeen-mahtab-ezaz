@@ -1,73 +1,66 @@
 import { Project, Testimonial } from '@/lib/types'
-import { promises as fs } from 'fs'
-import path from 'path'
 
-// Function to read project file
-const readProjectFile = async (filePath: string): Promise<Project> => {
-  const projectData = await fs.readFile(filePath, 'utf8')
-  return JSON.parse(projectData)
-}
+import p1 from '../../content/projects/project1.json'
+import p2 from '../../content/projects/project2.json'
+import p3 from '../../content/projects/project3.json'
+import p4 from '../../content/projects/project4.json'
+import p5 from '../../content/projects/project5.json'
+
+import t1 from '../../content/testimonials/testimonial-1.json'
+import t2 from '../../content/testimonials/testimonial-2.json'
+import t3 from '../../content/testimonials/testimonial-3.json'
+import t4 from '../../content/testimonials/testimonial-4.json'
+import t5 from '../../content/testimonials/testimonial-5.json'
+
+const allProjects: Project[] = [
+  p1 as unknown as Project,
+  p2 as unknown as Project,
+  p3 as unknown as Project,
+  p4 as unknown as Project,
+  p5 as unknown as Project,
+].sort((a, b) => a.priority - b.priority)
+
+const allTestimonials: Testimonial[] = [
+  t1 as unknown as Testimonial,
+  t2 as unknown as Testimonial,
+  t3 as unknown as Testimonial,
+  t4 as unknown as Testimonial,
+  t5 as unknown as Testimonial,
+].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
 
 // Function to get all projects
 const getAllProjects = async (): Promise<Project[]> => {
-  try {
-    const projectsPath = path.join(process.cwd(), '/content/projects')
-    const projectsName = await fs.readdir(projectsPath)
-
-    const projects = await Promise.all(
-      projectsName.map(async (projectName) => {
-        const filePath = path.join(projectsPath, projectName)
-        const projectDetails = await readProjectFile(filePath)
-        return projectDetails
-      }),
-    )
-
-    // Sort projects by priority
-    projects.sort((a, b) => a.priority - b.priority)
-
-    return projects
-  } catch (error) {
-    // Handle errors
-    console.error('Error:', error)
-    return []
-  }
+  return allProjects
 }
 
+// Function to get a single project by id, priority, or slug
 const getProjectById = async (id: string): Promise<Project | null> => {
-  try {
-    const projects = await getAllProjects()
-    const found = projects.find(
-      (p) => p.id === id || String(p.priority) === id || p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') === id
+  if (!id) return null
+  const cleanId = decodeURIComponent(id).trim().toLowerCase()
+
+  const found = allProjects.find((p) => {
+    const pId = p.id ? String(p.id).toLowerCase() : ''
+    const pPriority = String(p.priority)
+    const pAlias = `project${p.priority}`
+    const pTitleSlug = p.title ? p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : ''
+    const pNameSlug = (p as any).name ? (p as any).name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : ''
+
+    return (
+      pId === cleanId ||
+      pPriority === cleanId ||
+      pAlias === cleanId ||
+      pTitleSlug === cleanId ||
+      pNameSlug === cleanId ||
+      (cleanId.startsWith('project') && cleanId.replace('project', '') === pPriority)
     )
-    return found || null
-  } catch (error) {
-    console.error('Error finding project by ID:', error)
-    return null
-  }
+  })
+
+  return found || null
 }
 
+// Function to get all testimonials
 const getAllTestimonials = async (): Promise<Testimonial[]> => {
-  try {
-    const testimonialsPath = path.join(process.cwd(), '/content/testimonials')
-    const testimonialsName = await fs.readdir(testimonialsPath)
-
-    const testimonials = await Promise.all(
-      testimonialsName.map(async (projectName) => {
-        const filePath = path.join(testimonialsPath, projectName)
-        const projectDetails = await fs.readFile(filePath, 'utf8')
-        return JSON.parse(projectDetails)
-      }),
-    )
-
-    // Sort testimonials by date
-    testimonials.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-
-    return testimonials
-  } catch (error) {
-    // Handle errors
-    console.error('Error:', error)
-    return []
-  }
+  return allTestimonials
 }
 
 export { getAllProjects, getProjectById, getAllTestimonials }

@@ -2,7 +2,6 @@ import { Project } from '@/lib/types'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { ArrowUpRight } from 'lucide-react'
 
 interface ProjectCardProps {
   data: Project
@@ -28,7 +27,7 @@ const TechIcon: React.FC<{ name: string }> = ({ name }) => {
 
   if (normalized.includes('next')) {
     return (
-      <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 shrink-0 fill-white" role="img">
+      <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 shrink-0 fill-slate-900" role="img">
         <path d="M18.665 21.978C16.758 23.255 14.465 24 12 24 0 18.623 0 12S5.377 0 12 0s12 5.377 12 12c0 3.583-1.574 6.801-4.067 9.001L9.219 7.2H7.2v9.596h1.615V9.251l9.85 12.727Zm-3.332-8.533 1.6 2.061V7.2h-1.6v6.245Z" />
       </svg>
     )
@@ -45,7 +44,7 @@ const TechIcon: React.FC<{ name: string }> = ({ name }) => {
 
   if (normalized.includes('express')) {
     return (
-      <span className="font-mono text-[9px] font-bold text-slate-200 bg-white/15 px-1 py-0.2 rounded border border-white/25">
+      <span className="font-mono text-[9px] font-bold text-slate-700 bg-slate-100 px-1 py-0.2 rounded border border-slate-300">
         ex
       </span>
     )
@@ -109,7 +108,7 @@ const TechIcon: React.FC<{ name: string }> = ({ name }) => {
 
   if (normalized.includes('api') || normalized.includes('rest')) {
     return (
-      <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 shrink-0 text-[#00e6b4]" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 shrink-0 text-emerald-700" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="16 18 22 12 16 6" />
         <polyline points="8 6 2 12 8 18" />
       </svg>
@@ -144,11 +143,11 @@ const TechIcon: React.FC<{ name: string }> = ({ name }) => {
   }
 
   return (
-    <span className="w-1.5 h-1.5 rounded-full bg-[#00e6b4] shadow-[0_0_6px_#00e6b4] shrink-0" />
+    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shadow-[0_0_6px_#0077b6] shrink-0" />
   )
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ data }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ data, index = 0 }) => {
   const {
     id,
     priority,
@@ -187,34 +186,36 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ data }) => {
 
   return (
     <div
-      className="project-card-interactive group relative h-full flex flex-col rounded-2xl sm:rounded-[22px] border border-white/[0.14] bg-[#121622] bg-gradient-to-b from-[#181d28] via-[#121622] to-[#0e1219] p-4 sm:p-5 shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
+      className="project-card-interactive group relative h-full flex flex-col rounded-2xl sm:rounded-[22px] border border-slate-200/90 bg-white p-4 sm:p-5 "
     >
       {/* Specular top light edge - smooth native CSS opacity crossfade */}
-      <div className="project-card-sheen-default absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-t-2xl z-20 pointer-events-none" />
-      <div className="project-card-sheen-hover absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#00e6b4] to-transparent rounded-t-2xl z-20 pointer-events-none opacity-0" />
+      <div className="project-card-sheen-default absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-slate-200 to-transparent rounded-t-2xl z-20 pointer-events-none" />
+      <div className="project-card-sheen-hover absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-emerald-500 to-transparent rounded-t-2xl z-20 pointer-events-none opacity-0" />
 
       {/* Ambient background glow halo on hover */}
-      <div className="project-card-halo absolute -inset-0.5 rounded-[24px] bg-gradient-to-br from-[#00e6b4]/20 via-[#38bdf8]/10 to-[#c8b97a]/15 opacity-0 blur-xl pointer-events-none -z-10" />
+      {/* <div className="project-card-halo absolute -inset-0.5 rounded-[24px] bg-gradient-to-br from-emerald-500/15 via-emerald-400/10 to-teal-500/10 opacity-0 blur-xl pointer-events-none -z-10" /> */}
 
       <Link href={`/projects/${projectId}`} className="flex flex-col h-full focus:outline-none relative z-10">
         {/* Project Image Preview */}
         {cover && (
-          <div className="relative w-full aspect-[16/10] overflow-hidden rounded-xl border border-white/15 bg-black/80 shadow-[0_8px_25px_rgba(0,0,0,0.6)]">
+          <div className="relative w-full aspect-[16/10] overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-sm">
             <Image
               src={cover}
               alt={displayName}
               fill
-              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              sizes="(min-width: 1280px) 400px, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              quality={92}
+              priority={index < 4}
               className="project-card-image object-cover object-top"
             />
-            {/* Subtle gloss overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-white/[0.04] opacity-70 group-hover:opacity-30 transition-opacity duration-500 ease-out" />
+            {/* Very subtle bottom fade — light theme friendly */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-40 group-hover:opacity-0 transition-opacity duration-500 ease-out" />
 
             {/* Slider / Carousel indicator dots */}
-            <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 pointer-events-none shadow-md">
-              <span className="w-3.5 h-1.5 rounded-full bg-[#00e6b4] shadow-[0_0_8px_#00e6b4] transition-all" />
-              <span className="w-1.5 h-1.5 rounded-full bg-white/60" />
-              <span className="w-1.5 h-1.5 rounded-full bg-white/60" />
+            <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-md border border-slate-200 pointer-events-none shadow-md">
+              <span className="w-3.5 h-1.5 rounded-full bg-emerald-600 shadow-[0_0_8px_#0077b6] transition-all" />
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
             </div>
           </div>
         )}
@@ -223,35 +224,23 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ data }) => {
         <div className="pt-4 sm:pt-5 flex flex-col flex-1 justify-between gap-3.5">
           <div className="space-y-2">
             {/* Top row: Category Subtitle with glowing dot + Highlighted Year Badge */}
-            <div className="flex items-center justify-between gap-2">
-              <div className="inline-flex items-center gap-2 min-w-0">
-                <span className="relative flex h-2 w-2 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00e6b4] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00e6b4] shadow-[0_0_8px_#00e6b4]"></span>
-                </span>
-                <span className="text-xs sm:text-[13px] font-semibold text-[#00e6b4] tracking-wide uppercase truncate">
-                  {displaySubtitle}
-                </span>
-              </div>
-
-              <span className="shrink-0 font-mono text-xs font-bold text-[#38bdf8] px-2.5 py-0.5 rounded-full border border-[#38bdf8]/35 bg-[#38bdf8]/10 shadow-[0_0_12px_rgba(56,189,248,0.25)]">
-                {displayYear}
-              </span>
-            </div>
+            
 
             {/* Project Heading & Action Arrow with buttery-smooth transition */}
             <div className="flex items-start justify-between gap-2 pt-0.5">
-              <h3 className="project-card-title text-2xl sm:text-[26px] font-extrabold text-white tracking-tight leading-snug">
+              <h3 className="project-card-title text-2xl sm:text-[26px] font-extrabold text-slate-900 tracking-tight leading-snug">
                 {displayName}
               </h3>
-              <div className="project-card-arrow-btn w-8 h-8 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white/50 shrink-0 mt-0.5">
-                <ArrowUpRight className="project-card-arrow-icon w-4 h-4" />
+              <div className="project-card-arrow-btn w-8 h-8 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center text-slate-500 shrink-0 mt-0.5">
+                <i className="fa-solid fa-arrow-up-right-from-square text-[11px] project-card-arrow-icon" />
               </div>
             </div>
 
+            
+
             {/* Compact Brief - crisp high-contrast text */}
             {displayBrief && (
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal pt-0.5 line-clamp-2">
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal pt-0.5 line-clamp-2">
                 {displayBrief}
               </p>
             )}
@@ -259,11 +248,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ data }) => {
 
           {/* Tech Stack Pills - Tactile, high-contrast elevated chips */}
           {displayedTechnologies.length > 0 && (
-            <div className="flex flex-wrap items-center gap-2 pt-2.5 mt-auto border-t border-white/[0.08]">
+            <div className="flex flex-wrap items-center gap-2 pt-2.5 mt-auto border-t border-slate-100">
               {displayedTechnologies.map((tech) => (
                 <span
                   key={tech}
-                  className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/[0.07] px-3 py-1.5 text-xs text-white font-medium shadow-sm transition-[border-color,background-color] duration-300 ease-out group-hover:border-white/25 group-hover:bg-white/[0.11]"
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50/80 px-3 py-1.5 text-xs text-slate-700 font-medium shadow-sm transition-[border-color,background-color] duration-300 ease-out group-hover:border-emerald-300 group-hover:bg-emerald-50/70 group-hover:text-emerald-950"
                 >
                   <TechIcon name={tech} />
                   <span>{tech}</span>
@@ -271,7 +260,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ data }) => {
               ))}
 
               {technologies.length > displayedTechnologies.length && (
-                <span className="inline-flex items-center rounded-xl border border-white/10 bg-white/[0.05] px-2.5 py-1.5 text-xs font-mono font-medium text-slate-300">
+                <span className="inline-flex items-center rounded-xl border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-mono font-medium text-slate-600">
                   +{technologies.length - displayedTechnologies.length}
                 </span>
               )}

@@ -2,7 +2,6 @@
 
 import useHeadingsData from '@/hooks/useHeadingsData'
 import useIsLargeScreen from '@/hooks/useIsLargeScreen'
-import { ChevronRightIcon } from '@/utils/icons'
 import { useEffect, useState } from 'react'
 
 const TableOfContents = () => {
@@ -20,7 +19,7 @@ const TableOfContents = () => {
         onClick={isLargeScreen ? undefined : () => setIsVisible(!isVisible)}
         className="flex cursor-pointer items-center gap-2 text-lg font-semibold">
         {!isLargeScreen && (
-          <ChevronRightIcon className={`size-6 ${isVisible ? 'rotate-90' : ''}`} />
+          <i className={`fa-solid fa-chevron-right text-base transition-transform ${isVisible ? 'rotate-90' : ''}`} />
         )}
         Table of Contents
       </div>

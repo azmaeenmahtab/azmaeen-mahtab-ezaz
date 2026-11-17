@@ -17,11 +17,9 @@ export default async function Home() {
   const testimonials = await getAllTestimonials()
 
   return (
-    <main>
-      <div className="bg-primary bg-small-glow bg-small-glow-position md:bg-large-glow-position lg:bg-large-glow min-h-screen bg-no-repeat">
-<Hero />
+    <main className="min-h-screen bg-white/95 dark:bg-[#0c1017]/95 text-slate-800 dark:text-slate-200">
+      <Hero />
       <About />
-      </div>
       <SkillSection />
       <QualificationSection />
       {/* <Skills skills={skillList} /> */}

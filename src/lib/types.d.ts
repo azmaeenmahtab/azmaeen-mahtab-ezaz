@@ -71,3 +71,21 @@ export interface Testimonial {
   stars: number
   createdAt: string
 }
+
+export interface SocialLink {
+  platform: 'x' | 'github' | 'linkedin' | 'website' | 'youtube' | string
+  url: string
+}
+
+export interface FollowedPerson {
+  id: string
+  name: string
+  handle: string
+  platform: 'X' | 'github' | 'linkedin' | 'youtube' | string
+  avatar: string
+  role: string
+  endorsement?: string // e.g. "Proof that simple tools win. Half my stack exists because of him."
+  tags?: string[] // e.g. ["Livewire", "Alpine.js"]
+  socialLinks?: SocialLink[] // e.g. [{ platform: 'x', url: '...' }, { platform: 'github', url: '...' }]
+  followUrl: string
+}

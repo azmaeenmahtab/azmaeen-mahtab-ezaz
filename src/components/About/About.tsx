@@ -1,189 +1,252 @@
-"use client";
+'use client'
 
-import { useEffect, useRef } from "react";
-import { playfairdisplay } from '@/fonts'
-
-const stack: string[] = [
-  "TypeScript",
-  "JavaScript",
-  "React",
-  "Next.js",
-  "Node.js",
-  "Express",
-  "Spring Boot",
-  "Java",
-  "C++",
-  "PostgreSQL",
-  "MongoDB",
-];
-
-interface InfoRow {
-  label: string;
-  value: string;
-  highlight?: boolean;
-}
-
-const info: InfoRow[] = [
-  { label: "name", value: "Azmaeen Mahtab Ezaz" },
-  { label: "role", value: "Full Stack Developer" },
-  { label: "university", value: "AUST — CSE" },
-  { label: "location", value: "Dhaka, BD" },
-  { label: "timezone", value: "GMT+6" },
-  { label: "status", value: "open to opportunities", highlight: true },
-];
+import React, { useState, useEffect } from 'react'
 
 export default function About() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [dhakaTime, setDhakaTime] = useState({
+    timeStr: '6:02 PM',
+    periodDesc: 'Evening in Dhaka',
+    isNight: true,
+  })
+  const [playingLang, setPlayingLang] = useState<string | null>(null)
 
+  // Real-time Dhaka (GMT+6) clock & period calculation
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const reveals =
-              entry.target.querySelectorAll<HTMLElement>("[data-reveal]");
-            reveals.forEach((el, i) => {
-              setTimeout(() => {
-                el.style.opacity = "1";
-                el.style.transform = "translateY(0)";
-              }, i * 110);
-            });
-          }
-        });
-      },
-      { threshold: 0.08 }
-    );
+    const updateTime = () => {
+      try {
+        const now = new Date()
+        const formatter = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'Asia/Dhaka',
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true,
+        })
+        const timeStr = formatter.format(now)
 
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+        const hourFormatter = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'Asia/Dhaka',
+          hour: 'numeric',
+          hour12: false,
+        })
+        const hour = parseInt(hourFormatter.format(now), 10)
+
+        let periodDesc = 'Evening in Dhaka'
+        let isNight = false
+
+        if (hour >= 5 && hour < 12) {
+          periodDesc = 'Morning in Dhaka'
+          isNight = false
+        } else if (hour >= 12 && hour < 17) {
+          periodDesc = 'Afternoon in Dhaka'
+          isNight = false
+        } else if (hour >= 17 && hour < 21) {
+          periodDesc = 'Evening in Dhaka'
+          isNight = true
+        } else {
+          periodDesc = 'Night in Dhaka'
+          isNight = true
+        }
+
+        setDhakaTime({ timeStr, periodDesc, isNight })
+      } catch {
+        // Fallback
+      }
+    }
+
+    updateTime()
+    const timer = setInterval(updateTime, 1000)
+    return () => clearInterval(timer)
+  }, [])
+
+  // Audio pronunciation player using Web Speech API
+  const handlePlayAudio = (lang: string) => {
+    if (typeof window === 'undefined') return
+
+    setPlayingLang(lang)
+    setTimeout(() => setPlayingLang(null), 1800)
+
+    try {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel()
+
+        let phrase = ''
+        let langCode = 'en-US'
+
+        if (lang === 'English') {
+          phrase = 'Hello, nice to meet you!'
+          langCode = 'en-GB'
+        } else if (lang === 'Bangla') {
+          phrase = 'নমস্কার, কেমন আছেন?'
+          langCode = 'bn-BD'
+        } else if (lang === 'Arabic') {
+          phrase = 'مرحباً، أهلاً وسهلاً'
+          langCode = 'ar-SA'
+        }
+
+        const utterance = new SpeechSynthesisUtterance(phrase)
+        utterance.lang = langCode
+        utterance.rate = 0.9
+        utterance.onend = () => setPlayingLang(null)
+        utterance.onerror = () => setPlayingLang(null)
+        window.speechSynthesis.speak(utterance)
+      }
+    } catch {
+      setPlayingLang(null)
+    }
+  }
 
   return (
-    <section
-      id="about"
-      ref={sectionRef}
-      className="relative overflow-hidden px-4 sm:px-6 lg:px-8 py-24 md:py-32"
-    >
-      {/* Ambient glow */}
-      <div />
+    <section id="about" className="relative px-4 sm:px-6 lg:px-8 py-16 sm:py-20 max-w-4xl mx-auto">
+      {/* Top emerald accent line */}
+      <div className="flex justify-center mb-6">
+        <div className="w-12 h-1 bg-emerald-600 dark:bg-emerald-500 rounded-full" />
+      </div>
 
-      <div className="relative mx-auto max-w-300">
-        {/* Eyebrow */}
-        <div
-          data-reveal
-          style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
-          className="mb-8 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#00e6b4]"
-        >
-          <span className="block h-px w-9 bg-[#00e6b4]" />
-          01 — About
+      {/* Main About Container */}
+      <div className="space-y-6">
+        {/* Header: User Icon + Title */}
+        <div className="flex items-center gap-3">
+          <i className="fa-regular fa-user text-2xl text-slate-800 dark:text-white" />
+          <h2 className="text-2xl sm:text-[26px] font-bold tracking-tight text-slate-900 dark:text-white font-sans">
+            About
+          </h2>
         </div>
 
-        {/* Headline */}
-        <h2
-          data-reveal
-          style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
-          className={`${playfairdisplay.className} italic text-[clamp(2.6rem,5vw,4.2rem)] leading-[1.1] text-[#e8e2d5]`}
-        >
-          Engineer with a{" "}
-          <em className=" not-italic text-[#00e6b4]">
-            solver&apos;s mindset.
-          </em>
-        </h2>
+        {/* Bio Paragraphs */}
+        <div className="space-y-4 text-base sm:text-[17px] text-slate-700 dark:text-slate-300 leading-relaxed">
+          <p>
+            Hey, I'm Azmaeen here.
+          </p>
+          <p>
+Curiosity has always been my compass. I'm drawn to learning, exploring ideas, building things, and solving problems along the way.
 
-        {/* Grid */}
-        <div className="mt-14 grid grid-cols-1 items-start gap-10 md:grid-cols-[1fr_320px] md:gap-16">
-          {/* ── Left: prose ── */}
-          <div>
-            <div className="space-y-6 text-[16px] leading-[1.9] text-[#8a9bb0]">
-              <p
-                data-reveal
-                style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
+But there's one thought that never gets old - 
+</p>
+
+<p className='text-center'>" Somewhere out there, Someone might be using something I brought to life. "</p>
+
+<p> And honestly, nothing inspires me to build more than that.
+          </p>
+
+          <p>
+            Currently, I am working as an AI Engineer Intern at KishorCoder. I completed my first Internship as a Backend AI Engineer at Flyrank.ai. Delivered several projects on both Upwork and local market. Previously I worked as an AI Trainer at Outlier.ai, evaluating and fine-tuning frontier LLM code and general reasoning architectures.{' '}
+            {!isExpanded && (
+              <button
+                onClick={() => setIsExpanded(true)}
+                className="inline-flex items-center gap-1 font-medium text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors cursor-pointer select-none whitespace-nowrap"
               >
-                My programming journey started with a deep curiosity for how software solves everyday challenges. Today, I&apos;m a full stack developer based in Dhaka, BD — studying Computer Science at{" "}
-                <span className="italic text-[#c8b97a]">
-                  Ahsanullah University of Science and Technology
-                </span>{" "}
-                while freelancing on Upwork and training AI systems at{" "}
-                <span className="text-[#00e6b4]">Outlier AI</span>.
-              </p>
+                <span>Read more</span>
+                <i className="fa-solid fa-chevron-down text-xs" />
+              </button>
+            )}
+          </p>
 
-              <p
-                data-reveal
-                style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
-              >
-                I thrive on building scalable{" "}
-                <span className="text-[#00e6b4]">full stack web applications</span>
-                {" — designing clean REST APIs, architecting robust databases, and crafting fluid UIs with high aesthetic standards. I particularly enjoy solving real-world problems through tech, like my flagship project: "}
-                <span className="italic text-[#c8b97a]">
-                  KHUJO (AI-driven security ecosystem)
-                </span>
-                {" targeting mobile phone theft in Bangladesh."}
-              </p>
-
-              <p
-                data-reveal
-                style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
-              >
-                When I&apos;m not writing code or solving DSA problems, you can find me playing sports (football & cricket), exploring tech blogs, listening to music, or tuning up digital designs. Curious by default. Builder by habit.
-              </p>
-            </div>
-
-            {/* Stack */}
-            {/* <p
-              data-reveal
-              style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
-              className="mb-3 mt-10 font-mono text-[10px] uppercase tracking-[0.14em] text-[#3d5166]"
-            >
-              Stack
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {stack.map((tech) => (
-                <span
-                  key={tech}
-                  data-reveal
-                  style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
-                  className="rounded-sm border border-[rgba(0,230,180,0.18)] bg-[rgba(0,230,180,0.03)] px-3 py-1 font-mono text-[11px] text-[#5a7a8a] transition-colors duration-200 hover:border-[rgba(0,230,180,0.5)] hover:bg-[rgba(0,230,180,0.06)] hover:text-[#00e6b4]"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div> */}
-
-          </div>
-
-          {/* ── Right: info card ── */}
+          {/* Smooth Collapsible Extended Prose (Paragraphs 3 & 4) */}
           <div
-            data-reveal
-            style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
-            className="overflow-hidden rounded-md border border-[rgba(0,230,180,0.12)] bg-[#0b1520]"
+            className={`overflow-hidden transition-all duration-400 ease-in-out ${
+              isExpanded
+                ? 'max-h-[900px] opacity-100 space-y-4 pt-0'
+                : 'max-h-0 opacity-0 pointer-events-none'
+            }`}
           >
-            {info.map(({ label, value, highlight }) => (
-              <div
-                key={label}
-                className="flex items-center justify-between gap-3 border-b border-white/[0.04] px-[18px] py-[13px] last:border-b-0"
+            <p>
+              These days I actively build with agentic engineering, so the stack matters less than the value I add: I own the system architecture, the product decisions. Most of my products run on the modern TypeScript and JavaScript ecosystem, leveraging Next.js, Express, PostgreSQL, and MongoDB with a close eye on clean SaaS UI/UX, and I natively integrate intelligence into them with models from Anthropic Claude, OpenAI, and Google Gemini.
+            </p>
+
+            <p>
+              My journey is grounded in continuous learning: I study Computer Science and Engineering at Ahsanullah University of Science and Technology (AUST) in Dhaka. I&apos;ve engineered impactful products like KHUJO (an AI-driven anti-theft security ecosystem recognized in Bangladesh&apos;s National AI Hackathon) and SKYDGETS (an automated full-stack e-commerce platform). I love owning products end to end, and I&apos;m always happy to meet founders and teams building ambitious remote products.{' '}
+              <button
+                onClick={() => setIsExpanded(false)}
+                className="inline-flex items-center gap-1 font-medium text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors cursor-pointer select-none whitespace-nowrap"
               >
-                <span className={` text-[13px] tracking-[0.06em] text-[#3d5166]`}>
-                  {label}
-                </span>
-                <span
-                  className={` text-[13px] text-right ${highlight ? "text-[#00e6b4]" : "text-[#8a9bb0]"
-                    }`}
-                >
-                  {value}
+                <span>Read less</span>
+                <i className="fa-solid fa-chevron-up text-xs" />
+              </button>
+            </p>
+          </div>
+        </div>
+
+        {/* 2 Middle Cards (Grid) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 pt-2">
+          {/* Card 1: Based in Dhaka, Bangladesh (Mint Gradient) */}
+          <div className="relative overflow-hidden rounded-3xl p-6 sm:p-7 border border-emerald-500/25 bg-gradient-to-br from-emerald-500/12 via-emerald-500/5 to-emerald-500/0 dark:from-emerald-500/15 dark:via-emerald-500/5 dark:to-transparent flex flex-col justify-between min-h-[200px]">
+            {/* Top row: Target / location crosshairs icon + Based in */}
+            <div>
+              <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400">
+                <i className="fa-solid fa-crosshairs text-sm" />
+                <span className="text-xs sm:text-sm font-semibold tracking-tight text-slate-700 dark:text-slate-300">
+                  Based in
                 </span>
               </div>
-            ))}
+              <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-1.5 tracking-tight">
+                Dhaka, Bangladesh
+              </h3>
+            </div>
 
-            {/* Stack mini */}
-            <div className="border-t border-white/[0.04] px-[18px] py-[14px] text-[12px] leading-[1.8] text-[#5a7a8a]">
-              <span className="text-[#3d5166]">stack{"  "}</span>
-              TS · React · Next.js · Node.js
-              <br />
-              <span className="pl-12">Spring Boot · PostgreSQL</span>
+            {/* Bottom row: Live Time + Period */}
+            <div className="mt-6">
+              <div className="flex items-baseline gap-2.5">
+                <span className="text-3xl sm:text-[38px] font-extrabold tracking-tight text-slate-900 dark:text-white leading-none font-sans">
+                  {dhakaTime.timeStr}
+                </span>
+                <span className="text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-white/80 dark:bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-200/80 dark:border-slate-700 tracking-wider">
+                  GMT+6
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 mt-3 text-xs sm:text-[13px] font-medium text-slate-600 dark:text-slate-400">
+                {dhakaTime.isNight ? (
+                  <i className="fa-solid fa-moon text-indigo-500 text-xs" />
+                ) : (
+                  <i className="fa-solid fa-sun text-amber-500 text-xs" />
+                )}
+                <span>{dhakaTime.periodDesc}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 2: Works Remote-first (White/Dark Card) */}
+          <div className="rounded-3xl p-6 sm:p-7 border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111622] shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex flex-col justify-between min-h-[200px]">
+            <div>
+              {/* Top row: Globe icon + Works */}
+              <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400">
+                <i className="fa-solid fa-globe text-sm" />
+                <span className="text-xs sm:text-sm font-semibold tracking-tight text-slate-700 dark:text-slate-300">
+                  Works
+                </span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-1.5 tracking-tight">
+                Remote-first
+              </h3>
+              <p className="mt-2 text-xs sm:text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed">
+                Comfortable working with teams in any time zone, from the Americas to Europe to Asia-Pacific.
+              </p>
+            </div>
+
+            {/* Tags Pills Row */}
+            <div className="flex flex-wrap gap-2 mt-5">
+              {[
+                'Remote',
+                'Async-friendly',
+                'US hours',
+                'EU hours',
+                'Flexible schedule',
+              ].map((pill) => (
+                <div
+                  key={pill}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-800/40 text-xs font-medium text-slate-700 dark:text-slate-300 shadow-2xs"
+                >
+                  <i className="fa-solid fa-check text-[10px] text-slate-500 dark:text-slate-400" />
+                  <span>{pill}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
+
+        
       </div>
     </section>
-  );
+  )
 }

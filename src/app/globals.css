@@ -1,39 +1,53 @@
 @import 'tailwindcss';
 
-[data-theme='light'] {
-  --p: #fff;
-  --pc: #0d1a3b;
-  --s: #edeaf4;
-  --sc: #0d1a3b;
-  --tc: #6b7c93;
-  --a: #5565e8;
-  --n: #0d1a3b;
+@theme {
+  --color-emerald-50: #f0faff;
+  --color-emerald-100: #e0f6fc;
+  --color-emerald-200: #caf0f8;
+  --color-emerald-300: #90e0ef;
+  --color-emerald-400: #48cae4;
+  --color-emerald-500: #00b4d8;
+  --color-emerald-600: #0077b6;
+  --color-emerald-700: #023e8a;
+  --color-emerald-800: #03045e;
+  --color-emerald-900: #02033b;
+  --color-emerald-950: #01021f;
+}
 
-  --b: #dfdcdc;
-  --marquee: #dbe3f7;
+[data-theme='light'] {
+  --p: #ffffff;
+  --pc: #0f172a;
+  --s: #f8fafc;
+  --sc: #0077b6;
+  --tc: #475569;
+  --a: #00b4d8;
+  --n: #0f172a;
+
+  --b: #e2e8f0;
+  --marquee: #caf0f8;
 
   /* for logo */
-  --gradient-start: #5565e8;
-  --gradient-mid: #18f2e5;
-  --gradient-end: #dbe3f7;
+  --gradient-start: #03045e;
+  --gradient-mid: #0077b6;
+  --gradient-end: #00b4d8;
 }
 
 [data-theme='dark'] {
-  --p: #011627;
-  --pc: #607b96;
-  --s: #011221;
-  --sc: #5565e8;
-  --tc: #99a1af;
-  --a: #18f2e5;
+  --p: #0c1017;
+  --pc: #f1f5f9;
+  --s: #111622;
+  --sc: #00b4d8;
+  --tc: #94a3b8;
+  --a: #0077b6;
   --n: #fff;
 
-  --b: #1e2d3d;
-  --marquee: #062b48;
+  --b: #1e293b;
+  --marquee: #03045e;
 
   /* for logo */
-  --gradient-start: #18f2e5;
-  --gradient-mid: #5cc0fe;
-  --gradient-end: #4ea7ff;
+  --gradient-start: #0077b6;
+  --gradient-mid: #00b4d8;
+  --gradient-end: #90e0ef;
 }
 
 [data-theme='aqua'] {
@@ -95,8 +109,9 @@
   --background-position-large-glow-position: 110% 30%;
   --background-position-small-glow-position: 50% 600%;
 
-  --font-fira-code: Fira Code, monospace;
-  --font-inter: Inter, sans-serif;
+  --font-roboto: var(--font-roboto), Roboto, sans-serif;
+  --font-fira-code: var(--font-roboto), Roboto, sans-serif;
+  --font-inter: var(--font-roboto), Roboto, sans-serif;
 
   @keyframes fade-in {
     0% {
@@ -174,11 +189,11 @@ html {
 }
 
 body {
-  font-family: 'Fira Code', monospace;
+  font-family: var(--font-roboto), Roboto, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
 
-  @apply bg-primary text-white;
+  @apply bg-primary text-slate-800;
 }
 
 .rehype-code-title {
@@ -242,8 +257,13 @@ section {
 
 .project-card-interactive:hover {
   transform: translateY(-6px) !important;
-  border-color: rgba(0, 230, 180, 0.5) !important;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.65), 0 0 30px rgba(0, 230, 180, 0.12) !important;
+  border-color: rgba(0, 119, 182, 0.45) !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 119, 182, 0.14), 0 8px 16px -4px rgba(0, 0, 0, 0.04) !important;
+}
+
+:is(.dark) .project-card-interactive:hover {
+  border-color: rgba(0, 180, 216, 0.4) !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 180, 216, 0.18), 0 8px 16px -4px rgba(0, 0, 0, 0.25) !important;
 }
 
 .project-card-image {
@@ -284,7 +304,7 @@ section {
 }
 
 .project-card-interactive:hover .project-card-title {
-  color: #00e6b4 !important;
+  color: #0077b6 !important;
 }
 
 .project-card-arrow-btn {
@@ -292,9 +312,9 @@ section {
 }
 
 .project-card-interactive:hover .project-card-arrow-btn {
-  background-color: rgba(0, 230, 180, 0.1) !important;
-  border-color: rgba(0, 230, 180, 0.4) !important;
-  color: #00e6b4 !important;
+  background-color: rgba(0, 180, 216, 0.15) !important;
+  border-color: rgba(0, 119, 182, 0.4) !important;
+  color: #0077b6 !important;
 }
 
 .project-card-arrow-icon {
@@ -303,4 +323,87 @@ section {
 
 .project-card-interactive:hover .project-card-arrow-icon {
   transform: translate(2px, -2px) !important;
+}
+
+/* Smooth, buttery service card interactions (matching project-card-interactive) */
+.service-card-interactive {
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.3s ease !important;
+  will-change: transform, box-shadow;
+  transform: translateY(0);
+}
+
+.service-card-interactive:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(0, 119, 182, 0.45) !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 119, 182, 0.14), 0 8px 16px -4px rgba(0, 0, 0, 0.04) !important;
+}
+
+:is(.dark) .service-card-interactive:hover {
+  border-color: rgba(0, 180, 216, 0.4) !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 180, 216, 0.18), 0 8px 16px -4px rgba(0, 0, 0, 0.25) !important;
+}
+
+.service-card-sheen-default {
+  transition: opacity 0.4s ease-out !important;
+}
+
+.service-card-interactive:hover .service-card-sheen-default {
+  opacity: 0 !important;
+}
+
+.service-card-sheen-hover {
+  transition: opacity 0.4s ease-out !important;
+}
+
+.service-card-interactive:hover .service-card-sheen-hover {
+  opacity: 1 !important;
+}
+
+.service-card-icon-wrap {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.35s ease,
+              border-color 0.35s ease,
+              color 0.35s ease !important;
+  will-change: transform;
+}
+
+.service-card-interactive:hover .service-card-icon-wrap {
+  transform: scale(1.08) rotate(-2deg) !important;
+}
+
+.service-card-title {
+  transition: color 0.35s ease-out !important;
+}
+
+.service-card-interactive:hover .service-card-title {
+  color: #0077b6 !important;
+}
+
+:is(.dark) .service-card-interactive:hover .service-card-title {
+  color: #00b4d8 !important;
+}
+
+/* Lenis Smooth Scrolling */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }

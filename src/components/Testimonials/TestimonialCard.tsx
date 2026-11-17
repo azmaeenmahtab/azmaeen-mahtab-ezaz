@@ -1,6 +1,5 @@
 import { Testimonial } from '@/lib/types'
 import { isInViewport } from '@/utils'
-import { StarIcon } from '@/utils/icons'
 import Image from 'next/image'
 import { FC, useEffect, useRef } from 'react'
 
@@ -37,7 +36,7 @@ const TestimonialCard: FC<TestimonialCardProps> = ({
       <div className="mt-auto">
         <div className="mb-4 flex items-center justify-center gap-1.5">
           {Array.from({ length: 5 }, (_, idx) => (
-            <StarIcon key={idx} className={idx < stars ? 'text-tag' : 'text-transparent'} />
+            <i key={idx} className={`fa-solid fa-star text-xs ${idx < stars ? 'text-amber-500' : 'text-slate-200'}`} />
           ))}
         </div>
         <div>
