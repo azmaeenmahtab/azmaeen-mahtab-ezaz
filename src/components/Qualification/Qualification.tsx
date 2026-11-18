@@ -22,16 +22,29 @@ interface ExperienceItem {
 
 const experiences: ExperienceItem[] = [
   {
+    id: 'exp-kishorcoder',
+    role: 'AI Engineer Intern',
+    company: 'KishorCoder',
+    employmentType: 'Internship',
+    locationType: 'Dhaka, Bangladesh',
+    period: 'Jul 2026 – Present',
+    logo: '/images/experience/kishorcoder.webp',
+    isActive: true,
+    description:
+      'Developing intelligent agent workflows, integrating frontier LLMs, fine-tuning retrieval architectures, and implementing production backend AI systems.',
+    skills: ['AI Engineering', 'LLM Integration', 'Autonomous Agents', 'Python', 'FastAPI', 'System Architecture'],
+  },
+  {
     id: 'exp-outlier',
     role: 'AI Trainer — Full Stack & Code Evaluation',
     company: 'Outlier AI',
     employmentType: 'Contract',
     locationType: 'Remote',
-    period: 'Jan 2026 – Present',
+    period: 'Apr 2026 – Jul 2026 · 4 mos',
     logo: '/images/experience/outlier.jpg',
-    isActive: true,
+    isActive: false,
     description:
-      'Training and evaluating frontier LLMs on complex full-stack coding tasks, autonomous agent workflows, algorithmic problem solving, and production-grade software architecture.',
+      'Trained and evaluated frontier LLMs on complex full-stack coding tasks, autonomous agent workflows, algorithmic problem solving, and production-grade software architecture.',
     skills: ['LLM Evaluation', 'Full-Stack Coding', 'Agent Workflows', 'Python', 'TypeScript', 'System Design'],
   },
   {

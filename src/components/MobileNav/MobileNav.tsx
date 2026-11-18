@@ -66,12 +66,12 @@ const primaryNavItems: NavItem[] = [
     sectionId: 'reviews',
     icon: <Star className="w-[18px] h-[18px] shrink-0" strokeWidth={2} />,
   },
-  {
-    id: 'hackathons',
-    label: 'Hackathons',
-    href: '/hackathons',
-    icon: <Trophy className="w-[18px] h-[18px] shrink-0" strokeWidth={2} />,
-  },
+  // {
+  //   id: 'hackathons',
+  //   label: 'Hackathons',
+  //   href: '/hackathons',
+  //   icon: <Trophy className="w-[18px] h-[18px] shrink-0" strokeWidth={2} />,
+  // },
   {
     id: 'contact',
     label: 'Contact',

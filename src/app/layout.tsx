@@ -15,10 +15,10 @@ import { roboto } from '@/fonts'
   //   weight: ['300', '400', '500', '600', '700'] 
   // })
 
-const title = 'Azmaeen Mahtab Ezaz | Full-Stack Web Developer | AI Trainer at Outlier.ai'
+const title = 'Azmaeen Mahtab Ezaz | Full-Stack Web Developer | AI Engineer Intern at KishorCoder'
 
 const description =
-  "A full-stack web developer. Currently working on Outlier.ai as AI Trainer as Full Stack Engineer and also have working experience on Upwork as a Full Stack Developer. I build responsive, user-friendly websites with React, NextJS, NodeJS. Express.JS, Postgresql/Mongodb. Let's bring your vision to life. Hire me today!"
+  "A full-stack web developer & AI Engineer Intern at KishorCoder. Experienced in full-stack engineering, LLM integrations, and intelligent systems. I build responsive, user-friendly websites with React, NextJS, NodeJS. Express.JS, Postgresql/Mongodb. Let's bring your vision to life. Hire me today!"
 
 const url = process.env.NEXT_PUBLIC_SITE_URL
 

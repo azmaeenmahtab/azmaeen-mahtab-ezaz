@@ -266,12 +266,12 @@ export default function Sidebar() {
       sectionId: 'reviews',
       icon: <Star className="w-[21px] h-[21px] shrink-0" strokeWidth={2} />,
     },
-    {
-      id: 'hackathons',
-      label: 'Hackathons',
-      href: '/hackathons',
-      icon: <Trophy className="w-[21px] h-[21px] shrink-0" strokeWidth={2} />,
-    },
+    // {
+    //   id: 'hackathons',
+    //   label: 'Hackathons',
+    //   href: '/hackathons',
+    //   icon: <Trophy className="w-[21px] h-[21px] shrink-0" strokeWidth={2} />,
+    // },
     {
       id: 'contact',
       label: 'Contact',
