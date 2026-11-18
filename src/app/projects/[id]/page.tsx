@@ -2,7 +2,8 @@ import { getProjectById, getAllProjects } from '@/services'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import Navbar from '@/components/Navbar/Navbar'
+import TechIcon from '@/components/Projects/TechIcon'
+import { Breadcrumbs } from '@/components/UI/Breadcrumbs'
 
 export const dynamicParams = true
 
@@ -63,34 +64,26 @@ export default async function ProjectDetailPage({ params }: PageProps) {
     : []
 
   return (
-    <div className="min-h-screen bg-[#fafbfc] dark:bg-[#0c1017] text-slate-900 dark:text-white selection:bg-emerald-500/20 selection:text-emerald-950 transition-colors duration-300">
-      {/* Background glow effects */}
-      <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(16,185,129,0.08),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(16,185,129,0.12),rgba(0,0,0,0))]" />
+    <div className="min-h-screen bg-[#fafbfc] dark:bg-[#0c1017] text-slate-900 dark:text-white selection:bg-[#00b4d8]/25 selection:text-[#03045e] dark:selection:text-[#caf0f8] transition-colors duration-300">
+      {/* Background glow effects - portfolio brand theme colors */}
+      <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,180,216,0.14),rgba(255,255,255,0)),radial-gradient(ellipse_40%_40%_at_90%_20%,rgba(144,224,239,0.12),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,119,182,0.22),rgba(0,0,0,0)),radial-gradient(ellipse_40%_40%_at_90%_20%,rgba(3,4,94,0.35),rgba(0,0,0,0))]" />
 
-      <Navbar />
-
-      <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pt-32 pb-24 relative z-10 space-y-12">
-        {/* Breadcrumb & Navigation */}
-        <div className="flex items-center gap-2 text-xs font-mono text-slate-500 dark:text-slate-400">
-          <Link
-            href="/#projects"
-            className="hover:text-emerald-700 dark:hover:text-emerald-400 transition-colors flex items-center gap-1.5 font-medium"
-          >
-            <i className="fa-solid fa-arrow-left text-xs" />
-            <span>Back to Projects</span>
-          </Link>
-          <span>/</span>
-          <span className="text-emerald-800 dark:text-emerald-400 font-semibold truncate max-w-[200px] sm:max-w-none">
-            {project.title}
-          </span>
+      <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 md:pt-10 pb-20 relative z-10 space-y-8 sm:space-y-10">
+        {/* Breadcrumb Navigation - HeroUI style */}
+        <div className="flex items-center justify-between">
+          <Breadcrumbs variant="solid">
+            <Breadcrumbs.Item href="/">Home</Breadcrumbs.Item>
+            <Breadcrumbs.Item href="/#projects">Projects</Breadcrumbs.Item>
+            <Breadcrumbs.Item>{project.title}</Breadcrumbs.Item>
+          </Breadcrumbs>
         </div>
 
         {/* Title & Metadata */}
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-3">
             {project.category === 'fullstack' && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 dark:border-emerald-800/60 bg-emerald-50 dark:bg-emerald-950/40 px-3 py-1 text-xs text-emerald-800 dark:text-emerald-300 font-medium">
-                <i className="fa-solid fa-layer-group text-xs text-emerald-700 dark:text-emerald-400" />
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-200 dark:border-sky-800/60 bg-sky-50 dark:bg-sky-950/40 px-3 py-1 text-xs text-[#0077b6] dark:text-[#90e0ef] font-medium">
+                <i className="fa-solid fa-layer-group text-xs text-[#0077b6] dark:text-[#90e0ef]" />
                 <span>Full-Stack & AI</span>
               </span>
             )}
@@ -146,7 +139,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               href={project.livePreview}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 text-white dark:text-slate-950 text-sm font-semibold transition-all duration-300 shadow-md shadow-emerald-900/15"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#0077b6] to-[#00b4d8] hover:from-[#023e8a] hover:to-[#0077b6] text-white text-sm font-semibold transition-all duration-300 shadow-md shadow-[#0077b6]/25 hover:shadow-lg hover:shadow-[#0077b6]/35 cursor-pointer"
             >
               <span>Visit Live Website</span>
               <i className="fa-solid fa-arrow-up-right-from-square text-xs" />
@@ -158,7 +151,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               href={project.githubLinkClient || project.githubLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#121622] hover:bg-emerald-50/60 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 hover:text-emerald-800 dark:hover:text-emerald-400 text-sm font-medium transition-all duration-300 shadow-sm"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#121622] hover:bg-sky-50/70 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 hover:text-[#0077b6] dark:hover:text-[#90e0ef] text-sm font-medium transition-all duration-300 shadow-xs"
             >
               <i className="fa-brands fa-github text-sm" />
               <span>GitHub Client Repo</span>
@@ -170,9 +163,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               href={project.githubLinkServer}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#121622] hover:bg-emerald-50/60 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 hover:text-emerald-800 dark:hover:text-emerald-400 text-sm font-medium transition-all duration-300 shadow-sm"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#121622] hover:bg-sky-50/70 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 hover:text-[#0077b6] dark:hover:text-[#90e0ef] text-sm font-medium transition-all duration-300 shadow-xs"
             >
-              <i className="fa-solid fa-server text-emerald-700 dark:text-emerald-400 text-sm" />
+              <i className="fa-solid fa-server text-[#0077b6] dark:text-[#90e0ef] text-sm" />
               <span>GitHub Server Repo</span>
             </a>
           )}
@@ -188,9 +181,10 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               {project.technologies.map((tech) => (
                 <span
                   key={tech}
-                  className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121622] px-4 py-2 text-sm text-slate-800 dark:text-slate-200 font-medium shadow-sm hover:border-emerald-300 dark:hover:border-emerald-500/50 transition-all duration-200"
+                  className="inline-flex items-center gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#121622] px-4 py-2 text-sm text-slate-800 dark:text-slate-200 font-medium shadow-xs hover:border-emerald-300 dark:hover:border-emerald-500/50 transition-all duration-200"
                 >
-                  {tech}
+                  <TechIcon name={tech} className="w-4 h-4" />
+                  <span>{tech}</span>
                 </span>
               ))}
             </div>
@@ -255,7 +249,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         <div className="pt-8 text-center">
           <Link
             href="/#projects"
-            className="inline-flex items-center gap-2 px-8 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#121622] hover:bg-emerald-50 dark:hover:bg-slate-800 text-sm text-slate-800 dark:text-white hover:text-emerald-800 dark:hover:text-emerald-400 font-medium shadow-sm transition-all duration-300"
+            className="inline-flex items-center gap-2 px-8 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#121622] hover:bg-sky-50 dark:hover:bg-slate-800 text-sm text-slate-800 dark:text-white hover:text-[#0077b6] dark:hover:text-[#90e0ef] font-medium shadow-sm transition-all duration-300"
           >
             <i className="fa-solid fa-arrow-left text-xs" />
             <span>Back to All Projects</span>

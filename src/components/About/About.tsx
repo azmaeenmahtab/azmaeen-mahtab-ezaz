@@ -97,7 +97,7 @@ export default function About() {
   }
 
   return (
-    <section id="about" className="relative px-4 sm:px-6 lg:px-8 py-16 sm:py-20 max-w-4xl mx-auto">
+    <section id="about" className="relative px-4 sm:px-6 lg:px-8 py-5 md:py-10 max-w-4xl mx-auto">
       {/* Top emerald accent line */}
       <div className="flex justify-center mb-6">
         <div className="w-12 h-1 bg-emerald-600 dark:bg-emerald-500 rounded-full" />
@@ -106,9 +106,9 @@ export default function About() {
       {/* Main About Container */}
       <div className="space-y-6">
         {/* Header: User Icon + Title */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3.5">
           <i className="fa-regular fa-user text-2xl text-slate-800 dark:text-white" />
-          <h2 className="text-2xl sm:text-[26px] font-bold tracking-tight text-slate-900 dark:text-white font-sans">
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
             About
           </h2>
         </div>
@@ -187,7 +187,7 @@ But there's one thought that never gets old -
             {/* Bottom row: Live Time + Period */}
             <div className="mt-6">
               <div className="flex items-baseline gap-2.5">
-                <span className="text-3xl sm:text-[38px] font-extrabold tracking-tight text-slate-900 dark:text-white leading-none font-sans">
+                <span className="text-3xl sm:text-[38px] font-extrabold tracking-tight text-slate-900 dark:text-white leading-none ">
                   {dhakaTime.timeStr}
                 </span>
                 <span className="text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-white/80 dark:bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-200/80 dark:border-slate-700 tracking-wider">

@@ -1,5 +1,4 @@
 "use client"
-import { playfairdisplay } from '@/fonts'
 import React, { useEffect, useRef } from 'react'
 import ServiceCard from './ServiceCard'
 
@@ -85,20 +84,20 @@ const ServiceSection = () => {
   }, [])
 
   return (
-    <section className="space-y-16 my-25 max-w-4xl mx-auto" id="services" ref={sectionRef}>
+    <section className="relative px-4 sm:px-6 lg:px-8 py-5 md:py-10 max-w-4xl mx-auto" id="services" ref={sectionRef}>
 
-      {/* Heading */}
+      {/* Header matching About & Skills style */}
       <div
         data-reveal
-        style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
-        className="text-center space-y-2"
+        style={{ opacity: 0, transform: "translateY(14px)", transition: "opacity 0.45s ease, transform 0.45s ease" }}
+        className="flex items-center gap-3.5 mb-8 md:mb-10"
       >
-        <h2 className={`${playfairdisplay.className} text-4xl md:text-5xl text-slate-900 dark:text-white italic tracking-tight`}>
-          Services
-        </h2>
-        <p className="text-xs sm:text-sm text-emerald-700 dark:text-emerald-400 tracking-widest uppercase font-mono font-semibold">
-          What I offer &amp; build
-        </p>
+        <i className="fa-solid fa-laptop-code text-2xl text-slate-800 dark:text-white" />
+        <div>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            Services
+          </h2>
+        </div>
       </div>
 
       {/* Cards grid */}

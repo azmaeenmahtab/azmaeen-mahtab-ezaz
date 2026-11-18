@@ -22,15 +22,10 @@ export default async function Home() {
       <About />
       <SkillSection />
       <QualificationSection />
-      {/* <Skills skills={skillList} /> */}
-      <div className="mx-auto my-8 max-w-[1200px] px-4 md:my-[3.75rem]">
-        <ProjectSection projects={projects} />
-        {/* <HackathonSpotlight />  */}
-        <ServiceSection />
-        {/* <TestimonialSection testimonials={testimonials} /> */}
-        <ReviewsSection />
-        <ContactSection />
-      </div>
+      <ProjectSection projects={projects} />
+      <ServiceSection />
+      <ReviewsSection />
+      <ContactSection />
     </main>
   )
 }

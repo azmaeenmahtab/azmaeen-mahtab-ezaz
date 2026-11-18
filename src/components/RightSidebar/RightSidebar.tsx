@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 import { followedPeople } from '@/appData/followedPeople'
 import CurrentlyLearning from './CurrentLearning'
 
@@ -51,6 +52,8 @@ const personalSocials = [
 ]
 
 export default function RightSidebar() {
+  const pathname = usePathname()
+  const router = useRouter()
   const [isMobileOpen, setIsMobileOpen] = useState<boolean>(false)
 
   return (
@@ -85,7 +88,8 @@ export default function RightSidebar() {
 
       {/* Right Sidebar Container */}
       <aside
-        className={`fixed top-0 right-0 bottom-0 z-40 h-screen w-[380px] xl:w-[390px] 2xl:w-[410px] bg-white/95 dark:bg-[#0b0e14]/95 backdrop-blur-md border-l border-slate-100 dark:border-slate-800/80 p-6 overflow-y-auto space-y-6 transition-transform duration-300 ease-in-out select-none
+        data-lenis-prevent
+        className={`fixed top-0 right-0 bottom-0 z-40 h-screen w-[340px] xl:w-[350px] 2xl:w-[360px] bg-white/95 dark:bg-[#0b0e14]/95 backdrop-blur-md border-l border-slate-100 dark:border-slate-800/80 p-5 pb-12 overflow-y-auto overscroll-contain space-y-6 transition-transform duration-300 ease-in-out select-none
           ${isMobileOpen ? 'translate-x-0 shadow-2xl' : 'translate-x-full xl:translate-x-0'}
         `}
       >
@@ -99,6 +103,7 @@ export default function RightSidebar() {
             <i className="fa-solid fa-xmark text-sm" />
           </button>
         </div>
+        {/* <CurrentlyLearning /> */}
 
         {/* 1. CONNECT WITH ME (Glassmorphism Cards) */}
         <div>
@@ -107,7 +112,7 @@ export default function RightSidebar() {
               Connect With Me
             </span>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3">
             {personalSocials.map((social) => (
               <a
                 key={social.name}
@@ -119,34 +124,35 @@ export default function RightSidebar() {
                 {/* Subtle glass reflection highlight */}
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/40 dark:from-white/[0.04] to-transparent rounded-t-[22px]" />
 
-                <div className="flex items-center gap-3.5 min-w-0 relative z-10">
+                <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 relative z-10">
                   {/* Squared shaped rounded icon container */}
-                  <div className="w-12 h-12 rounded-[16px] bg-slate-50/90 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/60 flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 group-hover:border-emerald-300 dark:group-hover:border-emerald-600/40 transition-all duration-300">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-[14px] bg-slate-50/90 dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/60 flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 group-hover:border-emerald-300 dark:group-hover:border-emerald-600/40 transition-all duration-300">
                     {social.icon}
                   </div>
 
                   {/* Site name & handle: bold and prominent */}
                   <div className="min-w-0">
-                    <p className="font-bold text-[16px] sm:text-[17px] text-slate-900 dark:text-white leading-tight tracking-tight truncate">
+                    <p className="font-bold text-[13.5px] sm:text-[14.5px] text-slate-900 dark:text-white leading-tight tracking-tight truncate">
                       {social.name}
                     </p>
-                    {/* <p className="text-xs sm:text-[13px] font-medium text-slate-500 dark:text-slate-400 truncate mt-0.5">
+                    <p className="text-xs sm:text-[13px] font-medium text-slate-500 dark:text-slate-400 truncate mt-0.5">
                       {social.handle}
-                    </p> */}
+                    </p>
                   </div>
                 </div>
 
                 {/* Right action button */}
-                {/* <span className={`relative z-10 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-200 flex items-center gap-1.5 shrink-0 shadow-xs group-hover:scale-105 active:scale-95 ${social.badgeClass}`}>
+                <span className={`relative z-10 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-200 flex items-center gap-1.5 shrink-0 shadow-xs group-hover:scale-105 active:scale-95 ${social.badgeClass}`}>
                   <span>{social.badge}</span>
                   <i className="fa-solid fa-arrow-up-right-from-square text-[10px]" />
-                </span> */}
+                </span>
               </a>
             ))}
           </div>
         </div>
 
-        {/* 2. LET'S TALK / WORK TOGETHER (Glassmorphic Button Card) */}
+
+        {/* 2. WORK WITH ME CARD */}
         <div>
           <div className="flex items-center justify-between mb-3 px-1">
             <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 font-semibold">
@@ -156,42 +162,58 @@ export default function RightSidebar() {
 
           <Link
             href="/#contact"
-            onClick={() => setIsMobileOpen(false)}
-            className="group relative flex items-center justify-between p-3.5 sm:p-4 rounded-[22px] border border-emerald-300/80 dark:border-emerald-500/30 bg-white/70 dark:bg-[#121622]/60 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.25)] ring-1 ring-inset ring-white/60 dark:ring-white/[0.04] hover:border-emerald-400 dark:hover:border-emerald-400 hover:shadow-[0_12px_32px_rgba(16,185,129,0.12)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer overflow-hidden"
+            onClick={(e) => {
+              if (pathname === '/') {
+                e.preventDefault()
+                const el = document.getElementById('contact')
+                if (el) {
+                  const lenis = (window as unknown as { lenis?: { scrollTo: (target: HTMLElement | string, options?: unknown) => void } }).lenis
+                  if (lenis) {
+                    lenis.scrollTo(el, { offset: -24, duration: 1.1 })
+                  } else {
+                    el.scrollIntoView({ behavior: 'smooth' })
+                  }
+                }
+              } else {
+                e.preventDefault()
+                router.push('/#contact')
+              }
+            }}
+            title="Bring The Spark! — Work With Me"
+            className="group relative flex items-center justify-between p-3.5 sm:p-4 rounded-[22px] border border-[#00b4d8]/30 dark:border-[#0077b6]/35 bg-white/70 dark:bg-[#121622]/60 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.25)] ring-1 ring-inset ring-white/60 dark:ring-white/[0.04] hover:border-[#0077b6] dark:hover:border-[#00b4d8] hover:shadow-[0_12px_32px_rgba(0,119,182,0.18)] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer overflow-hidden"
           >
             {/* Subtle glass reflection highlight */}
             <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/40 dark:from-white/[0.04] to-transparent rounded-t-[22px]" />
 
-            <div className="flex items-center gap-3.5 min-w-0 relative z-10">
-              {/* Squared shaped rounded icon container */}
-              <div className="relative w-12 h-12 rounded-[16px] bg-emerald-50/90 dark:bg-emerald-950/50 border border-emerald-200/80 dark:border-emerald-800/60 flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 group-hover:border-emerald-400 transition-all duration-300">
-                <i className="fa-solid fa-comments text-lg text-emerald-600 dark:text-emerald-400" />
-                {/* Active status pulse */}
+            <div className="flex items-center gap-3 min-w-0 relative z-10">
+              {/* Icon slot with pulse active indicator */}
+              <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-[14px] bg-[#00b4d8]/15 dark:bg-[#0077b6]/25 border border-[#0077b6]/25 dark:border-[#00b4d8]/30 flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 group-hover:border-[#0077b6] transition-all duration-300">
+                <i className="fa-solid fa-comments text-base text-[#0077b6] dark:text-[#90e0ef]" />
                 <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white dark:border-[#0b0e14]"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white dark:border-[#0b0e14]" />
                 </span>
               </div>
 
-              {/* Title & subtitle: bold and prominent */}
+              {/* Title & subtitle */}
               <div className="min-w-0">
-                <p className="font-bold text-[16px] sm:text-[17px] text-slate-900 dark:text-white leading-tight tracking-tight truncate">
-                  Let&apos;s Talk
+                <p className="font-bold text-[14px] sm:text-[14.5px] text-slate-900 dark:text-white leading-tight tracking-tight truncate">
+                  Bring The Spark!
                 </p>
-                <p className="text-xs sm:text-[13px] font-medium text-emerald-600 dark:text-emerald-400 truncate mt-0.5">
-                  Open for new conversations
+                <p className="text-xs sm:text-[12.5px] font-medium text-[#0077b6] dark:text-[#90e0ef] truncate mt-0.5">
+                  Open for new projects
                 </p>
               </div>
             </div>
 
             {/* Right action button */}
-            <span className="relative z-10 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-200 flex items-center gap-1.5 shrink-0 shadow-xs group-hover:scale-105 active:scale-95 bg-emerald-600 hover:bg-emerald-700 text-white dark:bg-emerald-500 dark:hover:bg-emerald-400 dark:text-slate-950 border border-transparent">
-              <span>Contact</span>
-              <i className="fa-solid fa-arrow-up-right-from-square text-[10px]" />
+            <span className="relative z-10 px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#0077b6] hover:bg-[#023e8a] text-white transition-all duration-200 flex items-center gap-1.5 shrink-0 shadow-xs group-hover:scale-105 active:scale-95">
+              <span>Chat</span>
+              <i className="fa-solid fa-arrow-right text-[10px]" />
             </span>
           </Link>
         </div>
-        <CurrentlyLearning />
+        
 
       </aside>
     </>

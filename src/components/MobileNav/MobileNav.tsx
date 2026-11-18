@@ -1,9 +1,19 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import Logo from '@/components/Navbar/Logo'
+import {
+  CircleUser,
+  Code2,
+  Briefcase,
+  Box,
+  Laptop,
+  Star,
+  Trophy,
+  Mail,
+} from 'lucide-react'
 
 interface NavItem {
   id: string
@@ -11,56 +21,63 @@ interface NavItem {
   href: string
   sectionId?: string
   icon: React.ReactNode
-  description: string
 }
 
 const primaryNavItems: NavItem[] = [
   {
-    id: 'profile',
-    label: 'Profile',
+    id: 'about',
+    label: 'About',
     href: '/#about',
     sectionId: 'about',
-    icon: <i className="fa-regular fa-circle-user text-base" />,
-    description: 'About me & background',
+    icon: <CircleUser className="w-[18px] h-[18px] shrink-0" strokeWidth={2} />,
+  },
+  {
+    id: 'skills',
+    label: 'Tech Stack',
+    href: '/#skills',
+    sectionId: 'skills',
+    icon: <Code2 className="w-[18px] h-[18px] shrink-0" strokeWidth={2} />,
+  },
+  {
+    id: 'qualification',
+    label: 'Experience',
+    href: '/#qualification',
+    sectionId: 'qualification',
+    icon: <Briefcase className="w-[18px] h-[18px] shrink-0" strokeWidth={2} />,
   },
   {
     id: 'projects',
     label: 'Projects',
     href: '/#projects',
     sectionId: 'projects',
-    icon: <i className="fa-solid fa-cube text-base" />,
-    description: "What I've built",
+    icon: <Box className="w-[18px] h-[18px] shrink-0" strokeWidth={2} />,
   },
   {
-    id: 'library',
-    label: 'Library',
-    href: '/#skills',
-    sectionId: 'skills',
-    icon: <i className="fa-solid fa-book-bookmark text-base" />,
-    description: 'Skills & tools',
+    id: 'services',
+    label: 'Services',
+    href: '/#services',
+    sectionId: 'services',
+    icon: <Laptop className="w-[18px] h-[18px] shrink-0" strokeWidth={2} />,
   },
   {
-    id: 'people',
-    label: 'People',
+    id: 'reviews',
+    label: 'Reviews',
     href: '/#reviews',
     sectionId: 'reviews',
-    icon: <i className="fa-solid fa-users text-base" />,
-    description: 'Reviews & testimonials',
+    icon: <Star className="w-[18px] h-[18px] shrink-0" strokeWidth={2} />,
+  },
+  {
+    id: 'hackathons',
+    label: 'Hackathons',
+    href: '/hackathons',
+    icon: <Trophy className="w-[18px] h-[18px] shrink-0" strokeWidth={2} />,
   },
   {
     id: 'contact',
     label: 'Contact',
     href: '/#contact',
     sectionId: 'contact',
-    icon: <i className="fa-regular fa-envelope text-base" />,
-    description: "Let's talk",
-  },
-  {
-    id: 'focus',
-    label: 'Hackathons',
-    href: '/hackathons',
-    icon: <i className="fa-solid fa-headphones text-base" />,
-    description: 'Competitive builds',
+    icon: <Mail className="w-[18px] h-[18px] shrink-0" strokeWidth={2} />,
   },
 ]
 
@@ -94,9 +111,10 @@ const socialLinks = [
 
 export default function MobileNav() {
   const pathname = usePathname()
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
-  const [activeSection, setActiveSection] = useState('profile')
+  const [activeSection, setActiveSection] = useState('about')
   const [theme, setTheme] = useState('light')
   const [isSoundOn, setIsSoundOn] = useState(true)
   const [audioCtx, setAudioCtx] = useState<AudioContext | null>(null)
@@ -115,24 +133,48 @@ export default function MobileNav() {
 
   // Active section tracking
   useEffect(() => {
-    if (pathname !== '/') return
+    if (pathname !== '/') {
+      if (pathname.startsWith('/hackathons')) {
+        setActiveSection('hackathons')
+      } else if (pathname.startsWith('/projects')) {
+        setActiveSection('projects')
+      }
+      return
+    }
+
     const sections = [
-      { id: 'profile', elementId: 'about' },
+      { id: 'about', elementId: 'about' },
+      { id: 'skills', elementId: 'skills' },
+      { id: 'qualification', elementId: 'qualification' },
       { id: 'projects', elementId: 'projects' },
-      { id: 'people', elementId: 'reviews' },
+      { id: 'services', elementId: 'services' },
+      { id: 'reviews', elementId: 'reviews' },
       { id: 'contact', elementId: 'contact' },
-      { id: 'library', elementId: 'skills' },
-      { id: 'focus', elementId: 'services' },
     ]
+
     const onScroll = () => {
-      if (window.scrollY < 300) { setActiveSection('profile'); return }
+      const scrollY = window.scrollY
+      const docHeight = document.documentElement.scrollHeight
+      const winHeight = window.innerHeight
+
+      if (scrollY < 180) {
+        setActiveSection('about')
+        return
+      }
+      if (scrollY + winHeight >= docHeight - 80) {
+        setActiveSection('contact')
+        return
+      }
+
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i].elementId)
-        if (el && el.getBoundingClientRect().top <= window.innerHeight * 0.45) {
-          setActiveSection(sections[i].id); return
+        if (el && el.getBoundingClientRect().top <= winHeight * 0.4) {
+          setActiveSection(sections[i].id)
+          return
         }
       }
     }
+
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
     return () => window.removeEventListener('scroll', onScroll)
@@ -176,7 +218,7 @@ export default function MobileNav() {
   const playClick = () => {
     if (!isSoundOn) return
     try {
-      const ctx = audioCtx || new (window.AudioContext || (window as any).webkitAudioContext)()
+      const ctx = audioCtx || new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)()
       if (!audioCtx) setAudioCtx(ctx)
       if (ctx.state === 'suspended') ctx.resume()
       const osc = ctx.createOscillator()
@@ -195,13 +237,30 @@ export default function MobileNav() {
   const handleNavClick = (item: NavItem, e: React.MouseEvent) => {
     playClick()
     setIsOpen(false)
-    if (item.sectionId && pathname === '/') {
-      e.preventDefault()
-      const el = document.getElementById(item.sectionId)
-      if (el) { el.scrollIntoView({ behavior: 'smooth' }); setActiveSection(item.id) }
-    } else {
-      setActiveSection(item.id)
+
+    if (item.sectionId) {
+      if (pathname === '/') {
+        e.preventDefault()
+        const el = document.getElementById(item.sectionId)
+        if (el) {
+          setActiveSection(item.id)
+          const lenis = (window as unknown as { lenis?: { scrollTo: (target: HTMLElement | string, options?: unknown) => void } }).lenis
+          if (lenis) {
+            lenis.scrollTo(el, { offset: -24, duration: 1.1 })
+          } else {
+            el.scrollIntoView({ behavior: 'smooth' })
+          }
+          return
+        }
+      } else {
+        e.preventDefault()
+        setActiveSection(item.id)
+        router.push(item.href)
+        return
+      }
     }
+
+    setActiveSection(item.id)
   }
 
   const handleToggleTheme = () => {
@@ -269,9 +328,9 @@ export default function MobileNav() {
             </div>
 
             {/* ── Nav items ── */}
-            <div className="px-3 py-3">
+            <div className="px-3 py-2.5">
               <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400 dark:text-slate-500 px-2 mb-2">Navigate</p>
-              <div className="space-y-0.5">
+              <div className="space-y-0.5 max-h-[50vh] overflow-y-auto no-scrollbar pr-0.5">
                 {primaryNavItems.map((item) => {
                   const active = activeSection === item.id
                   return (
@@ -279,26 +338,22 @@ export default function MobileNav() {
                       key={item.id}
                       href={item.href}
                       onClick={(e) => handleNavClick(item, e)}
-                      className={`flex items-center gap-3 px-3 py-2.5 rounded-[14px] transition-all duration-200 group ${
+                      className={`flex items-center gap-3 px-3 py-2 rounded-[14px] transition-all duration-200 group ${
                         active
-                          ? 'bg-[#0077b6]/10 dark:bg-white/10 text-slate-900 dark:text-white'
-                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-white/[0.06]'
+                          ? 'bg-[#0077b6]/10 dark:bg-white/10 text-slate-900 dark:text-white font-bold'
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-white/[0.06] font-medium'
                       }`}
                     >
                       <div className={`w-8 h-8 rounded-[10px] flex items-center justify-center shrink-0 transition-all duration-200 ${
                         active
-                          ? 'bg-gradient-to-br from-[#00b4d8]/20 to-[#0077b6]/15 text-[#0077b6] dark:text-[#90e0ef] border border-[#0077b6]/25 dark:border-[#00b4d8]/30'
-                          : 'bg-slate-100/80 dark:bg-white/[0.05] text-slate-500 dark:text-slate-500 border border-slate-200/80 dark:border-white/[0.06] group-hover:bg-slate-200/70 dark:group-hover:bg-white/[0.08] group-hover:text-slate-700 dark:group-hover:text-slate-300'
+                          ? 'bg-[#0077b6]/15 text-[#0077b6] dark:text-[#90e0ef] border border-[#0077b6]/25 dark:border-[#00b4d8]/30'
+                          : 'bg-slate-100/80 dark:bg-white/[0.05] text-slate-500 dark:text-slate-400 border border-slate-200/80 dark:border-white/[0.06] group-hover:bg-slate-200/70 dark:group-hover:bg-white/[0.08] group-hover:text-slate-700 dark:group-hover:text-slate-300'
                       }`}>
                         {item.icon}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className={`text-[14px] font-semibold leading-tight ${active ? 'text-[#0077b6] dark:text-white' : 'text-slate-800 dark:text-slate-300'}`}>{item.label}</p>
-                        <p className="text-[11px] text-slate-400 leading-tight truncate">{item.description}</p>
+                        <p className={`text-[14px] leading-tight ${active ? 'text-[#0077b6] dark:text-white font-bold' : 'text-slate-800 dark:text-slate-200 font-medium'}`}>{item.label}</p>
                       </div>
-                      {active && (
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#0077b6] dark:bg-[#00b4d8] shadow-[0_0_6px_#0077b6] dark:shadow-[0_0_6px_#00b4d8] shrink-0" />
-                      )}
                     </Link>
                   )
                 })}
@@ -391,12 +446,14 @@ export default function MobileNav() {
         </button>
       </div>
 
-      {/* Backdrop */}
+      {/* Smooth Animated Backdrop */}
       <div
         onClick={() => setIsOpen(false)}
         aria-hidden="true"
-        className={`fixed inset-0 z-40 lg:hidden transition-opacity duration-350 ${
-          isOpen ? 'opacity-100 pointer-events-auto bg-slate-900/20 dark:bg-slate-950/50 backdrop-blur-[2px]' : 'opacity-0 pointer-events-none'
+        className={`fixed inset-0 z-40 lg:hidden bg-slate-950/35 dark:bg-slate-950/60 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isOpen
+            ? 'opacity-100 backdrop-blur-sm pointer-events-auto'
+            : 'opacity-0 backdrop-blur-none pointer-events-none'
         }`}
       />
     </>

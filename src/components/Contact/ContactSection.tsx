@@ -1,7 +1,6 @@
 // ContactSection.tsx
 'use client'
 
-import { playfairdisplay } from '@/fonts'
 import { useRef, useEffect } from 'react'
 import ContactForm from './ContactForm'
 
@@ -69,18 +68,20 @@ const ContactSection = () => {
   }, [])
 
   return (
-    <section className="space-y-16" id="contact" ref={sectionRef}>
+    <section className="relative px-4 sm:px-6 lg:px-8 py-5 md:py-10 max-w-4xl mx-auto" id="contact" ref={sectionRef}>
 
-      {/* Heading */}
+      {/* Header matching About & Skills style */}
       <div
         data-reveal
-        style={{ opacity: 0, transform: "translateY(22px)", transition: "opacity 0.55s ease, transform 0.55s ease" }}
-        className="text-center"
+        style={{ opacity: 0, transform: "translateY(14px)", transition: "opacity 0.45s ease, transform 0.45s ease" }}
+        className="flex items-center gap-3.5 mb-8 md:mb-10"
       >
-        <h2 className={`${playfairdisplay.className} text-4xl md:text-5xl text-slate-900 dark:text-white italic`}>
-          Get in Touch
-        </h2>
-        <p className="text-xs text-emerald-700 dark:text-emerald-400 mt-2 tracking-widest uppercase font-mono font-semibold">Contact Me</p>
+        <i className="fa-regular fa-paper-plane text-2xl text-slate-800 dark:text-white" />
+        <div>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            Contact
+          </h2>
+        </div>
       </div>
 
       {/* Two col layout */}

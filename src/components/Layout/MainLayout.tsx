@@ -29,7 +29,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
       <Sidebar />
-      <div className={`transition-[padding] duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] min-h-screen bg-white dark:bg-[#0c1017] ${isCollapsed ? 'lg:pl-[84px]' : 'lg:pl-[280px] xl:pl-[300px]'} xl:pr-[380px] 2xl:pr-[410px]`}>
+      <div className={`transition-[padding] duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] min-h-screen bg-white dark:bg-[#0c1017] ${isCollapsed ? 'lg:pl-[84px]' : 'lg:pl-[250px] xl:pl-[260px]'} xl:pr-[340px] 2xl:pr-[360px]`}>
         {children}
       </div>
       <RightSidebar />

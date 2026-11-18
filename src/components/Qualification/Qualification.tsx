@@ -1,272 +1,138 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
+import Image from 'next/image'
 
-interface QualificationItem {
+interface ExperienceItem {
   id: string
-  title: string
-  place: string
+  role: string
+  company: string
+  employmentType: string
+  locationType: string
   period: string
-  description?: string
-  status?: string
-  icon: string
-  type: 'experience' | 'education'
-  accentColor: string
-  dotColor: string
+  logo?: string
+  pseudoIcon?: {
+    icon: string
+    bgGradient: string
+  }
+  isActive: boolean
+  description: string
+  skills: string[]
 }
 
-const allItems: QualificationItem[] = [
+const experiences: ExperienceItem[] = [
   {
-    id: 'exp-1',
-    title: 'AI Trainer — Full Stack & Code Evaluation',
-    place: 'Outlier AI',
-    period: '2026 – Present',
-    description: 'Training and evaluating state-of-the-art LLMs on full-stack coding tasks, agent workflows, and software architecture.',
-    status: 'Active',
-    icon: 'fa-solid fa-brain',
-    type: 'experience',
-    accentColor: 'text-[#0077b6] bg-[#caf0f8]/60 dark:bg-[#0077b6]/15 dark:text-[#90e0ef]',
-    dotColor: '#0077b6',
+    id: 'exp-outlier',
+    role: 'AI Trainer — Full Stack & Code Evaluation',
+    company: 'Outlier AI',
+    employmentType: 'Contract',
+    locationType: 'Remote',
+    period: 'Jan 2026 – Present',
+    logo: '/images/experience/outlier.jpg',
+    isActive: true,
+    description:
+      'Training and evaluating frontier LLMs on complex full-stack coding tasks, autonomous agent workflows, algorithmic problem solving, and production-grade software architecture.',
+    skills: ['LLM Evaluation', 'Full-Stack Coding', 'Agent Workflows', 'Python', 'TypeScript', 'System Design'],
   },
   {
-    id: 'exp-2',
-    title: 'Full Stack Developer',
-    place: 'Upwork (Freelance)',
+    id: 'exp-upwork',
+    role: 'Full Stack Developer',
+    company: 'Upwork',
+    employmentType: 'Freelance',
+    locationType: 'Remote',
     period: '2025 – Present',
-    description: 'Building modern web applications, scalable APIs, and responsive frontends for global clients with React, Next.js, and Node.js.',
-    status: 'Top Rated',
-    icon: 'fa-solid fa-laptop-code',
-    type: 'experience',
-    accentColor: 'text-teal-600 bg-teal-500/10 dark:text-teal-400',
-    dotColor: '#00b4d8',
-  },
-  {
-    id: 'edu-1',
-    title: 'B.Sc. in Computer Science & Engineering',
-    place: 'Ahsanullah University of Science & Technology',
-    period: '2024 – Present',
-    description: 'Focusing on algorithms, data structures, software engineering, and artificial intelligence.',
-    status: 'Undergraduate',
-    icon: 'fa-solid fa-graduation-cap',
-    type: 'education',
-    accentColor: 'text-[#0077b6] bg-[#caf0f8]/60 dark:bg-[#0077b6]/15 dark:text-[#90e0ef]',
-    dotColor: '#0077b6',
-  },
-  {
-    id: 'edu-2',
-    title: 'Higher Secondary Certificate (HSC)',
-    place: 'Dhaka City College',
-    period: '2021 – 2023',
-    description: 'Science stream with mathematics, physics, chemistry, and higher level analytics.',
-    status: 'Completed',
-    icon: 'fa-solid fa-building-columns',
-    type: 'education',
-    accentColor: 'text-sky-600 bg-sky-500/10 dark:text-sky-400',
-    dotColor: '#00b4d8',
-  },
-  {
-    id: 'edu-3',
-    title: 'Secondary School Certificate (SSC)',
-    place: 'Bir Pratik Gazi High School',
-    period: '2016 – 2021',
-    description: 'Graduated with strong foundations in science and mathematics.',
-    status: 'Completed',
-    icon: 'fa-solid fa-school',
-    type: 'education',
-    accentColor: 'text-indigo-600 bg-indigo-500/10 dark:text-indigo-400',
-    dotColor: '#90e0ef',
+    logo: '/images/experience/upwork.png',
+    isActive: true,
+    description:
+      'Delivering end-to-end web applications, performant RESTful APIs, and pixel-perfect interactive frontends for international clients with modern full-stack architectures.',
+    skills: ['React', 'Next.js', 'Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'Tailwind CSS'],
   },
 ]
 
-const experience = allItems.filter((i) => i.type === 'experience')
-const education = allItems.filter((i) => i.type === 'education')
+const educations: ExperienceItem[] = [
+  {
+    id: 'edu-aust',
+    role: 'B.Sc. in Computer Science & Engineering',
+    company: 'Ahsanullah University of Science & Technology',
+    employmentType: 'Undergraduate',
+    locationType: 'Dhaka',
+    period: '2024 – Present',
+    pseudoIcon: {
+      icon: 'fa-solid fa-graduation-cap',
+      bgGradient: 'from-[#0077b6] via-[#023e8a] to-[#03045e]',
+    },
+    isActive: true,
+    description:
+      'Pursuing comprehensive coursework in algorithms, data structures, computer architecture, systems design, software engineering, and applied artificial intelligence.',
+    skills: ['Data Structures', 'Algorithms', 'OOP', 'Software Engineering', 'Database Systems', 'AI'],
+  },
+  {
+    id: 'edu-dcc',
+    role: 'Higher Secondary Certificate (HSC)',
+    company: 'Dhaka City College',
+    employmentType: 'Science Stream',
+    locationType: 'Dhaka',
+    period: '2021 – 2023',
+    pseudoIcon: {
+      icon: 'fa-solid fa-building-columns',
+      bgGradient: 'from-[#00b4d8] to-[#0077b6]',
+    },
+    isActive: false,
+    description:
+      'Built rigorous foundations in analytical reasoning, advanced mathematics, physics, and chemistry with distinguished academic standing.',
+    skills: ['Higher Mathematics', 'Physics', 'Chemistry', 'Analytics'],
+  },
+  {
+    id: 'edu-bpg',
+    role: 'Secondary School Certificate (SSC)',
+    company: 'Bir Pratik Gazi High School',
+    employmentType: 'Science Stream',
+    locationType: 'Dhaka',
+    period: '2016 – 2021',
+    pseudoIcon: {
+      icon: 'fa-solid fa-school',
+      bgGradient: 'from-[#48cae4] to-[#023e8a]',
+    },
+    isActive: false,
+    description:
+      'Graduated with excellent marks and core grounding in science, general mathematics, and early computer fundamentals.',
+    skills: ['General Science', 'Mathematics', 'Computer Basics'],
+  },
+]
 
-/* ─── Desktop Card ─── */
-function DesktopCard({ item, isVisible, index }: { item: QualificationItem; isVisible: boolean; index: number }) {
-  return (
-    <div
-      data-item-id={item.id}
-      style={{ transitionDelay: `${index * 120}ms` }}
-      className={`relative p-5 sm:p-6 rounded-[22px] bg-slate-100/70 dark:bg-[#121622]/70 hover:bg-slate-100 dark:hover:bg-[#161c2a] shadow-[0_4px_20px_rgba(0,0,0,0.02)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.2)] hover:-translate-y-1 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden cursor-default ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      }`}
-    >
-      <div className="flex items-start justify-between gap-3 mb-2.5">
-        <div className="flex items-center gap-3 min-w-0">
-          <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${item.accentColor}`}>
-            <i className={`${item.icon} text-sm`} />
-          </div>
-          <div className="min-w-0">
-            <h4 className="font-bold text-base sm:text-[17px] text-slate-900 dark:text-white leading-snug tracking-tight">
-              {item.title}
-            </h4>
-            <p className="text-xs sm:text-sm font-semibold text-[#0077b6] dark:text-emerald-400 truncate mt-0.5">
-              {item.place}
-            </p>
-          </div>
-        </div>
-        {item.status && (
-          <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#caf0f8]/70 dark:bg-emerald-500/10 text-[#0077b6] dark:text-emerald-400 shrink-0">
-            {item.status}
-          </span>
-        )}
-      </div>
-      {item.description && (
-        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-normal mt-2">
-          {item.description}
-        </p>
-      )}
-      <div className="flex items-center gap-2 mt-4 pt-3 text-[11px] font-mono text-slate-500 dark:text-slate-400 font-medium">
-        <i className="fa-regular fa-calendar text-[10px] text-[#0077b6] dark:text-emerald-400" />
-        <span>{item.period}</span>
-      </div>
-    </div>
-  )
-}
-
-/* ─── Mobile Timeline Item ─── */
-function TimelineItem({
-  item,
-  isVisible,
-  isLast,
-  lineProgress,
-}: {
-  item: QualificationItem
-  isVisible: boolean
-  isLast: boolean
-  lineProgress: number
-}) {
-  const typeLabel = item.type === 'experience' ? 'Work' : 'Education'
-
-  return (
-    <div className="relative flex gap-5 pl-1" data-item-id={item.id}>
-      {/* Left: dot + line segment */}
-      <div className="relative flex flex-col items-center w-8 shrink-0">
-        {/* Dot */}
-        <div
-          className="relative z-10 mt-1 flex items-center justify-center transition-all duration-700"
-          style={{ transitionDelay: isVisible ? '0ms' : '0ms' }}
-        >
-          {/* Outer ring pulse when visible */}
-          {isVisible && (
-            <span
-              className="absolute w-6 h-6 rounded-full animate-ping opacity-30"
-              style={{ backgroundColor: item.dotColor }}
-            />
-          )}
-          <div
-            className={`w-4 h-4 rounded-full border-2 border-white dark:border-[#0c1017] flex items-center justify-center transition-all duration-500 ${
-              isVisible ? 'scale-100' : 'scale-0'
-            }`}
-            style={{
-              backgroundColor: isVisible ? item.dotColor : 'transparent',
-              borderColor: isVisible ? item.dotColor : '#cbd5e1',
-              boxShadow: isVisible ? `0 0 10px ${item.dotColor}80` : 'none',
-            }}
-          />
-        </div>
-
-        {/* Line segment below dot */}
-        {!isLast && (
-          <div className="relative mt-1 w-px flex-1 bg-slate-200 dark:bg-slate-800 overflow-hidden rounded-full min-h-[40px]">
-            <div
-              className="absolute inset-x-0 top-0 rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
-              style={{
-                height: isVisible ? '100%' : '0%',
-                background: `linear-gradient(to bottom, ${item.dotColor}, ${item.dotColor}60)`,
-                transitionDelay: '300ms',
-              }}
-            />
-          </div>
-        )}
-      </div>
-
-      {/* Right: content */}
-      <div
-        className={`flex-1 pb-9 transition-all duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-        }`}
-        style={{ transitionDelay: isVisible ? '80ms' : '0ms' }}
-      >
-        {/* Type tag + period row */}
-        <div className="flex items-center gap-2 mb-2">
-          <span
-            className="text-[9px] font-mono font-bold uppercase tracking-widest px-2 py-0.5 rounded-full"
-            style={{
-              color: item.dotColor,
-              backgroundColor: `${item.dotColor}18`,
-            }}
-          >
-            {typeLabel}
-          </span>
-          <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500">{item.period}</span>
-        </div>
-
-        {/* Title */}
-        <h4 className="text-[15px] font-bold text-slate-900 dark:text-white leading-snug tracking-tight mb-0.5">
-          {item.title}
-        </h4>
-
-        {/* Place + status row */}
-        <div className="flex items-center gap-2 flex-wrap mb-2">
-          <span className="text-[13px] font-semibold" style={{ color: item.dotColor }}>
-            {item.place}
-          </span>
-          {item.status && (
-            <span
-              className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-              style={{ color: item.dotColor, backgroundColor: `${item.dotColor}18` }}
-            >
-              {item.status}
-            </span>
-          )}
-        </div>
-
-        {/* Description */}
-        {item.description && (
-          <p className="text-[12px] text-slate-500 dark:text-slate-400 leading-relaxed">
-            {item.description}
-          </p>
-        )}
-      </div>
-    </div>
-  )
-}
-
-/* ─── Main Section ─── */
 export default function QualificationSection() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const [visibleItems, setVisibleItems] = useState<Set<string>>(new Set())
+  const [activeTab, setActiveTab] = useState<'experience' | 'education'>('experience')
+  const experienceTabRef = useRef<HTMLButtonElement>(null)
+  const educationTabRef = useRef<HTMLButtonElement>(null)
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 })
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('data-item-id')
-            if (id) {
-              setVisibleItems((prev) => {
-                const next = new Set(prev)
-                next.add(id)
-                return next
-              })
-            }
-          }
+    const updateIndicator = () => {
+      const activeBtn = activeTab === 'experience' ? experienceTabRef.current : educationTabRef.current
+      if (activeBtn) {
+        setIndicatorStyle({
+          left: activeBtn.offsetLeft,
+          width: activeBtn.offsetWidth,
+          opacity: 1,
         })
-      },
-      { threshold: 0.2, rootMargin: '0px 0px -60px 0px' }
-    )
+      }
+    }
 
-    const cards = sectionRef.current?.querySelectorAll('[data-item-id]')
-    cards?.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+    updateIndicator()
+    window.addEventListener('resize', updateIndicator)
+    return () => window.removeEventListener('resize', updateIndicator)
+  }, [activeTab])
+
+  const currentItems = activeTab === 'experience' ? experiences : educations
 
   return (
-    <section className="mt-16 sm:mt-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto" id="qualification" ref={sectionRef}>
+    <section
+      className="relative px-4 sm:px-6 lg:px-8 py-5 md:py-10 max-w-4xl mx-auto"
+      id="qualification"
+    >
       {/* Section Header */}
-      <div className="text-center mb-12 sm:mb-16">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#caf0f8]/60 dark:bg-[#0077b6]/10 text-[#0077b6] dark:text-[#90e0ef] text-xs font-mono font-semibold uppercase tracking-wider mb-3">
+      {/* <div className="text-center mb-10 sm:mb-12">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#caf0f8]/70 dark:bg-[#0077b6]/15 text-[#0077b6] dark:text-[#90e0ef] text-xs font-mono font-semibold uppercase tracking-wider mb-3">
           <i className="fa-solid fa-compass text-[11px]" />
           <span>My Journey</span>
         </div>
@@ -274,103 +140,137 @@ export default function QualificationSection() {
           Qualifications &amp; Background
         </h2>
         <p className="text-slate-600 dark:text-slate-400 text-sm sm:text-base max-w-xl mx-auto mt-3 font-normal leading-relaxed">
-          My academic foundation and professional track record building scalable software and AI systems.
+          Explore my professional industry experience and academic engineering background.
         </p>
+      </div> */}
+
+      {/* Tabs Navigation (matching user reference) */}
+      <div className="border-b border-slate-200/80 dark:border-slate-800 mb-10 sm:mb-12">
+        <div className="relative flex items-center justify-center gap-8 sm:gap-12">
+          {/* Experience Tab */}
+          <button
+            ref={experienceTabRef}
+            onClick={() => setActiveTab('experience')}
+            className={`relative pb-3 text-xs sm:text-sm font-bold tracking-wider uppercase transition-colors duration-250 cursor-pointer ${
+              activeTab === 'experience'
+                ? 'text-[#0077b6] dark:text-[#00b4d8]'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+            }`}
+          >
+            <span>Experience</span>
+          </button>
+
+          {/* Education Tab */}
+          <button
+            ref={educationTabRef}
+            onClick={() => setActiveTab('education')}
+            className={`relative pb-3 text-xs sm:text-sm font-bold tracking-wider uppercase transition-colors duration-250 cursor-pointer ${
+              activeTab === 'education'
+                ? 'text-[#0077b6] dark:text-[#00b4d8]'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+            }`}
+          >
+            <span>Education</span>
+          </button>
+
+          {/* Smooth Sliding Underline Indicator */}
+          <span
+            className="absolute bottom-0 h-[2.5px] bg-[#0077b6] dark:bg-[#00b4d8] rounded-full transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-none"
+            style={{
+              left: `${indicatorStyle.left}px`,
+              width: `${indicatorStyle.width}px`,
+              opacity: indicatorStyle.opacity,
+            }}
+          />
+        </div>
       </div>
 
-      {/* ── Mobile: two separate timelines (< lg) ── */}
-      <div className="lg:hidden space-y-12">
+      {/* Timeline List (matching user unit design reference) */}
+      <div className="space-y-0" key={activeTab}>
+        {currentItems.map((item, index) => {
+          const isLast = index === currentItems.length - 1
 
-        {/* Experience timeline */}
-        <div>
-          <div className="flex items-center gap-3 mb-7 pl-1">
-            <div className="w-9 h-9 rounded-xl bg-[#caf0f8]/60 dark:bg-[#0077b6]/15 flex items-center justify-center text-[#0077b6] dark:text-[#90e0ef] shrink-0">
-              <i className="fa-solid fa-briefcase text-sm" />
-            </div>
-            <div>
-              <h3 className="text-base font-bold text-slate-900 dark:text-white leading-tight">Experience</h3>
-              <p className="text-[11px] text-slate-400 font-medium">Professional roles &amp; freelance work</p>
-            </div>
-          </div>
-          {experience.map((item, idx) => (
-            <TimelineItem
-              key={item.id}
-              item={item}
-              isVisible={visibleItems.has(item.id)}
-              isLast={idx === experience.length - 1}
-              lineProgress={visibleItems.has(item.id) ? 100 : 0}
-            />
-          ))}
-        </div>
+          return (
+            <div
+              key={`${activeTab}-${item.id}`}
+              style={{ animationDelay: `${index * 85}ms` }}
+              className="relative flex gap-4 sm:gap-5 group animate-qualification-unit"
+            >
+              {/* Left Column: Icon + Vertical Connecting Line */}
+              <div className="relative flex flex-col items-center shrink-0">
+                {/* Icon Container with Corner Status Dot */}
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-[14px] sm:rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm overflow-hidden flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-105">
+                  {item.logo ? (
+                    <Image
+                      src={item.logo}
+                      alt={item.company}
+                      fill
+                      sizes="56px"
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div
+                      className={`w-full h-full bg-gradient-to-br ${item.pseudoIcon?.bgGradient} flex items-center justify-center text-white`}
+                    >
+                      <i className={`${item.pseudoIcon?.icon} text-lg sm:text-xl`} />
+                    </div>
+                  )}
 
-        {/* Divider */}
-        <div className="flex items-center gap-3 pl-1">
-          <div className="flex-1 h-px bg-slate-200 dark:bg-slate-800" />
-          <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 dark:text-slate-500 shrink-0">Education</span>
-          <div className="flex-1 h-px bg-slate-200 dark:bg-slate-800" />
-        </div>
+                  {/* Corner Status Dot (matching reference image) */}
+                  
+                </div>
 
-        {/* Education timeline */}
-        <div>
-          <div className="flex items-center gap-3 mb-7 pl-1">
-            <div className="w-9 h-9 rounded-xl bg-teal-500/10 flex items-center justify-center text-teal-600 dark:text-teal-400 shrink-0">
-              <i className="fa-solid fa-graduation-cap text-sm" />
-            </div>
-            <div>
-              <h3 className="text-base font-bold text-slate-900 dark:text-white leading-tight">Education</h3>
-              <p className="text-[11px] text-slate-400 font-medium">Academic degrees &amp; certifications</p>
-            </div>
-          </div>
-          {education.map((item, idx) => (
-            <TimelineItem
-              key={item.id}
-              item={item}
-              isVisible={visibleItems.has(item.id)}
-              isLast={idx === education.length - 1}
-              lineProgress={visibleItems.has(item.id) ? 100 : 0}
-            />
-          ))}
-        </div>
+                {/* Vertical Connecting Line to Next Unit */}
+                {!isLast && (
+                  <div className="w-[1.5px] flex-1 bg-slate-200/90 dark:bg-slate-800 my-2.5 min-h-[48px]" />
+                )}
+              </div>
 
-      </div>
+              {/* Right Column: Title, Subtitle, Date, Description & Tags */}
+              <div className={`flex-1 ${isLast ? 'pb-4' : 'pb-10 sm:pb-12'}`}>
+                {/* Top Row: Title + Date */}
+                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-snug tracking-tight">
+                    {item.role}
+                  </h3>
+                  <span className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 shrink-0">
+                    {item.period}
+                  </span>
+                </div>
 
-      {/* ── Desktop: two columns (lg+) ── */}
-      <div className="hidden lg:grid grid-cols-2 gap-8 lg:gap-10">
-        {/* Experience column */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3 px-1 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-[#caf0f8]/60 dark:bg-[#0077b6]/15 flex items-center justify-center text-[#0077b6] dark:text-[#90e0ef] shrink-0">
-              <i className="fa-solid fa-briefcase text-base" />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white leading-tight">Experience</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Professional roles &amp; freelance work</p>
-            </div>
-          </div>
-          <div className="space-y-4">
-            {experience.map((item, index) => (
-              <DesktopCard key={item.id} item={item} isVisible={visibleItems.has(item.id)} index={index} />
-            ))}
-          </div>
-        </div>
+                {/* Subtitle: Company · Type · Location */}
+                <p className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400 mt-1 flex items-center gap-1.5 flex-wrap">
+                  <span className="font-semibold text-slate-700 dark:text-slate-300">
+                    {item.company}
+                  </span>
+                  <span>·</span>
+                  <span>{item.employmentType}</span>
+                  <span>·</span>
+                  <span>{item.locationType}</span>
+                </p>
 
-        {/* Education column */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3 px-1 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-teal-500/10 flex items-center justify-center text-teal-600 dark:text-teal-400 shrink-0">
-              <i className="fa-solid fa-graduation-cap text-base" />
+                {/* Description */}
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-normal mt-2.5 max-w-2xl">
+                  {item.description}
+                </p>
+
+                {/* Skill / Highlights Pills */}
+                {item.skills && item.skills.length > 0 && (
+                  <div className="flex flex-wrap items-center gap-1.5 mt-3.5">
+                    {item.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="inline-flex items-center rounded-lg border border-slate-200/90 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 px-2.5 py-0.5 text-[11px] text-slate-600 dark:text-slate-400"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
-            <div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white leading-tight">Education</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Academic degrees &amp; certifications</p>
-            </div>
-          </div>
-          <div className="space-y-4">
-            {education.map((item, index) => (
-              <DesktopCard key={item.id} item={item} isVisible={visibleItems.has(item.id)} index={index} />
-            ))}
-          </div>
-        </div>
+          )
+        })}
       </div>
     </section>
   )

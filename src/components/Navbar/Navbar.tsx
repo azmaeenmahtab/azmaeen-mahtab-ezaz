@@ -133,9 +133,20 @@ const Navbar = () => {
         </button>
       </div>
 
+      {/* Smooth Animated Backdrop for Navbar dropdown */}
+      <div
+        onClick={() => setIsVisible(false)}
+        aria-hidden="true"
+        className={`fixed inset-0 z-30 md:hidden bg-slate-950/40 dark:bg-slate-950/60 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isVisible
+            ? 'opacity-100 backdrop-blur-sm pointer-events-auto'
+            : 'opacity-0 backdrop-blur-none pointer-events-none'
+        }`}
+      />
+
       {/* Mobile menu dropdown */}
       {isVisible && (
-        <div className="absolute top-16 left-4 right-4 rounded-2xl border border-slate-200/90 bg-white/95 backdrop-blur-md p-3 flex flex-col gap-1 md:hidden shadow-xl animate-[fade-drop_220ms_ease-out]">
+        <div className="absolute top-16 left-4 right-4 rounded-2xl border border-slate-200/90 bg-white/95 backdrop-blur-md p-3 flex flex-col gap-1 md:hidden shadow-xl z-40 animate-[fade-drop_220ms_ease-out]">
           {navItems.map(({ label, href, icon }) => (
             <Link
               key={href}

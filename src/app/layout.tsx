@@ -80,7 +80,7 @@ export default function RootLayout({
             {children}
             <Footer />
           </MainLayout>
-          <ThemeMenu />
+          {/* <ThemeMenu /> */}
           <MobileNav />
         </SmoothScroll>
       </body>

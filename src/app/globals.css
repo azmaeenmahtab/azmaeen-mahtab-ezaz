@@ -158,6 +158,22 @@
       transform: translateY(0);
     }
   }
+
+  @keyframes qualification-slide-in {
+    0% {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.animate-qualification-unit {
+  animation: qualification-slide-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
 }
 
 /*
@@ -406,4 +422,21 @@ html.lenis body {
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
+}
+
+/* Super smooth tab cross-fade */
+@keyframes projectTabIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-project-tab {
+  animation: projectTabIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform;
 }

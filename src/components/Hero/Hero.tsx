@@ -40,9 +40,9 @@ const aiTools = [
 
 const stackPills = [
   { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
-  { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
   { name: 'Next.js', icon: 'https://cdn.simpleicons.org/nextdotjs/black' },
-  { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+  
+  { name: "Express.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", invert: true },
   // { name: 'Spring Boot', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg' },
   { name: 'PostgreSQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
   { name: 'MongoDB', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
@@ -53,6 +53,56 @@ const Hero = () => {
   const [copied, setCopied] = useState<boolean>(false)
   const [currentTime, setCurrentTime] = useState<string>('')
   const [theme, setTheme] = useState<string>('light')
+  const [magnetConfig, setMagnetConfig] = useState({
+    rows: 22,
+    columns: 66,
+    lineHeight: 10,
+    lineWidth: 1.5,
+    radius: 130,
+    stretch: 0.25,
+  })
+
+  // Responsive MagnetLines density & dimensions for clean mobile spacing
+  useEffect(() => {
+    const updateMagnetConfig = () => {
+      const width = window.innerWidth
+      if (width < 480) {
+        // Mobile phones: spacious ~15px gap per column, smaller radius
+        setMagnetConfig({
+          rows: 13,
+          columns: 26,
+          lineHeight: 6.5,
+          lineWidth: 1.3,
+          radius: 75,
+          stretch: 0.16,
+        })
+      } else if (width < 768) {
+        // Phablets / Small tablets
+        setMagnetConfig({
+          rows: 16,
+          columns: 38,
+          lineHeight: 8,
+          lineWidth: 1.4,
+          radius: 95,
+          stretch: 0.2,
+        })
+      } else {
+        // Desktop
+        setMagnetConfig({
+          rows: 22,
+          columns: 66,
+          lineHeight: 10,
+          lineWidth: 1.5,
+          radius: 130,
+          stretch: 0.25,
+        })
+      }
+    }
+
+    updateMagnetConfig()
+    window.addEventListener('resize', updateMagnetConfig)
+    return () => window.removeEventListener('resize', updateMagnetConfig)
+  }, [])
 
   // Synchronize theme with html data-theme attribute
   useEffect(() => {
@@ -185,19 +235,19 @@ const Hero = () => {
         >
           {/* Interactive MagnetLines WebGL2 Component */}
           <MagnetLines
-            key={isWhiteTheme ? 'magnet-light' : 'magnet-dark'}
-            rows={22}
-            columns={66}
+            key={`${isWhiteTheme ? 'magnet-light' : 'magnet-dark'}-${magnetConfig.columns}`}
+            rows={magnetConfig.rows}
+            columns={magnetConfig.columns}
             lineColor={isWhiteTheme ? '#0077b6' : '#00b4d8'}
             accentColor={isWhiteTheme ? '#03045e' : '#90e0ef'}
-            lineWidth={1.5}
-            lineHeight={10}
+            lineWidth={magnetConfig.lineWidth}
+            lineHeight={magnetConfig.lineHeight}
             baseAngle={0}
             mode="orbit"
             shape="line"
             fade={isWhiteTheme ? 0.45 : 0.38}
-            stretch={0.25}
-            radius={130}
+            stretch={magnetConfig.stretch}
+            radius={magnetConfig.radius}
             clickPulse={true}
             className="w-full h-full"
           />
@@ -282,7 +332,7 @@ const Hero = () => {
             <div className="flex items-center gap-2">
               <i className="fa-solid fa-briefcase text-slate-400 dark:text-slate-500 text-xs" />
               <span>
-                Backend AI Engineer Intern at <strong className="text-slate-900 dark:text-white font-semibold">FlyRank AI</strong>
+                AI Engineer Intern at <strong className="text-slate-900 dark:text-white font-semibold">Kishor Coder</strong>
               </span>
             </div>
 
