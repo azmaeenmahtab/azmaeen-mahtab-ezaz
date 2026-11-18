@@ -27,7 +27,7 @@ const experiences: ExperienceItem[] = [
     company: 'KishorCoder',
     employmentType: 'Internship',
     locationType: 'Dhaka, Bangladesh',
-    period: 'Jul 2026 – Present',
+    period: 'Nov 2026 – Present',
     logo: '/images/experience/kishorcoder.webp',
     isActive: true,
     description:
@@ -83,9 +83,9 @@ const educations: ExperienceItem[] = [
     id: 'edu-dcc',
     role: 'Higher Secondary Certificate (HSC)',
     company: 'Dhaka City College',
-    employmentType: 'Science Stream',
+    employmentType: 'Science',
     locationType: 'Dhaka',
-    period: '2021 – 2023',
+    period: '2023',
     pseudoIcon: {
       icon: 'fa-solid fa-building-columns',
       bgGradient: 'from-[#00b4d8] to-[#0077b6]',
@@ -99,9 +99,9 @@ const educations: ExperienceItem[] = [
     id: 'edu-bpg',
     role: 'Secondary School Certificate (SSC)',
     company: 'Bir Pratik Gazi High School',
-    employmentType: 'Science Stream',
+    employmentType: 'Science',
     locationType: 'Dhaka',
-    period: '2016 – 2021',
+    period: '2021',
     pseudoIcon: {
       icon: 'fa-solid fa-school',
       bgGradient: 'from-[#48cae4] to-[#023e8a]',
