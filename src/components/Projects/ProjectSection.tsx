@@ -154,7 +154,7 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
                     </span>
                   ) : (
                     <span
-                      className={`rounded-full px-1.5 py-0.5 font-mono text-[10px] font-semibold transition-colors duration-250 shrink-0 ${
+                      className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold transition-colors duration-250 shrink-0 ${
                         active ? 'bg-white/25 text-white' : 'bg-slate-900/5 text-slate-500 dark:bg-white/10 dark:text-slate-400'
                       }`}
                     >
